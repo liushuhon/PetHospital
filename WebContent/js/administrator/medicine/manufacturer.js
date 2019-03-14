@@ -1,40 +1,46 @@
-layui.use([ 'element', 'table', 'form', 'jquery'], function() {
+layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 	var element = layui.element;
 	var table = layui.table;
 	var form = layui.form;
-	var $ = layui.jquery; 
- 
+	var $ = layui.jquery;
+
 	// 展示已知数据
 	var tableIns = table.render({
-		elem : '#categaryTable',
-		id : 'categary',
-		url : '/PetHospital/servlet/medicine/CategaryServlet',
-		where: {type: 'queryAllCategary'},
-		request: {
-		    pageName: 'curr' //页码的参数名称，默认：page
-		    ,limitName: 'nums' //每页数据量的参数名，默认：limit
-		  },
-		  method: 'post',
+		elem : '#manuTable',
+		id : 'manufacture',
+		url : '/PetHospital/servlet/medicine/ManuServlet',
+		where : {
+			type : 'queryAllManu'
+		},
+		request : {
+			pageName : 'curr',
+			limitName : 'nums'
+		},
+		method : 'post',
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
- 
+
 		cols : [ [ // 标题栏
 		{
 			align : 'center',
 			field : 'id',
-			title : '编号', 
+			title : '编号',
 			sort : true
 		}, {
 			align : 'center',
-			field : 'categary',
-			title : '药品类别', 
-		}, {
+			field : 'manufacture',
+			title : '生产商',
+		},  {
+			align : 'center',
+			field : 'tel',
+			title : '联系电话',
+		},{
 			align : 'center',
 			field : 'operate',
 			title : '操作',
 			align : 'center',
-			toolbar : '#categaryTool'
+			toolbar : '#manuTool'
 		} ] ],
-		 
+
 		skin : 'line',
 		even : true,
 		page : true,
@@ -51,28 +57,26 @@ layui.use([ 'element', 'table', 'form', 'jquery'], function() {
 
 	table.on('tool(table)', function(obj) {
 		var data = obj.data;
-		if (obj.event === 'detail') {
-			layer.msg('ID：' + data.id + ' 的查看操作');
-		} else if (obj.event === 'delete') {
-			layer.confirm('真的删除行么', function(index) {
+		if (obj.event === 'delete') {
+			parent.layer.confirm('真的删除行么', function(index) {
 				$.ajax({
-					url : "/PetHospital/servlet/medicine/CategaryServlet",
+					url : "/PetHospital/servlet/medicine/ManuServlet",
 					type : "POST",
 					data : {
-						type : 'deleteCategary',
+						type : 'deleteManu',
 						id : data.id,
 					},
-					success : function(msg) { 
+					success : function(msg) {
 						if (msg == 'true') {
-							// 删除这一行 
+							// 删除这一行
 							// 关闭弹框
-							layer.close(index);
-							layer.msg("删除成功", {
+							parent.layer.close(index);
+							parent.layer.msg("删除成功", {
 								icon : 6
 							});
-							refreashTable(); 
+							refreashTable();
 						} else {
-							layer.msg("删除失败", {
+							parent.layer.msg("删除失败", {
 								icon : 5
 							});
 						}
@@ -81,86 +85,124 @@ layui.use([ 'element', 'table', 'form', 'jquery'], function() {
 				return false;
 			});
 		} else if (obj.event === 'edit') {
-			layer.open({
+			parent.layer.open({
 				type : 1,
-				title : "修改药品类别信息",
-				area : [ '420px', '280px' ],
-				content : $("#popUpdateTest"),
+				title : "修改生产厂家信息",
+				area : [ '420px', '320px' ],
+				content : '<form class="layui-form layui-from-pane" action="" style="margin-top: 20px">' + '<div class="layui-form-item" style="margin-top: 40px">'
+						+ '<label class="layui-form-label">厂家编号</label>' + '<div class="layui-input-block">' + '<input type="text" name="cateTypeId" id="manuId" required'
+						+ 'lay-verify="required" autocomplete="off" readonly class="layui-input" style="width:80%">' + '</div>' + '</div>' + '<div class="layui-form-item">'
+						+ '<label class="layui-form-label">生产厂家</label>' + '<div class="layui-input-block">'
+						+ '<input type="text" name="manufacture" id="manufacture" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入生产厂家名字" class="layui-input">'
+					 
+						+ '</div>' + '</div>' 
+						+ '<div class="layui-form-item">'
+						+ '<label class="layui-form-label">联系电话</label>' + '<div class="layui-input-block">'
+						+ '<input type="text" name="tel" id="tel" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入"  class="layui-input">'
+					 
+						+ '</div>' + '</div>' 
+						+ '</form>',
+				btn : [ '确定', '取消' ],
 				success : function(layero, index) {
-					$("#category").val(data.categary);
-					$("#categaryId").val(data.id);
+					layero.find("#manufacture").val(data.manufacture);
+					layero.find("#manuId").val(data.id);
+					layero.find("#tel").val(data.tel);
+				},
+				yes : function(index, layero) {
+					let id = layero.find("#manuId").val();
+					let manufacture = layero.find("#manufacture").val();
+					let tel =  layero.find("#tel").val();
+					$.ajax({
+						url : '/PetHospital/servlet/medicine/ManuServlet',
+						type : 'POST',
+						data : {
+							type : 'updateManu',
+							id : id,
+							manu : manufacture,
+							tel : tel
+						},
+						success : function(msg) {
+							parent.layer.closeAll();
+						}
+					})
+				},
+				cancel : function(index, layero) {
+					layer.close(index);
+				},
+				end : function() {
+					refreashTable();
 				}
-
-			});
-			// 动态向表传递赋值可以参看文章进行修改界面的更新前数据的显示，当然也是异步请求的要数据的修改数据的获取
-			setFormValue(obj, data);
+			}); 
 		}
 	});
-	function refreashTable(){
-		table.reload('categary', {
-			 page : {
-				 curr : 1
-			 },
-			 where : {
-				 type : 'queryAllCategary',
-			 },
-			 url : '/PetHospital/servlet/medicine/CategaryServlet',
-			 method : 'post'
-			 });
+	function refreashTable() {
+		table.reload('manufacture', {
+			page : {
+				curr : 1
+			},
+			where : {
+				type : 'queryAllManu',
+			},
+			url : '/PetHospital/servlet/medicine/ManuServlet',
+			method : 'post'
+		});
 	}
-	function setFormValue(obj, data) {
-		form.on('submit(confirmUpdate)', function(message) {
-			let id = message.field.cateTypeId;
-			let categary = message.field.category;
-			$.ajax({
-				url : '/PetHospital/servlet/medicine/CategaryServlet',
-				type : 'POST',
-				data : {
-					type : 'updateCategary',
-					id : id,
-					categary : categary
-				},
-				success : function(msg) {  
-					if (msg == 'true') {
-						layer.msg("修改成功", {
-							icon : 6
-						});
-						setTimeout(function() {
-							obj.update({
-								id : id,
-								categary : categary, 
-							}); 
-							layer.closeAll(); 
-						}, 2000); 
-					} else {
-						layer.msg("修改失败", {
-							icon : 5
-						});
-					}
-				}
-			})
-		})
-	} 
-	$("#addCategary").on('click', function() {
-		parent.addPopShow();
-	});
+	 
+	$("#addManu").on( 'click',
+			function() {
+				parent.layer.open({
+					type : 1,
+					title : "新增生产厂家",
+					area : [ '420px', '200px' ],
+					content : '<label class="layui-form-label">生产厂家</label>' + '<div class="layui-input-block">'
+							+ '<input type="text" name="manufacture" id="manufacture" required lay-verify="required" autocomplete="off" placeholder="请输入生产厂家" class="layui-input">'
+							+ '</div>'
+							+ '<label class="layui-form-label">联系电话</label>' + '<div class="layui-input-block">'
+							+ '<input type="text" name="tel" id="tel" required lay-verify="required" autocomplete="off" placeholder="请输入联系电话" class="layui-input">'
+							+ '</div>',
 
-	
+					btn : [ '确定', '取消' ],
+					yes : function(index, layero) {
+						$.ajax({
+							url : '/PetHospital/servlet/medicine/ManuServlet',
+							type : 'POST',
+							data : {
+								type : 'addManu',
+								manu : layero.find('#manufacture').val(),
+								tel : layero.find('#tel').val()
+							},
+							success : function(msg) {
+								parent.layer.closeAll();
+							},
+							error : function(mag) {
+							}
+						})
+					},
+					cancel : function(index, layero) {
+						layer.close(index);
+					},
+					end : function() {
+						refreashTable(); 
+					}
+				});
+
+			});
+
 	var active = {
 		reload : function() {
 			var selContent = $('#selContent').val();// 获取输入框的值
 			var selItem = $("#select").val();
 			// 执行重载
-			table.reload('categary', {
+			table.reload('manufacture', {
 				page : {
-					curr : 1 
+					curr : 1
 				},
 				where : {
-					type : 'selectCategary', 
+					type : 'selectManu',
 					selContent : selContent,
 					selItem : selItem
 				},// 这里传参 向后台
-				url : '/PetHospital/servlet/medicine/CategaryServlet',// 后台做模糊搜索接口路径
+				url : '/PetHospital/servlet/medicine/ManuServlet',// 后台做模糊搜索接口路径
 				method : 'post'
 			});
 		}

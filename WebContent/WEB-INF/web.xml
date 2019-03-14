@@ -65,12 +65,20 @@
     <servlet-name>PetServlet</servlet-name>
     <url-pattern>/servlet/PetServlet</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>CategaryServlet</servlet-name>
     <servlet-class>servlet.medicine.CategaryServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CategaryServlet</servlet-name>
     <url-pattern>/servlet/medicine/CategaryServlet</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>ManuServlet</servlet-name>
+    <servlet-class>servlet.medicine.ManuServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManuServlet</servlet-name>
+    <url-pattern>/servlet/medicine/ManuServlet</url-pattern>
   </servlet-mapping>
 </web-app>
