@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="layui-row" id="popAddTest" style="display: none;">
+		<div class="layui-col-md10">
+			<div class="layui-form-item" style="margin-top: 10%;">
+				<label class="layui-form-label">药品类别</label>
+				<div class="layui-input-block">
+					<input type="text" name="categary2" id="categary2" required
+						lay-verify="required" autocomplete="off" placeholder="请输入药品类别"
+						class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item" style="margin-top: 20px">
+				<div class="layui-input-block">
+					<button class="layui-btn" id="confirmAdd" lay-filter="confirmAdd">确认</button>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

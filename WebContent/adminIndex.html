@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="assets/css/layui.css">
+<link rel="stylesheet" href="assets/css/admin.css">
+<link rel="icon" href="/favicon.ico">
+<title>管理后台</title>
+</head>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header custom-header">
+			<ul class="layui-nav layui-layout-right">
+				<li class="layui-nav-item"><a id="userName" href="javascript:;"></a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="adminLogin.html">退出</a>
+						</dd>
+					</dl></li>
+			</ul>
+		</div>
+
+		<div class="layui-side custom-admin">
+			<div class="layui-side-scroll">
+				<div class="custom-logo">
+					<!--  <img src="assets/images/logo.png" alt=""/> -->
+					<h1>宠物医院后台管理</h1>
+				</div>
+				<ul id="Nav" class="layui-nav layui-nav-tree">
+					<li class="layui-nav-item"><a href="javascript:;"> <i
+							class="layui-icon">&#xe609;</i> <em>客户管理</em>
+					</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="views/administor/customerManage.html">客户管理</a>
+							</dd>
+							<dd>
+								<a href="views/administor/petManage.html">宠物管理</a>
+							</dd>
+						</dl></li>
+					<li class="layui-nav-item"><a href="javascript:;"> <i
+							class="layui-icon">&#xe612;</i> <em>药品管理</em>
+					</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="views/administor/medecineManage.html">药品管理</a>
+							</dd>
+						</dl></li>
+					<li class="layui-nav-item"><a href="javascript:;"> <i
+							class="layui-icon">&#xe612;</i> <em>仓库管理</em>
+					</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="views/administor/inStorageManage.html">入库管理</a>
+							</dd>
+							<dd>
+								<a href="views/administor/outStorageManage.html">出库管理</a>
+							</dd>
+						</dl></li>
+					<li class="layui-nav-item"><a href="javascript:;"> <i
+							class="layui-icon">&#xe612;</i> <em>参数管理</em>
+					</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="views/administor/medicine/medecineType.html">药品类别</a>
+							</dd>
+							<dd>
+								<a href="views/administor/medicine/manufacturer.html">生产厂家</a>
+							</dd>
+							<dd>
+								<a href="views/administor/medicine/supplierManage.html">供应商管理</a>
+							</dd>
+							<dd>
+								<a href="views/administor/medicine/specifications.html">药品规格</a>
+							</dd>
+						</dl></li>
+					<li class="layui-nav-item"><a href="javascript:;"> <i
+							class="layui-icon">&#xe612;</i> <em>寄养领养管理</em>
+					</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="views/administor/fosterCareManage.html">寄养管理</a>
+							</dd>
+							<dd>
+								<a href="views/administor/adoptManage.html">领养管理</a>
+							</dd>
+						</dl></li>
+					<li class="layui-nav-item"><a href="javascript:;"> <i
+							class="layui-icon">&#xe612;</i> <em>个人信息管理</em>
+					</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="views/administor/changePassword.html">修改密码</a>
+							</dd>
+						</dl></li>
+				</ul>
+			</div>
+		</div>
+		<div class="layui-body">
+			<div class="layui-tab app-container" lay-allowClose="true"
+				lay-filter="tabs">
+				<ul id="appTabs" class="layui-tab-title custom-tab"></ul>
+				<div id="appTabPage" class="layui-tab-content"></div>
+			</div>
+		</div>
+		<div class="mobile-mask"></div>
+	</div>
+
+	<script src="assets/layui.js"></script>
+	<script src="util/jquery.js"></script>
+	<script src="js/getCurUser.js"></script> 
+	<script src="adminIndex.js"></script> 
+	<script src="index.js" data-main="home"></script> 
+</body>
+</html>

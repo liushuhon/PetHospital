@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" href="../../assets/css/layui.css">
+<link rel="stylesheet" href="../../assets/css/view.css" />
+<title>客户管理</title>
+</head>
+<body class="layui-view-body">
+	<div class="layui-content">
+		<div class="layui-page-header">
+			<div class="pagewrap">
+				<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">客户管理</a>
+					<a><cite>客户管理</cite></a>
+				</span>
+			</div>
+		</div>
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<div class="form-box layui-form">
+					<div class="layui-row layui-form-item layui-col-space10">
+						<div class=" layui-col-md2">
+							<select id="select" name="select" lay-verify=""
+								class="layui-select ">
+								<option value="registrationCode">编号</option>
+								<option value="customerName">客戶姓名</option>
+							</select>
+						</div>
+						<div class="layui-col-md2">
+							<input type="text" id="selContent"
+								class="layui-input layui-input-inline ">
+							<button id="selectRe" data-type="reload"
+								class="layui-btn layui-btn-normal" style="position: absolute;">查询</button>
+						</div>
+					</div>
+					<table id="customerTable" lay-filter="demo"></table>
+					<script type="text/html" id="customerTool">
+                            <a class="layui-btn layui-btn-xs" lay-filter="detail" lay-event="detail" lay>查看</a> 
+                        </script>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../assets/layui.all.js"></script>
+	<script src="../../util/jquery.js"></script>
+	<script src="../../js/getCurUser.js"></script>
+	<script src="../../js/administrator/customerManage.js"></script>
+</body>
+</html>
