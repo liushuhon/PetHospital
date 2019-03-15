@@ -10,6 +10,9 @@ public class Medicine {
 	private double costPrice;
 	private String supplier;
 	
+	public Medicine() {
+		super();
+	}
 	public Medicine(String medicineCode, String category, String medicineName,
 			String specifications, String manufacturer, double price,
 			double costPrice, String supplier) {

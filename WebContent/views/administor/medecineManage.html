@@ -2,9 +2,62 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" href="../../assets/css/layui.css">
+<link rel="stylesheet" href="../../assets/css/view.css" />
+<title>药品管理</title>
+<style> 
+</style>
 </head>
-<body>
-
+<body class="layui-view-body">
+	<div class="layui-content">
+		<div class="layui-page-header">
+			<div class="pagewrap">
+				<span class="layui-breadcrumb"> <a href="">首页</a>
+					<a><cite>药品管理</cite></a>
+				</span>
+			</div>
+		</div>
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<div class="form-box layui-form">
+					<div class="layui-row layui-form-item">
+						<div class=" layui-col-md2">
+							<select id="select" name="select" lay-verify=""
+								class="layui-select ">
+								<option value="medicineCode">药品编号</option>
+								<option value="categary">药品类别</option>
+								<option value="medicineName">药品名</option>
+								<option value="specifications">药品规格</option>
+								<option value="manufacturer">生产商</option>
+								<option value="price">售价</option>
+								<option value="costPrice">进价</option>
+								<option value="supplier">供应商</option> 
+							</select>
+						</div>
+						<div class="layui-col-md2">
+							<input type="text" id="selContent"
+								class="layui-input layui-input-inline ">
+							<button id="selectRe" data-type="reload"
+								class="layui-btn layui-btn-normal" style="position: absolute;">查询</button>
+						</div>
+						<div class="layui-col-md8">
+							<button id="addMedicine" class="layui-btn layui-btn-normal"
+								style="position: absolute; right: 0px;">新增</button>
+						</div>
+					</div>
+					<table id="medicineTable" lay-filter="table"></table>
+					<script type="text/html" id="medicineTool"> 
+                            <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+   							<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+                    </script>
+				</div>
+			</div>
+		</div>
+	</div> 
+	<script src="../../assets/layui.js"></script>
+	<script src="../../util/jquery.js"></script>
+	<script src="../../js/getCurUser.js"></script>  
+	<script src="../../js/administrator/medicineManage.js"></script>
 </body>
 </html>
