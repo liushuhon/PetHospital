@@ -39,7 +39,7 @@ public class ManuDao {
 			new Exception("操作数据库出错！").printStackTrace(); 
 		}
 	}
-	public void updateCategary(Manufacture manu) throws Exception{ 
+	public void updateManu(Manufacture manu) throws Exception{ 
 		try {
 			String sql = "update med_manufacture SET tel = '"+manu.getTel()+"',manufacture = '"+manu.getManufacture()+"' WHERE id = '"+manu.getId()+"'";
 			this.commonDAO.executeUpdate(sql, new Object[]{}); 
@@ -47,7 +47,7 @@ public class ManuDao {
 			new Exception("操作数据库出错！").printStackTrace(); 
 		}
 	}
-	public void addCategary(Manufacture manu) throws Exception{ 
+	public void addManu(Manufacture manu) throws Exception{ 
 		try {
 			String sql = "INSERT INTO med_manufacture(manufacture,tel) VALUES('"+manu.getManufacture()+"','"+manu.getTel()+"')";
 			this.commonDAO.executeUpdate(sql, new Object[]{}); 

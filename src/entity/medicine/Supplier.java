@@ -3,7 +3,7 @@ package entity.medicine;
 public class Supplier {
 	private String supplier;
 	private String id;
-
+	private String tel;
 	public Supplier() {
 		super();
 	}
@@ -19,6 +19,12 @@ public class Supplier {
 
 	public void setSupplier(String supplier) {
 		this.supplier = supplier;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 	
 }

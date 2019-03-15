@@ -73,12 +73,28 @@
     <servlet-name>CategaryServlet</servlet-name>
     <url-pattern>/servlet/medicine/CategaryServlet</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>ManuServlet</servlet-name>
     <servlet-class>servlet.medicine.ManuServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ManuServlet</servlet-name>
     <url-pattern>/servlet/medicine/ManuServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SupplierServlet</servlet-name>
+    <servlet-class>servlet.medicine.SupplierServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SupplierServlet</servlet-name>
+    <url-pattern>/servlet/medicine/SupplierServlet</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>SpecificationServlet</servlet-name>
+    <servlet-class>servlet.medicine.SpecificationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SpecificationServlet</servlet-name>
+    <url-pattern>/servlet/medicine/SpecificationServlet</url-pattern>
   </servlet-mapping>
 </web-app>

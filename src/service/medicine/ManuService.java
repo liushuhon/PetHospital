@@ -27,14 +27,14 @@ public class ManuService {
 	}
 	public void updateManu(Manufacture manu){
 		try {
-			manuDao.updateCategary(manu);
+			manuDao.updateManu(manu);
 		} catch (Exception e) { 
 			new Exception("操作数据库出错！").printStackTrace();
 		}
 	}
 	public void addManu(Manufacture manu){
 		try {
-			manuDao.addCategary(manu);
+			manuDao.addManu(manu);
 		} catch (Exception e) { 
 			new Exception("操作数据库出错！").printStackTrace();
 		}

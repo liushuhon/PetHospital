@@ -11,7 +11,7 @@
 		<div class="layui-page-header">
 			<div class="pagewrap">
 				<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">参数管理</a>
-					<a><cite>药品规格</cite></a>
+					<a><cite>供应商</cite></a>
 				</span>
 			</div>
 		</div>
@@ -23,7 +23,8 @@
 							<select id="select" name="select" lay-verify=""
 								class="layui-select ">
 								<option value="id">编号</option>
-								<option value="specification">药品规格</option> 
+								<option value="supplier">供应商</option>
+								<option value="tel">联系电话</option>
 							</select>
 						</div>
 						<div class="layui-col-md2">
@@ -33,12 +34,12 @@
 								class="layui-btn layui-btn-normal" style="position: absolute;">查询</button>
 						</div>
 						<div class="layui-col-md8">
-							<button id="addSpeci" class="layui-btn layui-btn-normal"
+							<button id="addSupp" class="layui-btn layui-btn-normal"
 								style="position: absolute; right: 0px;">新增</button>
 						</div>
 					</div>
-					<table id="speciTable" lay-filter="table"></table>
-					<script type="text/html" id="speciTool"> 
+					<table id="suppTable" lay-filter="table"></table>
+					<script type="text/html" id="suppTool"> 
                             <a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="edit">编辑</a>
    							<a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</a>
                     </script>
@@ -51,6 +52,6 @@
 	<script src="../../../assets/layui.js"></script>
 	<script src="../../../util/jquery.js"></script>
 	<script src="../../../js/getCurUser.js"></script>  
-	<script src="../../../js/administrator/medicine/specification.js"></script>
+	<script src="../../../js/administrator/medicine/supplier.js"></script>
 </body>
 </html>
