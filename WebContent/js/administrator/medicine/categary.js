@@ -151,9 +151,10 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 					type : 1,
 					title : "新增药品类别信息",
 					area : [ '420px', '200px' ],
-					content : '<label class="layui-form-label">药品类别</label>' + '<div class="layui-input-block">'
-							+ '<input type="text" name="categary2" id="categary2" required lay-verify="required" autocomplete="off" placeholder="请输入药品类别" class="layui-input">'
-							+ '</div>',
+					content : '<div class="layui-form-item" style="margin-top: 40px">' 
+							+ '<label class="layui-form-label">药品类别</label>' + '<div class="layui-input-block">'
+							+ '<input type="text" style="width:80%" name="categary2" id="categary2" required lay-verify="required" autocomplete="off" placeholder="请输入药品类别" class="layui-input">'
+							+ '</div></div>',
 
 					btn : [ '确定', '取消' ],
 					yes : function(index, layero) {

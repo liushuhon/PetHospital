@@ -153,13 +153,15 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 				parent.layer.open({
 					type : 1,
 					title : "新增生产厂家",
-					area : [ '420px', '200px' ],
-					content : '<label class="layui-form-label">生产厂家</label>' + '<div class="layui-input-block">'
-							+ '<input type="text" name="manufacture" id="manufacture" required lay-verify="required" autocomplete="off" placeholder="请输入生产厂家" class="layui-input">'
-							+ '</div>'
+					area : [ '420px', '280px' ],
+					content : '<div class="layui-form-item" style="margin-top: 40px">'
+							+ '<label class="layui-form-label">生产厂家</label>' + '<div class="layui-input-block">'
+							+ '<input type="text" style="width:80%" name="manufacture" id="manufacture" required lay-verify="required" autocomplete="off" placeholder="请输入生产厂家" class="layui-input">'
+							+ '</div></div>'
+							+ '<div class="layui-form-item">'
 							+ '<label class="layui-form-label">联系电话</label>' + '<div class="layui-input-block">'
-							+ '<input type="text" name="tel" id="tel" required lay-verify="required" autocomplete="off" placeholder="请输入联系电话" class="layui-input">'
-							+ '</div>',
+							+ '<input type="text" style="width:80%" name="tel" id="tel" required lay-verify="required" autocomplete="off" placeholder="请输入联系电话" class="layui-input">'
+							+ '</div></div>',
 
 					btn : [ '确定', '取消' ],
 					yes : function(index, layero) {
