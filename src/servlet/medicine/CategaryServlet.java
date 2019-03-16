@@ -99,6 +99,10 @@ public class CategaryServlet extends HttpServlet {
 			System.out.print(JSON.toJSONString(result));
 			OutputStream out = response.getOutputStream();
 			out.write(JSON.toJSONString(result).getBytes("utf-8"));
+		} else if(requestType.equals("getAllCategory")){
+			List<Map<String, Object>> categarys = categaryDao.queryCategary();
+			OutputStream out = response.getOutputStream();
+			out.write(JSON.toJSONString(categarys).getBytes("utf-8"));
 		}
 	}
 }

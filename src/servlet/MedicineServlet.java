@@ -96,8 +96,7 @@ public class MedicineServlet extends HttpServlet {
 			outputStream.write(JSON.toJSONString(true).getBytes("utf-8"));
 		} else if (requestType.equals("addMedicine")) {
 			Medicine medicine = new Medicine();
-			medicine.setCategory(request.getParameter("categary").toString());
-			medicine.setMedicineCode(request.getParameter("medicineCode").toString());
+			medicine.setCategory(request.getParameter("categary").toString()); 
 			medicine.setCostPrice(Double.parseDouble(request.getParameter("costPrice").toString()));
 			medicine.setPrice(Double.parseDouble(request.getParameter("price").toString()));
 			medicine.setManufacturer(request.getParameter("manufacturer").toString());

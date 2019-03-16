@@ -73,9 +73,9 @@ public class MedicineDao {
 	}
 	public void addMedicine(Medicine medicine) throws Exception{ 
 		try {
-			String sql = "INSERT INTO medicine(medicineCode,medicineName,specifications,manufacturer,price,costPrice，supplier,category) "
-					+ "VALUES('"+medicine.getMedicineCode()+"','"+medicine.getMedicineName()+"','"+medicine.getSpecifications()+"','"+medicine.getManufacturer()+"'"
-					+ ",'"+medicine.getPrice()+"''"+medicine.getCostPrice()+"''"+medicine.getSupplier()+"''"+medicine.getCategory()+"')";
+			String sql = "INSERT INTO medicine(medicineCode,category,medicineName,specifications,manufacturer,price,costPrice,supplier) "
+					+ "VALUES('"+medicine.getMedicineCode()+"','"+medicine.getCategory()+"','"+medicine.getMedicineName()+"','"+medicine.getSpecifications()+"','"+medicine.getManufacturer()+"'"
+					+ ",'"+medicine.getPrice()+"','"+medicine.getCostPrice()+"','"+medicine.getSupplier()+"')";
 			this.commonDAO.executeUpdate(sql, new Object[]{}); 
 		} catch (Exception e) {
 			new Exception("操作数据库出错！").printStackTrace(); 

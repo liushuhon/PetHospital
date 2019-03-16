@@ -103,6 +103,10 @@ public class ManuServlet extends HttpServlet {
 			System.out.print(JSON.toJSONString(result));
 			OutputStream out = response.getOutputStream();
 			out.write(JSON.toJSONString(result).getBytes("utf-8"));
+		} else if(requestType.equals("getAllManu")){
+			List<Map<String, Object>> manus = manuDao.queryManu();
+			OutputStream out = response.getOutputStream();
+			out.write(JSON.toJSONString(manus).getBytes("utf-8"));
 		}
 	}
 

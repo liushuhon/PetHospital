@@ -2,8 +2,15 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 	var element = layui.element;
 	var table = layui.table;
 	var form = layui.form;
-	var $ = layui.jquery;
-	form.render();
+	var $ = layui.jquery; 
+	var cateOption = [];
+	var manuOption = [];
+	var suppOption = [];
+	var speciOption = [];
+	
+//	var getCateOption = function(){
+//		
+//	};
 	// 展示已知数据
 	var tableIns = table.render({
 		elem : '#medicineTable',
@@ -76,8 +83,8 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 	});
 
 	table.on('tool(table)', function(obj) { 
-		var data = obj.data;
-		console.log(obj);
+		parent.layui.form.render(); 
+		var data = obj.data;  
 		if (obj.event === 'delete') {
 			parent.layer.confirm('真的删除行么', function(index) {
 				$.ajax({
@@ -105,74 +112,34 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 				});
 				return false;
 			});
-		} else if (obj.event === 'edit') {
+		} else if (obj.event === 'edit') { 
 			parent.layer.open({
 				type : 1,
 				title : "修改药品信息",
-				area : [ '600px', ],
-				content : '<form class="layui-form layui-from-pane" action="" style="margin-top: 20px">' 
-						+ '<div class="layui-form-item" style="margin-top: 40px">'
-						+ '<label class="layui-form-label">药品编号</label>' + '<div class="layui-input-block">' + '<input type="text" name="medicineCode" id="medicineCode" required'
-						+ 'lay-verify="required" autocomplete="off" readonly class="layui-input" style="width:80%">' + '</div>' + '</div>' + '<div class="layui-form-item">'
-						+ '<label class="layui-form-label">药品类别</label>' + '<div class="layui-input-block">'
-					    + '<select name="city" lay-verify="required">'
-				        + '<option value="dddddd">ddddd</option>'
-				        + '<option value="0">北京</option>'
-				        + '<option value="1">上海</option>'
-				        + '<option value="2">广州</option>'
-				        + '<option value="3">深圳</option>'
-				        + '<option value="4">杭州</option>'
-				        + '</select>'
-						+ '</div>' + '</div>' 
-						+ '<div class="layui-form-item">'
-						+ '<label class="layui-form-label">药品名</label>' + '<div class="layui-input-block">'
-						+ '<input type="text" name="medicineName" id="medicineName" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入"  class="layui-input">'
-						+ '</div>' + '</div>' 
-						+ '<div class="layui-form-item">'
-						+ '<label class="layui-form-label">药品规格</label>' + '<div class="layui-input-block">'
-						+ '<input type="text" name="specifications" id="specifications" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入"  class="layui-input">'
-						+ '</div>' + '</div>' 
-						+ '<div class="layui-form-item">'
-						+ '<label class="layui-form-label">生产商</label>' + '<div class="layui-input-block">'
-						+ '<input type="text" name="manufacturer" id="manufacturer" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入"  class="layui-input">'
-						+ '</div>' + '</div>' 
-						+ '<div class="layui-form-item">'
-						+ '<label class="layui-form-label">供应商</label>' + '<div class="layui-input-block">'
-						+ '<input type="text" name="supplier" id="supplier" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入"  class="layui-input">'
-						+ '</div>' + '</div>' 
-						+ '<div class="layui-form-item">'
-						+ '<label class="layui-form-label">进价</label>' + '<div class="layui-input-block">'
-						+ '<input type="text" name="costPrice" id="costPrice" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入"  class="layui-input">'
-						+ '</div>' + '</div>' 
-						+ '<div class="layui-form-item">'
-						+ '<label class="layui-form-label">售价</label>' + '<div class="layui-input-block">'
-						+ '<input type="text" name="price" id="price" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入"  class="layui-input">'
-						+ '</div>' + '</div>' 
-						
-						+ '</form>',
+				area : [ '600px'],
+				content : editCon,
 				btn : [ '确定', '取消' ],
-				success : function(layero, index) {
-					 form.render();
-
-					console.log(data.medicineCode)
-					layero.find("#medicineCode").val(data.medicineCode);
-					layero.find("#categary").val(data.category);
+				success : function(layero, index) { 
+					parent.layui.form.render(); 
+					layero.find("#medicineCode").val(data.medicineCode);  
 					layero.find("#medicineName").val(data.medicineName);
-					layero.find("#specifications").val(data.specifications);
-					layero.find("#manufacturer").val(data.manufacturer);
 					layero.find("#price").val(data.price);
 					layero.find("#costPrice").val(data.costPrice);
-					layero.find("#supplier").val(data.supplier); 
+					addOption('categary','edit',data);
+					addOption('specifications','edit',data);
+					addOption('manufacturer','edit',data);
+					addOption('supplier','edit',data);
+					parent.layui.form.render(); 
 				},
-				yes : function(index, layero) {
+				yes : function(index, layero) {  
 					let medicineCode = layero.find("#medicineCode").val();
-					let categary = layero.find("#categary").val();
-					let medicineName =  layero.find("#medicineName").val();
-					let specifications = layero.find("#specifications").val();
-					let manufacturer = layero.find("#manufacturer").val();
 					let price =  layero.find("#price").val();
 					let costPrice = layero.find("#costPrice").val();
-					let supplier = layero.find("#supplier").val(); 
+					let medicineName =  layero.find("#medicineName").val();
+					let categary = parent.document.getElementById('cateSelect').value;
+					let specifications = parent.document.getElementById('speciSelect').value;
+					let manufacturer = parent.document.getElementById('manuSelect').value;
+					let supplier = parent.document.getElementById('suppSelect').value;
 					$.ajax({
 						url : '/PetHospital/servlet/MedicineServlet',
 						type : 'POST',
@@ -190,7 +157,7 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 						success : function(msg) {
 							parent.layer.closeAll();
 						}
-					})
+					}) 
 				},
 				cancel : function(index, layero) {
 					layer.close(index);
@@ -200,69 +167,38 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 				}
 			}); 
 		}
-	});
-	function refreashTable() {
-		table.reload('medicine', {
-			page : {
-				curr : 1
-			},
-			where : {
-				type : 'queryAllMedicine',
-			},
-			url : '/PetHospital/servlet/MedicineServlet',
-			method : 'post'
-		});
-	}
-	 
+	});  
+
 	$("#addMedicine").on( 'click',
 			function() {
 				parent.layer.open({
 					type : 1,
 					title : "新增药品",
 					area : [ '600px', '540px' ],
-					content :'<div class="layui-form-item"  style="margin-top: 40px">'
-							+ '<label class="layui-form-label">药品名</label>' + '<div class="layui-input-block">'
-							+ '<input type="text" name="medicineName" id="medicineName" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入药品名"  class="layui-input">'
-							+ '</div>' + '</div>'  
-							+ '<div class="layui-form-item">'
-							+ '<label class="layui-form-label">药品类别</label>' + '<div class="layui-input-block">'
-							+ '<input type="text" name="categary" id="categary" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入生产厂家名字" class="layui-input">'
-							+ '</div>' + '</div>' 
-							+ '<div class="layui-form-item">'
-							+ '<label class="layui-form-label">药品规格</label>' + '<div class="layui-input-block">'
-							+ '<input type="text" name="specifications" id="specifications" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入药品规格"  class="layui-input">'
-							+ '</div>' + '</div>' 
-							+ '<div class="layui-form-item">'
-							+ '<label class="layui-form-label">生产商</label>' + '<div class="layui-input-block">'
-							+ '<input type="text" name="manufacturer" id="manufacturer" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入生产商"  class="layui-input">'
-							+ '</div>' + '</div>' 
-							+ '<div class="layui-form-item">'
-							+ '<label class="layui-form-label">供应商</label>' + '<div class="layui-input-block">'
-							+ '<input type="text" name="supplier" id="supplier" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入供应商"  class="layui-input">'
-							+ '</div>' + '</div>' 
-							+ '<div class="layui-form-item">'
-							+ '<label class="layui-form-label">进价/元</label>' + '<div class="layui-input-block">'
-							+ '<input type="text" name="costPrice" id="costPrice" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入进价/元"  class="layui-input">'
-							+ '</div>' + '</div>' 
-							+ '<div class="layui-form-item">'
-							+ '<label class="layui-form-label">售价/元</label>' + '<div class="layui-input-block">'
-							+ '<input type="text" name="price" id="price" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入售价/元"  class="layui-input">'
-							+ '</div>' + '</div>' ,
+					content :addCon,
 
 					btn : [ '确定', '取消' ],
+					success : function(layero, index) { 
+						parent.layui.form.render(); 
+						addOption('categary','add');
+						addOption('specifications','add');
+						addOption('manufacturer','add');
+						addOption('supplier','add');
+						parent.layui.form.render(); 
+					},
 					yes : function(index, layero) {
 						$.ajax({
 							url : '/PetHospital/servlet/MedicineServlet',
 							type : 'POST',
 							data : {
 								type : 'addMedicine', 
-								categary:layero.find("#categary").val(),
-							    medicineName:layero.find("#medicineName").val(),
-								specifications:layero.find("#specifications").val(),
-								manufacture:layero.find("#manufacture").val(),
 								price : layero.find("#price").val(),
 								costPrice:layero.find("#costPrice").val(),
-								supplier: layero.find("#supplier").val(),
+								medicineName: layero.find("#medicineName").val(),
+								categary : parent.document.getElementById('cateSelect').value,
+								specifications : parent.document.getElementById('speciSelect').value,
+								manufacturer : parent.document.getElementById('manuSelect').value,
+								supplier : parent.document.getElementById('suppSelect').value,
 							},
 							success : function(msg) {
 								parent.layer.closeAll();
@@ -300,9 +236,218 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			});
 		}
 	};
+	
 	$('#selectRe').on('click', function() {
 		var type = $(this).data('type');
 		active[type] ? active[type].call(this) : '';
 	});
-
+	 
+	(function(){
+		$.ajax({
+			url : '/PetHospital/servlet/medicine/CategaryServlet',
+						type : 'POST',
+						data : {
+							type : 'getAllCategory'
+						},
+						success : function(msg) { 
+							cateOption=eval(msg); 
+						},
+						errors : function(msg) {
+							layer.msg('失败');
+						}
+		});
+		$.ajax({
+			url : '/PetHospital/servlet/medicine/ManuServlet',
+						type : 'POST',
+						data : {
+							type : 'getAllManu'
+						},
+						success : function(msg) { 
+							manuOption=eval(msg);
+						},
+						errors : function(msg) {
+							layer.msg('失败');
+						}
+		});
+		$.ajax({
+			url : '/PetHospital/servlet/medicine/SupplierServlet',
+						type : 'POST',
+						data : {
+							type : 'getAllSupp'
+						},
+						success : function(msg) { 
+							suppOption=eval(msg);
+						},
+						errors : function(msg) {
+							layer.msg('失败');
+						}
+		});
+		$.ajax({
+			url : '/PetHospital/servlet/medicine/SpecificationServlet',
+						type : 'POST',
+						data : {
+							type : 'getAllSpeci'
+						},
+						success : function(msg) { 
+							speciOption=eval(msg);
+						},
+						errors : function(msg) {
+							layer.msg('失败');
+						}
+		});
+	})();
+	var editCon =  '<form class="layui-form layui-from-pane" action="" style="margin-top: 20px">' 
+		+ '<div class="layui-form-item" style="margin-top: 40px">'
+		+ '<label class="layui-form-label">药品编号</label>' + '<div class="layui-input-block">' + '<input type="text" name="medicineCode" id="medicineCode" required'
+		+ 'lay-verify="required" autocomplete="off" readonly class="layui-input" style="width:80%">' + '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">药品名</label>' + '<div class="layui-input-block">'
+		+ '<input type="text" name="medicineName" id="medicineName" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入"  class="layui-input">'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">进价</label>' + '<div class="layui-input-block">'
+		+ '<input type="text" name="costPrice" id="costPrice" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入"  class="layui-input">'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">售价</label>' + '<div class="layui-input-block">'
+		+ '<input type="text" name="price" id="price" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入"  class="layui-input">'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">药品类别</label>' 
+		+ '<div class="layui-input-block" style="width:35%" >'
+	    + '<select id="cateSelect" lay-filter="cateSelect" lay-verify="required"  >'
+        + '<option value="">请选择药品类别</option>'
+        + '</select>'
+		+ '</div>' + '</div>'  
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">药品规格</label>' 
+		+ '<div class="layui-input-block" style="width:35%" >'
+		+ '<select id="speciSelect" lay-filter="speciSelect" lay-verify="required"  >'
+	    + '<option value="">请选择药品规格</option>'
+	    + '</select>'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">生产商</label>' 
+		+ '<div class="layui-input-block" style="width:35%" >'
+		+ '<select id="manuSelect" lay-filter="manuSelect" lay-verify="required"  >'
+	    + '<option value="">请选择生产商</option>'
+	    + '</select>'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">供应商</label>' 
+		+ '<div class="layui-input-block" style="width:35%" >'
+		+ '<select id="suppSelect" lay-filter="suppSelect" lay-verify="required"  >'
+	    + '<option value="">请选择供应商</option>'
+	    + '</select>'
+		+ '</div>' + '</div>' 
+ 
+		+ '</form>';
+	var addCon = '<form class="layui-form layui-from-pane" action="" style="margin-top: 20px">' 
+		+ '<div class="layui-form-item"  style="margin-top: 40px">'
+		+ '<label class="layui-form-label">药品名</label>' + '<div class="layui-input-block">'
+		+ '<input type="text" name="medicineName" id="medicineName" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入药品名"  class="layui-input">'
+		+ '</div>' + '</div>'
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">进价/元</label>' + '<div class="layui-input-block">'
+		+ '<input type="text" name="costPrice" id="costPrice" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入进价/元"  class="layui-input">'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">售价/元</label>' + '<div class="layui-input-block">'
+		+ '<input type="text" name="price" id="price" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入售价/元"  class="layui-input">'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">药品类别</label>' 
+		+ '<div class="layui-input-block" style="width:35%" >'
+	    + '<select id="cateSelect" lay-filter="cateSelect" lay-verify="required"  >'
+        + '<option value="">请选择药品类别</option>'
+        + '</select>'
+		+ '</div>' + '</div>'  
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">药品规格</label>' 
+		+ '<div class="layui-input-block" style="width:35%">'
+		+ '<select id="speciSelect" lay-filter="speciSelect" lay-verify="required">'
+	    + '<option value="">请选择药品规格</option>'
+	    + '</select>'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">生产商</label>' 
+		+ '<div class="layui-input-block" style="width:35%" >'
+		+ '<select id="manuSelect" lay-filter="manuSelect" lay-verify="required"  >'
+	    + '<option value="">请选择生产商</option>'
+	    + '</select>'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">供应商</label>' 
+		+ '<div class="layui-input-block" style="width:35%" >'
+		+ '<select id="suppSelect" lay-filter="suppSelect" lay-verify="required"  >'
+	    + '<option value="">请选择供应商</option>'
+	    + '</select>'
+		+ '</div>' + '</div>' 
+		+ '<form>';
+	function refreashTable() {
+		table.reload('medicine', {
+			page : {
+				curr : 1
+			},
+			where : {
+				type : 'queryAllMedicine',
+			},
+			url : '/PetHospital/servlet/MedicineServlet',
+			method : 'post'
+		});
+	}
+	/**
+	 * 增加option
+	 * @param type
+	 * @param data
+	 * @param _this
+	 */
+	function addOption(type,handleType,data) {
+		if (type === 'categary') {
+			cateOption.map(function(obj) {
+				var selectEle = parent.document.getElementById('cateSelect');  
+				var optionObj = parent.document.createElement("option");  
+				optionObj.value = obj.categary;  
+				optionObj.innerHTML = obj.categary;   
+				if(handleType==='edit' && obj.categary===data.category){
+					optionObj.selected = "selected";
+				}
+				selectEle.appendChild(optionObj);    
+			});
+		} else if (type === 'supplier') {
+			suppOption.map(function(obj) {
+				var selectEle = parent.document.getElementById('suppSelect');  
+				var optionObj = parent.document.createElement("option");  
+				optionObj.value = obj.supplier;  
+				optionObj.innerHTML = obj.supplier;   
+				if(handleType==='edit' && obj.supplier===data.supplier){
+					optionObj.selected = "selected";
+				}
+				selectEle.appendChild(optionObj);    
+			});
+		} else if (type === 'manufacturer') {
+			manuOption.map(function(obj) {
+				var selectEle = parent.document.getElementById('manuSelect');  
+				var optionObj = parent.document.createElement("option");  
+				optionObj.value = obj.manufacture;  
+				optionObj.innerHTML = obj.manufacture;   
+				if(handleType==='edit' && obj.manufacture===data.manufacturer){
+					optionObj.selected = "selected";
+				}
+				selectEle.appendChild(optionObj);    
+			});
+		} else if (type === 'specifications') {
+			speciOption.map(function(obj) {
+				var selectEle = parent.document.getElementById('speciSelect');  
+				var optionObj = parent.document.createElement("option");  
+				optionObj.value = obj.specification;  
+				optionObj.innerHTML = obj.specification;   
+				if(handleType==='edit' && obj.specification===data.specifications){
+					optionObj.selected = "selected";
+				}
+				selectEle.appendChild(optionObj);    
+			});
+		}
+		
+	} 
 })

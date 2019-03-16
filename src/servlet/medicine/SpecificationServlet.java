@@ -12,10 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
+
 import service.medicine.SpecificationService;
 
 import com.alibaba.fastjson.JSON;
  
+
 import dao.medicine.SpecificationDao; 
 import entity.medicine.Specification;
 
@@ -94,6 +96,10 @@ public class SpecificationServlet extends HttpServlet {
 			System.out.print(JSON.toJSONString(result));
 			OutputStream out = response.getOutputStream();
 			out.write(JSON.toJSONString(result).getBytes("utf-8"));
+		} else if(requestType.equals("getAllSpeci")){
+			List<Map<String, Object>> specis = sDao.querySpeci();
+			OutputStream out = response.getOutputStream();
+			out.write(JSON.toJSONString(specis).getBytes("utf-8"));
 		}
 	}
 

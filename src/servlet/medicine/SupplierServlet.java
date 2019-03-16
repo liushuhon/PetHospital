@@ -102,6 +102,10 @@ public class SupplierServlet extends HttpServlet {
 			System.out.print(JSON.toJSONString(result));
 			OutputStream out = response.getOutputStream();
 			out.write(JSON.toJSONString(result).getBytes("utf-8"));
+		} else if(requestType.equals("getAllSupp")){
+			List<Map<String, Object>> supps = supplierDao.querySupplier();
+			OutputStream out = response.getOutputStream();
+			out.write(JSON.toJSONString(supps).getBytes("utf-8"));
 		}
 	
 	}
