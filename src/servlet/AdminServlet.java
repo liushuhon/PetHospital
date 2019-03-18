@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  
 
 
+
 import service.AdminService;
 
 import com.alibaba.fastjson.JSON;
@@ -55,6 +56,12 @@ public class AdminServlet extends HttpServlet {
 			request.getSession().setAttribute("password", password); 
 			List<Map<String,Object>> admin = adminService.findAdminByUsernameAndPassword(username, password);  
 			request.getSession().setAttribute("userId", admin.get(0).get("id")); 
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(admin).getBytes("utf-8")); 
+		} else if (requestType.equals("changePassword")) {
+			String id = request.getParameter("userId");
+			String newPassword = request.getParameter("password");
+			List<Map<String,Object>> admin = adminService.changePassword(newPassword, id); 
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(admin).getBytes("utf-8")); 
 		}

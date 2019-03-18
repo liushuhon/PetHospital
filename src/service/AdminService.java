@@ -10,4 +10,11 @@ public class AdminService {
 	public List<Map<String, Object>> findAdminByUsernameAndPassword(String username,String password){
 		return adminDao.findAdminByUsernameAndPassword(username, password);
 	}
+	public List<Map<String, Object>> changePassword(String password, String id) {
+		try {
+			return adminDao.changePassword(password, id);
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

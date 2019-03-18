@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 import java.util.Map;
  
+
 import util.CommonDAO;
 import entity.Administor;
 
@@ -20,5 +21,16 @@ public class AdminDao {
 		}
 		return null;
 	 }
- 
+	 public List<Map<String, Object>> changePassword(String password,String id) {  
+		 
+			try {
+				String sql = "update administor set password='" + password +  "'"+"where id='" + id+"'" ;
+						this.commonDAO.executeUpdate(sql, null);
+				System.out.print(sql);
+			}
+			catch(Exception e){
+				new Exception("操作数据库出错！").printStackTrace();;
+			}
+			return null;
+		}
 }
