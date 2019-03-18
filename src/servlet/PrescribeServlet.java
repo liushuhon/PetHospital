@@ -24,6 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+import service.MediMiddlePrescriService;
 import service.PrescribeService;
 import service.RegistrationService;
 
@@ -66,7 +69,15 @@ public class PrescribeServlet extends HttpServlet {
 		PrescriptionDao pDao = new PrescriptionDao();
 		PrescribeService prescribeService = new PrescribeService();
 		RegistrationService registerableService = new RegistrationService();
+		MediMiddlePrescriService service = new MediMiddlePrescriService();
 		if (requestType.equals("addPrescribe")) {
+			String customerId = request.getParameter("customerId");
+			String mark = request.getParameter("mark");
+			List<Map<String, Object>> middles = service.selectByMark(customerId, mark);
+			double sum = 0;
+			for (Map<String, Object> map : middles) {
+				sum += Double.parseDouble((map.get("price").toString()));
+			}
 			Date time = new Date(); 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String date = sdf.format(time);
@@ -81,10 +92,12 @@ public class PrescribeServlet extends HttpServlet {
 			prescription.setPrescriptionCode(prescriptionCode);
 			prescription.setSymptom(request.getParameter("symptom")); 
 			prescription.setDate(date);
+			prescription.setTotalPrice(sum);
 			pDao.addPrescription(prescription); 
 			registerableService.updateState(request.getParameter("registrationCode"));
+			service.updateMarkTo1(request.getParameter("customerId")); 
 			OutputStream outputStream = response.getOutputStream();
-			outputStream.write(JSON.toJSONString(true).getBytes("utf-8"));
+			outputStream.write(JSON.toJSONString(prescriptionCode).getBytes("utf-8"));
 		}else if(requestType.equals("findPrescriptionByDoctorId")){  
 			String doctorId = request.getParameter("doctorId").toString();
 			System.out.print(doctorId);

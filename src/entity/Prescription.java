@@ -8,11 +8,19 @@ public class Prescription {
 	private int customerId;
 	private String date;
 	private String symptom;
- 
+	private Double totalPrice;
 	public Prescription() {
 		super();
 	}
 	
+	public Double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double sum) {
+		this.totalPrice = sum;
+	}
+
 	public String getSymptom() {
 		return symptom;
 	}

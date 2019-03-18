@@ -30,12 +30,13 @@ layui.use(['element','table','form','jquery'],function(){
     elem: '#regisTable'
     ,id: 'regisTable'
     ,cols: [[ //标题栏
-              {field: 'prescriptionCode', title: '药方编号', width: 120}
-              ,{field: 'userName', title: '主人姓名', width: 120}
-              ,{field: 'phone', title: '手机号码', minWidth: 120}
-              ,{field: 'nickname', title: '宠物姓名', minWidth: 60}
-              ,{field: 'species', title: '宠物类别', minWidth: 80}
+              {field: 'prescriptionCode', title: '药方编号'}
+              ,{field: 'userName', title: '主人姓名'}
+              ,{field: 'phone', title: '手机号码'}
+              ,{field: 'nickname', title: '宠物姓名'}
+              ,{field: 'species', title: '宠物类别'}
               ,{field: 'date', title: '就诊时间', width: 160} 
+              ,{field: 'totalPrice', title: '价格'} 
               ,{field: 'operate',title: '操作',  width:150, align:'center', toolbar: '#hisRegisTool'}
     ]]
     ,data: datas 

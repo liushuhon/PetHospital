@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import util.CommonDAO;
+import entity.MediMiddlePrescri;
 import entity.Prescription; 
 
 public class PrescriptionDao {
@@ -12,8 +13,8 @@ public class PrescriptionDao {
 	 public void addPrescription(Prescription prescription){
 		 
 		   try {
-				String sql = "insert into prescription (prescriptionCode,symptom,medicines,customerId,petId,doctorId,date) "
-						+ "values('"+prescription.getPrescriptionCode()+"','"+prescription.getSymptom()+"','"+prescription.getMedicines()+"','"+prescription.getCustomerId()+"','"+prescription.getPetId()+"','"+prescription.getDoctorId()+"','"+prescription.getDate()+"');";
+				String sql = "insert into prescription (prescriptionCode,symptom,medicines,customerId,petId,doctorId,date,totalPrice) "
+						+ "values('"+prescription.getPrescriptionCode()+"','"+prescription.getSymptom()+"','"+prescription.getMedicines()+"','"+prescription.getCustomerId()+"','"+prescription.getPetId()+"','"+prescription.getDoctorId()+"','"+prescription.getDate()+"','"+prescription.getTotalPrice()+"');";
 				
 				this.commonDAO.executeUpdate(sql, null); 
 			}
@@ -66,6 +67,6 @@ public class PrescriptionDao {
 		return null;
 		 
 	}
-	 
+	
 	 
 }

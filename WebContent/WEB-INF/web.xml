@@ -33,7 +33,6 @@
     <servlet-name>UserServlet</servlet-name>
     <url-pattern>/servlet/UserServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <servlet-name>AdminServlet</servlet-name>
     <servlet-class>servlet.AdminServlet</servlet-class>
@@ -82,7 +81,7 @@
     <servlet-name>SupplierServlet</servlet-name>
     <url-pattern>/servlet/medicine/SupplierServlet</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>SpecificationServlet</servlet-name>
     <servlet-class>servlet.medicine.SpecificationServlet</servlet-class>
   </servlet>
@@ -90,12 +89,20 @@
     <servlet-name>SpecificationServlet</servlet-name>
     <url-pattern>/servlet/medicine/SpecificationServlet</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>MedicineServlet</servlet-name>
     <servlet-class>servlet.MedicineServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>MedicineServlet</servlet-name>
     <url-pattern>/servlet/MedicineServlet</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>MediMiddlePrescriServlet</servlet-name>
+    <servlet-class>servlet.MediMiddlePrescriServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MediMiddlePrescriServlet</servlet-name>
+    <url-pattern>/servlet/MediMiddlePrescriServlet</url-pattern>
   </servlet-mapping>
 </web-app>

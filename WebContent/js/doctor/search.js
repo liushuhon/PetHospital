@@ -1,4 +1,6 @@
-$(function(){ 
+
+	var medicines = [];
+	$(function(){ 
 //	取得div层 
 	var $search = $('#search'); 
 //	取得输入框JQuery对象 
@@ -39,10 +41,8 @@ $(function(){
 		.eq(selectedItem).addClass('highlight'); 
 	}; 
 	var ajax_request = function(){ 
-		var s = $searchInput.val();
-		console.log(s)
-		var searchValue = s.split("，")[s.split("，").length-1];
-		console.log(searchValue)
+		var s = $searchInput.val(); 
+		var searchValue = s.split("，")[s.split("，").length-1]; 
 //		ajax服务端通信 
 		$.ajax({ 
 			'url':"/PetHospital/servlet/MedicineServlet", //服务器的地址 
@@ -53,13 +53,12 @@ $(function(){
 			'dataType':'json', //返回数据类型 
 			'type':'POST', //请求类型 
 			'success':function(data){ 
-				data = eval(data);
-				console.log(data)
-				if(data.length) { 
+				medicines = eval(data);   
+				if(medicines.length) { 
 //					遍历data，添加到自动完成区 
-					$.each(data, function(index,term) { 
+					$.each(medicines, function(index,term) {  
 //						创建li标签,添加到下拉列表中 
-						$('<li></li>').text(term).appendTo($autocomplete) 
+						$('<li></li>').text(term.medicineName).appendTo($autocomplete) 
 						.addClass('clickable') 
 						.hover(function(){ 
 //							下拉列表每一项的事件，鼠标移进去的操作 
@@ -72,12 +71,14 @@ $(function(){
 //							当鼠标离开时索引置-1，当作标记 
 							selectedItem = -1; 
 						}) 
-						.click(function(){ 
+						.click(function(){  
+							console.log("term"+term.medicineCode) 
 //							鼠标单击下拉列表的这一项的话，就将这一项的值添加到输入框中 
 							var str =  $searchInput.val();
-							$searchInput.val(str.slice(0,str.length-searchValue.length)+term); 
+							$searchInput.val(str.slice(0,str.length-searchValue.length)+term.medicineName); 
 //							清空并隐藏下拉列表 
 							$autocomplete.empty().hide(); 
+							
 						}); 
 					});//事件注册完毕 
 //					设置下拉列表的位置，然后显示下拉列表 

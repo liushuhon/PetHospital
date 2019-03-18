@@ -63,7 +63,7 @@ public class MedicineServlet extends HttpServlet {
 				medicineName.add(map.get("medicineName").toString());
 			} 
 			OutputStream out = response.getOutputStream(); 
-			out.write(JSON.toJSONString(medicineName).getBytes("utf-8")); 
+			out.write(JSON.toJSONString(medicines).getBytes("utf-8")); 
 		}else if (requestType.equals("queryAllMedicine")) {
 			int page = Integer.parseInt(request.getParameter("curr").toString());
 			int limit = Integer.parseInt(request.getParameter("nums").toString());
@@ -126,6 +126,10 @@ public class MedicineServlet extends HttpServlet {
 			System.out.print(JSON.toJSONString(result));
 			OutputStream out = response.getOutputStream();
 			out.write(JSON.toJSONString(result).getBytes("utf-8"));
+		}else if(requestType.equals("getAllMedicines")){
+			List<Map<String, Object>> medicines = medicineDao.queryMedicine();
+			OutputStream out = response.getOutputStream();
+			out.write(JSON.toJSONString(medicines).getBytes("utf-8"));
 		}
 		
 	}

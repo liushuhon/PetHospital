@@ -16,6 +16,7 @@ layui.use(['layer','form','jquery'],function(){
 		success : function(data) {
 			datas = eval(data);    
 			console.log(datas)
+			$("#totalPrice").html(datas[0].totalPrice+"元");
 			$("#customerName").html(datas[0].userName);
 			$("#petName").html(datas[0].nickname);
 			$("#gender").html(datas[0].gender);
