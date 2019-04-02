@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import dao.RegistrationDao;
+import entity.Registration;
 
 public class RegistrationService {
 	RegistrationDao registrationDao = new RegistrationDao();
@@ -22,5 +23,7 @@ public class RegistrationService {
 			String doctorId, String selContent) {
 		return registrationDao.selectRegistration(selItem, doctorId, selContent);
 	}
-
+	public void addRegistration(Registration registration) {
+		 registrationDao.addRegistration(registration);
+	}
 }

@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.CustomerService;
 import service.PetService;
+import util.Common;
 
 import com.alibaba.fastjson.JSON;
 
@@ -50,10 +52,39 @@ public class PetServlet extends HttpServlet {
 		String requestType = request.getParameter("type"); 
 		Pet pet = new Pet();
 		PetService petService = new PetService();
-		if(requestType.equals("queryAllPets")){
-			List<Map<String,Object>> pets = petService.queryAllPets(); 
+		Common common = new Common();
+		if(requestType.equals("queryAllPet")){
+			int page = Integer.parseInt(request.getParameter("curr").toString());
+			int limit = Integer.parseInt(request.getParameter("nums").toString());
+			int total = petService.queryAllPets().size();
+			List<Map<String, Object>> pets = common.toBase64(petService.queryAllByLimits(page, limit), "petImg");
+			HashMap<String, Object> result = new HashMap<String, Object>();
+			result.put("data", pets);
+			result.put("count", total);
+			result.put("msg", "");
+			result.put("code", "0");
 			OutputStream out = response.getOutputStream(); 
-			out.write(JSON.toJSONString(pets).getBytes("utf-8")); 
+			out.write(JSON.toJSONString(result).getBytes("utf-8")); 
+		}else if (requestType.equals("queryByCusCode")) {
+			String customerCode = request.getParameter("customerCode");
+			List<Map<String,Object>> pets = petService.queryByCusId(customerCode);
+			List<Map<String,Object>> petsToBase64 = common.toBase64(pets, "petImg"); 
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(petsToBase64).getBytes("utf-8")); 
+		}else if(requestType.equals("selectPet")){ 
+			String selItem = request.getParameter("selItem").toString();
+			String selContent = request.getParameter("selContent").toString();
+			int pageSize = Integer.parseInt(request.getParameter("nums").toString()); 
+			int currPage = Integer.parseInt(request.getParameter("curr").toString());
+			int total = petService.selectPet(selItem, selContent).size();
+			List<Map<String,Object>> pets = common.toBase64(petService.selectPetByLimits(selItem, selContent, pageSize, currPage), "petImg"); 
+			HashMap<String, Object> result = new HashMap<String, Object>();
+			result.put("data", pets);
+			result.put("count", total);
+			result.put("msg", "");
+			result.put("code", "0");
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(result).getBytes("utf-8")); 
 		}
 	}
 

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>领养专区</title>
+<link rel="stylesheet" href="../../assets/css/layui.css">
+<link rel="stylesheet" href="../../assets/css/user.css">
+<link rel="stylesheet" href="../../assets/css/common.css">
+</head>
+<body onpageshow="">
+	<div class="index-header head-font">
+		<div class="layui-row">
+			<div class="layui-col-md3 left head-img">
+				<div>
+					<img src="../../assets/images/show.jpg">
+				</div>
+				<div>
+					<span>爱宠宠物医院</span>
+				</div>
+			</div>
+			<div class="layui-col-md7">
+				<ul class="layui-nav" lay-filter="">
+					<li class="layui-nav-item "><a href="../../indexWeb.html">主页</a></li>
+					<li class="layui-nav-item "><a href="expertsIntroduction.html">专家介绍</a></li>
+					<li class="layui-nav-item "><a href="envirEquip.html">环境设备</a></li>
+					<li class="layui-nav-item layui-this"><a href="javascript:;">领养专区</a></li>
+				</ul>
+			</div>
+			<div id="logined" class="layui-col-md2" style="display: none;">
+				<ul class="layui-nav">
+					<li><img id="cusPhoto" src=""></li>
+					<li class="layui-nav-item"><a href="">个人中心</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;">修改信息</a>
+							</dd>
+							<dd>
+								<a href="javascript:;">修改密码</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" onclick="cusLogout()">退出</a>
+							</dd>
+						</dl></li>
+				</ul>
+			</div>
+			<div id="unlogined" class="layui-col-md2" style="display: block;">
+				<ul class="layui-nav">
+					<li class="layui-nav-item"><a href="login.html">登录</a></li>
+					<li class="layui-nav-item"><a href="register.html">注册</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="adopt">
+		<div class="layui-card">
+			<div class="layui-card-header ">
+				<h1 class="text-center">待领养专区</h1>
+			</div>
+			<div class="layui-card-body">
+				<div class="layui-row">
+					<div id="adoptPets" class="layui-col-md4 petBlock">
+						<div class="layui-card">
+							<div class="layui-card-header" onclick="popPetAdopt()">
+								<img alt="" src="../../assets/images/cat.jpg">
+							</div>
+							<div class="layui-card-body">
+								<span class="purple text-center"><h3>小白</h3></span> <a
+									href="javascript:;" onclick="adopt()">我想领养</a>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div id="popUp">
+		<div class="layui-row layui-col-space20 margin-top-10">
+			<div class="layui-col-md5">
+				<img id="popImg"
+					style="width: 100%; height: 100%; margin-left: 12px; border-radius: 10px;">
+			</div>
+			<div class="layui-col-md7">
+				<span class="gray block margin-bottom-10"><h1 id="nickname"> </h1></span> <span
+					class="gray block margin-bottom-10" id="gender"> </span> <span
+					class="gray block margin-bottom-10" id="age"> </span> <span
+					class="gray block margin-bottom-10" id="weight"> </span> <span
+					class="gray block margin-bottom-10" id="color"> </span> <span
+					class="gray block margin-bottom-10" id="species"> </span> <span
+					class="gray block margin-bottom-10" id="sterilization"> </span> <span
+					class="gray block margin-bottom-10" id="immunity"> </span>
+			</div>
+		</div>
+	</div>
+	<div id="prompt">
+		<div class="layui-row">
+			<div class="layui-col-md12">您的申请已发送至管理员处，请注意查收信息</div>
+		</div>
+	</div>
+	<script src="../../util/jquery.js"></script>
+	<script src="../../assets/layui.js"></script>
+
+	<script type="text/javascript" src="../../js/getCustomer.js"></script>
+	<script src="../../js/user/adopt.js"></script>
+</body>
+</html>

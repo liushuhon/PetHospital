@@ -4,28 +4,38 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 	var form = layui.form;
 	var $ = layui.jquery;
 	getCurUser();
-	$.ajax({
-		type : "POST",
-		async : false,
-		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-		url : "/PetHospital/servlet/PetServlet",
-		dataType : 'json',
-		data : {
-			'type' : 'queryAllPets', 
-		},
-		success : function(data) {
-			datas = eval(data);
-			table.render();
-		},
-		error : function(error) {
-			alert("cannot find!");
-		}
-	});
+//	$.ajax({
+//		type : "POST",
+//		async : false,
+//		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+//		url : "/PetHospital/servlet/PetServlet",
+//		dataType : 'json',
+//		data : {
+//			'type' : 'queryAllPets', 
+//		},
+//		success : function(data) {
+//			datas = eval(data);
+//			table.render();
+//		},
+//		error : function(error) {
+//			alert("cannot find!");
+//		}
+//	});
 
 	// 展示已知数据
 	table.render({
-		elem : '#customerTable',
-		id : 'customerTable',
+		elem : '#petTable',
+		id : 'petTable',
+		url : '/PetHospital/servlet/PetServlet',
+		where : {
+			type : 'queryAllPet'
+		},
+		method : 'post',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		request : {
+			pageName : 'curr',
+			limitName : 'nums'
+		},
 		cols : [ [ // 标题栏
 		{
 			field : 'petCode',
@@ -36,7 +46,7 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			title : '宠物昵称',
 		}, {
 			field : 'age',
-			title : '年龄',
+			title : '年龄/岁',
 		}, {
 			field : 'gender',
 			title : '雌雄',
@@ -50,27 +60,19 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			field : 'operate',
 			title : '操作',
 			align : 'center',
-			toolbar : '#customerTool'
-		} ] ],
-		data : datas,
-		skin : 'line' // 表格风格
-		,
+			toolbar : '#petTool'
+		} ] ], 
+		skin : 'line',
 		even : true,
-		page : true // 是否显示分页
-		,
+		page : true,
 		limits : [ 5, 7, 10 ],
-		limit : 5 // 每页默认显示的数量
-		,
+		limit : 5,
 		response : {
-			statusName : 'code' // 数据状态的字段名称，默认：code
-			,
-			statusCode : 0 // 成功的状态码，默认：0
-			,
-			msgName : 'msg' // 状态信息的字段名称，默认：msg
-			,
-			countName : 'count' // 数据总数的字段名称，默认：count
-			,
-			dataName : 'data' // 数据列表的字段名称，默认：data
+			statusName : 'code',
+			statusCode : 0 ,
+			msgName : 'msg',
+			countName : 'count',
+			dataName : 'data' 
 		}
 	});
 
@@ -79,18 +81,17 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			var selContent = $('#selContent').val();// 获取输入框的值
 			var selItem = $("#select").val();
 			// 执行重载
-			table.reload('customerTable', {
+			table.reload('petTable', {
 				page : {
 					curr : 1
 				// 重新从第 1 页开始
 				},
 				where : {
-					type : 'selectRegistration',
-					doctorId : curUserId,
+					type : 'selectPet', 
 					selContent : selContent,
 					selItem : selItem
 				},// 这里传参 向后台
-				url : '/PetHospital/servlet/RegistrationServlet',// 后台做模糊搜索接口路径
+				url : '/PetHospital/servlet/PetServlet',// 后台做模糊搜索接口路径
 				method : 'post'
 			});
 		}
@@ -99,10 +100,32 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 		var type = $(this).data('type');
 		active[type] ? active[type].call(this) : '';
 	});
-	table.on('tool(demo)', function(obj) {
-		var data = obj.data;
-		location.href = "prescribe.html?registrationCode="
-				+ data.registrationCode;
+	table.on('tool(demo)', function(obj) { 
+		var pop = obj.data; 
+		parent.layer.open({
+			title: '详细信息',
+			type: 1,
+			area: ['45%','60%'],
+			content: '<div id="pop" >'+
+						'<div class="layui-row layui-col-space20 popContent">'+
+							'<div class="layui-col-md5">'+
+								'<img id="popImg" src="'+pop.petImg+'"'+
+									'style="width: 70%;height: 70%;margin-left: 12px;border-radius: 10px;">'+
+							'</div>'+
+							'<div class="layui-col-md7">'+
+								'<span id="customerCode" class=" block margin-bottom-10" >宠物编号：'+pop.petCode+'</span> '+
+								'<span id="address" class=" block margin-bottom-10">宠物昵称：'+pop.nickname+'</span> '+
+								'<span id="userName" class=" block margin-bottom-10" >主人编号：'+pop.masterid+'</span> '+
+								'<span id="gender" class=" block margin-bottom-10" >年龄：'+pop.age+'岁</span> '+
+								'<span id="phone" class=" block margin-bottom-10">体重：'+pop.weight+'kg</span>'+
+								'<span id="address" class=" block margin-bottom-10">种类：'+pop.species+'</span> '+
+								'<span id="address" class=" block margin-bottom-10">颜色：'+pop.color+'</span> '+
+								'<span id="address" class=" block margin-bottom-10">是否绝育：'+pop.sterilization+'</span> '+
+								'<span id="address" class=" block margin-bottom-10">是否免疫：'+pop.immunity+'</span> '+
+							'</div>'+
+						'</div>'+ 
+					'</div>', 
+		})
 
 	})
 

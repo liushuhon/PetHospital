@@ -26,8 +26,8 @@
    					$("#jobTitle").val(datas[0].Jobtitle);  
    					$("#description").val(datas[0].description);   
    					$("#doctorPhoto").attr('src',datas[0].photo);    
-   				    $("input[name='doctorSex'][value=1]").attr("checked", data[0].gender == 'nan' ? true : false);
-   		            $("input[name='doctorSex'][value=2]").attr("checked", data[0].gender == 'nv' ? true : false);
+   				    $("input[name='doctorSex'][value='男']").attr("checked", data[0].gender == '男' ? true : false);
+   		            $("input[name='doctorSex'][value='女']").attr("checked", data[0].gender == '女' ? true : false);
    		            form.render(); 
    				},
    				error : function(error) {
@@ -36,6 +36,7 @@
    			}); 
        		
        	  form.on('submit(formDemo)', function(data){  
+       		var data = data.field;
        		$.ajax({
    				type : "POST",
    				async : false,
@@ -48,7 +49,8 @@
    					'description' : $("#description").val(),
    					'medicalSkill' : $("#medicalSkill").val(),
    					'phone' : $("#phone").val(),
-   					'age' : $("#age").val()
+   					'age' : $("#age").val(), 
+   					'gender' : data.doctorSex
    				},
    				success : function(data) {
    					datas = eval(data);  

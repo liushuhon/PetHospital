@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 import java.util.Map;
 
+import entity.Registration;
 import util.CommonDAO;
 
 public class RegistrationDao {
@@ -55,7 +56,12 @@ public class RegistrationDao {
 	public List<Map<String, Object>> selectRegistration(String selItem,String doctorId, String selContent) {
 		
 		try {
-			String sql = "select * FROM registration WHERE state = '待处理' AND doctorId='"+doctorId+"' AND "+selItem+" like '%"+selContent+"%' order by date DESC";
+			String sql ="";
+			if (doctorId=="") {
+				sql = "select * FROM registration WHERE state = '待处理' AND  "+selItem+" like '%"+selContent+"%' order by date DESC";
+			} else {
+				sql = "select * FROM registration WHERE state = '待处理' AND doctorId='"+doctorId+"' AND "+selItem+" like '%"+selContent+"%' order by date DESC";
+			} 
 			List<Map<String, Object>> registrations = this.commonDAO.excuteQuery(sql, null);
 			return registrations;
 		}
@@ -64,5 +70,16 @@ public class RegistrationDao {
 		}
 		return null; 
 	}
- 
+	public void addRegistration(Registration registration) {
+		try {
+			String sql = "insert into registration (registrationCode,petId,customerId,doctorId,customerName,customerPhone,doctorName,category,date,state,petName,regisTime)"
+						+ "values('"+registration.getRegistrationCode()+"','"+registration.getPetId()+"','"+registration.getCustomerId()+"','"+registration.getDoctorId()+"','"+registration.getCustomerName()+"'"
+								+ ",'"+registration.getCustomerPhone()+"','"+registration.getDoctorName()+"','"+registration.getCategory()+"','"+registration.getDate()+"','"+registration.getState()+"','"+registration.getPetName()+"','"+registration.getRegisTime()+"');";
+			this.commonDAO.executeUpdate(sql, null);
+			 
+		}
+		catch(Exception e){
+			System.out.println("操作数据库出错！");
+		} 
+	}
 }

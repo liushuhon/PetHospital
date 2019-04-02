@@ -10,21 +10,40 @@ public class Pet {
 	private String immunity;
 	private String species;
 	private String Color;
-	private String Weight;
-	private int Mark;
-	private String petName;
+	private String Weight;  
+	private String petImg;
  
-	public Pet() {
+	public Pet(String petCode, int masterId, int age, String nickname,
+			String gender, String sterilization, String immunity,
+			String species, String color, String weight, String petImg) {
 		super();
-	} 
-	
-	public String getPetName() {
-		return petName;
+		this.petCode = petCode;
+		this.masterId = masterId;
+		this.age = age;
+		this.nickname = nickname;
+		this.gender = gender;
+		this.sterilization = sterilization;
+		this.immunity = immunity;
+		this.species = species;
+		this.Color = color;
+		this.Weight = weight; 
+		this.petImg = petImg;
 	}
-  
-	public void setPetName(String petName) {
-		this.petName = petName;
-	} 
+ 
+
+	public Pet() { 
+	}
+
+
+	public String getPetImg() {
+		return petImg;
+	}
+
+
+	public void setPetImg(String petImg) {
+		this.petImg = petImg;
+	}
+
 
 	public String getPetCode() {
 		return petCode;
@@ -88,12 +107,6 @@ public class Pet {
 	public void setWeight(String weight) {
 		Weight = weight;
 	}
-	public int getMark() {
-		return Mark;
-	}
-	public void setMark(int mark) {
-		Mark = mark;
-	}
-
+	 
 	
 }

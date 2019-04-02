@@ -70,6 +70,7 @@ public class DoctorServlet extends HttpServlet {
 			doctor.setDescription(request.getParameter("description"));
 			doctor.setMedicalSkill(request.getParameter("medicalSkill").toString());
 			doctor.setPhone(request.getParameter("phone")); 
+			doctor.setGender(request.getParameter("gender")); 
 			List<Map<String,Object>> doctor1 = doctorService.updateDoctor(doctor);  
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(doctor1).getBytes("utf-8")); 
@@ -91,6 +92,27 @@ public class DoctorServlet extends HttpServlet {
 			List<Map<String,Object>> doctor1 = doctorService.changePassword(password, username);
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(doctor1).getBytes("utf-8"));
+		}
+		else if(requestType.equals("queryByMedicalSkill")){
+			String medicalSkill = request.getParameter("medicalSkill");
+			List<Map<String, Object>> doctors = doctorService.queryByMedicalSkill(medicalSkill);
+			for (Map<String, Object> map : doctors) { 
+				String imgHeader = "data:image/png;base64,";
+				String s = imgHeader + getImageStr(map.get("photo").toString());
+				map.put("photo", s); 
+			}
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(doctors).getBytes("utf-8"));
+		}
+		else if(requestType.equals("queryAll")){ 
+			List<Map<String, Object>> doctors = doctorService.queryAll();
+			for (Map<String, Object> map : doctors) { 
+				String imgHeader = "data:image/png;base64,";
+				String s = imgHeader + getImageStr(map.get("photo").toString());
+				map.put("photo", s); 
+			}
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(doctors).getBytes("utf-8"));
 		}
 	}
 	public String getImageStr(String imgFile) {

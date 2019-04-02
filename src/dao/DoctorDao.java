@@ -27,9 +27,10 @@ public class DoctorDao {
 			String phone = doctor.getPhone();
 			String medicalSkill = doctor.getMedicalSkill();
 			String description = doctor.getDescription(); 
+			String gender = doctor.getGender();
 			try {
 				String sql = "update doctor set age='" + age + "',phone='" + phone
-						+ "',medicalSkill='" + medicalSkill+ "',description='" + description+ "'"+"where doctorCode='" + doctorCode+"'" ;
+						+ "',medicalSkill='" + medicalSkill+ "',description='" + description+ "',gender='" + gender+ "' "+"where doctorCode='" + doctorCode+"'" ;
 						this.commonDAO.executeUpdate(sql, null);
 				System.out.print(sql);
 			}
@@ -56,6 +57,30 @@ public class DoctorDao {
 					String sql = "select * from  doctor where username='" + username + "' and password = '" + password + "'";
 					List<Map<String, Object>> doctor = this.commonDAO.excuteQuery(sql, null);
 					return doctor;
+				}
+				catch(Exception e){
+					new Exception("操作数据库出错！").printStackTrace();;
+				}
+				return null;
+		  }
+		public List<Map<String, Object>> queryByMedicalSkill(String medicalSkil){
+			 
+			 try {
+					String sql = "select * from doctor where medicalSkill ='"+ medicalSkil+ "'";
+					List<Map<String, Object>> doctors = this.commonDAO.excuteQuery(sql, null);
+					return doctors;
+				}
+				catch(Exception e){
+					new Exception("操作数据库出错！").printStackTrace();;
+				}
+				return null;
+		  }
+		public List<Map<String, Object>> queryAll(){
+			 
+			 try {
+					String sql = "select * from doctor";
+					List<Map<String, Object>> doctors = this.commonDAO.excuteQuery(sql, null);
+					return doctors;
 				}
 				catch(Exception e){
 					new Exception("操作数据库出错！").printStackTrace();;

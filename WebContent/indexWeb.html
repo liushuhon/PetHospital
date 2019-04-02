@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>爱宠宠物医院</title>
+<link rel="stylesheet" href="assets/css/layui.css">
+<link rel="stylesheet" href="assets/css/common.css"> 
+</head>
+<body>
+	<div >
+		<div class="index-header head-font">
+			<div class="layui-row">
+				<div class="layui-col-md3 head-img left">
+					<img src="assets/images/show.jpg">
+					<span>爱宠宠物医院</span>
+				</div>
+				<div class="layui-col-md7">
+					<ul class="layui-nav" lay-filter="">
+						<li class="layui-nav-item layui-this"><a href="">主页</a></li>
+						<li class="layui-nav-item "><a href="views/user/expertsIntroduction.html">专家介绍</a></li>
+						<li class="layui-nav-item"><a href="views/user/envirEquip.html">环境设备</a></li>
+						<li class="layui-nav-item"><a href="views/user/adopt.html">领养专区</a></li>   
+					</ul>
+				</div>
+				<!-- <div class="layui-col-md1">
+					<img id="cusPhoto" src="">
+				</div> -->
+				<div id="logined" class="layui-col-md2" style="display:none;">
+					<ul class="layui-nav">
+						<li><img id="cusPhoto" src=""></li>
+						<li class="layui-nav-item"><a href="">个人中心</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;">修改信息</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">修改密码</a>
+								</dd>
+								<dd>
+									<a href="javascript:;" onclick="cusLogout()">退出</a>
+								</dd>
+							</dl></li>
+					</ul>
+				</div>
+				<div id="unlogined" class="layui-col-md2" style="display:block;">
+					<ul class="layui-nav">
+						<li class="layui-nav-item"><a href="views/user/login.html">登录</a> 
+						</li>
+						<li class="layui-nav-item"><a href="views/user/register.html">注册</a> 
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="content">
+			<div class="layui-carousel" id="test1">
+				<div carousel-item>
+					<div><img src="assets/images/photo1.jpg" style="width:1366px;height:400px"></div>
+					<div><img src="assets/images/photo1.jpg" style="width:1366px;height:400px"></div>
+					<div><img src="assets/images/photo1.jpg" style="width:1366px;height:400px"></div>
+					<div><img src="assets/images/photo1.jpg" style="width:1366px;height:400px"></div> 
+				</div>
+			</div>
+			<div class="layui-row">
+				<div class="layui-col-md6"> 
+					 
+				</div>
+				<div class="layui-col-md6"> 
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="assets/layui.js"></script>
+	<script>
+		//注意：导航 依赖 element 模块，否则无法进行功能性操作
+		layui.use(['element','carousel'], function() {
+			var element = layui.element,
+			carousel = layui.carousel;
+			//建造实例
+			carousel.render({
+				elem : '#test1',
+				width : '100%',
+				height : '400px',
+				arrow : 'always', 
+			});
+		});
+		
+	</script>
+	<script type="text/javascript" src="util/jquery.js"></script>
+	<script type="text/javascript" src="js/getCustomer.js"></script>
+	<script type="text/javascript">
+	getCurCustomer();
+	
+	</script>
+</body>
+</html>

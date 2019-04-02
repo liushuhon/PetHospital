@@ -5,15 +5,30 @@ public class Customer {
 	private String userName;
 	private String password;
 	private String phone;
-	private String address;
-	private String personName;
-	
-	
+	private String address; 
+	private String gender;
+	private String photo;
 	 
 	public Customer() {
 		super();
 	}
 	
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	public String getCustomerCode() {
 		return customerCode;
 	}
@@ -45,13 +60,7 @@ public class Customer {
 	}
 	public void setAddress(String address) {
 		this.address = address;
-	}
-	public String getPersonName() {
-		return personName;
-	}
-	public void setPersonName(String personName) {
-		this.personName = personName;
-	}
+	} 
 	
 	
 }

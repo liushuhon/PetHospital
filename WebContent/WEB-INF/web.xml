@@ -18,14 +18,6 @@
     <url-pattern>/servlet/PrescribeServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>DoctorServlet</servlet-name>
-    <servlet-class>servlet.DoctorServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>DoctorServlet</servlet-name>
-    <url-pattern>/servlet/DoctorServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>UserServlet</servlet-name>
     <servlet-class>servlet.UserServlet</servlet-class>
   </servlet>
@@ -97,12 +89,28 @@
     <servlet-name>MedicineServlet</servlet-name>
     <url-pattern>/servlet/MedicineServlet</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>MediMiddlePrescriServlet</servlet-name>
     <servlet-class>servlet.MediMiddlePrescriServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>MediMiddlePrescriServlet</servlet-name>
     <url-pattern>/servlet/MediMiddlePrescriServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AdoptPetServlet</servlet-name>
+    <servlet-class>servlet.AdoptPetServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdoptPetServlet</servlet-name>
+    <url-pattern>/servlet/AdoptPetServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DoctorServlet</servlet-name>
+    <servlet-class>servlet.DoctorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DoctorServlet</servlet-name>
+    <url-pattern>/servlet/DoctorServlet</url-pattern>
   </servlet-mapping>
 </web-app>

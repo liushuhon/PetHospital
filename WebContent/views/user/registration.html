@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>填写预约单</title>
+<link rel="stylesheet" href="../../assets/css/layui.css">
+<link rel="stylesheet" href="../../assets/css/user.css">
+<link rel="stylesheet" href="../../assets/css/common.css">
+</head>
+<body>
+	<div class="index-header head-font">
+		<div class="layui-row">
+			<div class="layui-col-md3 left head-img">
+				<div>
+					<img src="../../assets/images/show.jpg">
+				</div>
+				<div>
+					<span>爱宠宠物医院</span>
+				</div>
+			</div>
+			<div class="layui-col-md7">
+				<ul class="layui-nav" lay-filter="">
+					<li class="layui-nav-item "><a href="../../indexWeb.html">主页</a></li>
+					<li class="layui-nav-item "><a href="expertsIntroduction.html">专家介绍</a></li>
+					<li class="layui-nav-item"><a href="envirEquip.html">环境设备</a></li>
+					<li class="layui-nav-item"><a href="adopt.html">领养专区</a></li>
+				</ul>
+			</div>
+			<div id="logined" class="layui-col-md2" style="display: none;">
+				<ul class="layui-nav">
+					<li><img id="cusPhoto" src=""></li>
+					<li class="layui-nav-item"><a href="">个人中心</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;">修改信息</a>
+							</dd>
+							<dd>
+								<a href="javascript:;">修改密码</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" onclick="cusLogout()">退出</a>
+							</dd>
+						</dl></li>
+				</ul>
+			</div>
+			<div id="unlogined" class="layui-col-md2" style="display: block;">
+				<ul class="layui-nav">
+					<li class="layui-nav-item"><a href="login.html">登录</a></li>
+					<li class="layui-nav-item"><a href="register.html">注册</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="petInfo">
+
+		<div class="layui-card margin-top-10">
+			<div class="layui-card-header  ">
+				<h1 class="">
+					您选择的医生是<span id="docName" class="purple"></span>
+				</h1>
+			</div>
+			<div class="layui-card">
+				<div class="layui-card-header">
+					<span class="pointer bold" onclick="chooseHasPet()">选择已有宠物&nbsp;&nbsp;或者</span> <span onclick="addPet()" class="pointer purple bold">点击此处新增宠物</span>
+				</div>
+				<div class="layui-card-body"> 
+					<div id="hasPet" class="layui-row"></div>
+<div id="addPet" style="display: none" class="layui-card-body">
+				<form class="layui-form" action="">
+				<div class="layui-form-item upload-photo">
+				<label class="layui-form-label">宠物照片</label>
+				 <input type="file"
+                               accept="image/png, image/jpeg, image/gif, image/jpg"
+                               id="xFile"
+                               style="position:absolute;clip:rect(0 0 0 0);"
+                               onchange="uploadPhoto()">
+						<label class="upload-button" 
+                               for="xFile">
+                            <img id="photo" src="../../assets/images/moren.jpg" alt="">
+                        </label> 
+				</div>
+					<div class="layui-form-item text-center">
+						<label class="layui-form-label">预约时间</label>
+						<div class="layui-input-block">
+							<input type="text" class="layui-input" id="regisTime"
+								name="regisTime">
+						</div>
+					</div>
+					<div class="layui-form-item text-center">
+						<label class="layui-form-label">宠物名称</label>
+						<div class="layui-input-block">
+							<input type="text" name="petName" required lay-verify="required"
+								placeholder="请输入宠物名称" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">宠物性别</label>
+						<div class="layui-input-block">
+							<input type="radio" name="gender" value="雄" title="雄"> <input
+								type="radio" name="gender" value="雌" title="雌" checked>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">宠物年龄</label>
+						<div class="layui-input-block">
+							<input type="text" name="age" required lay-verify="required"
+								placeholder="请输入宠物年龄" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">宠物体重</label>
+						<div class="layui-input-block">
+							<input type="text" name="weight" required lay-verify="required"
+								placeholder="请输入宠物体重" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">宠物类别</label>
+						<div class="layui-input-block">
+							<input type="text" name="species" required lay-verify="required"
+								placeholder="请输入宠物类别" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">宠物花色</label>
+						<div class="layui-input-block">
+							<input type="text" name="color" required lay-verify="required"
+								placeholder="请输入宠物花色" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">是否绝育</label>
+						<div class="layui-input-block">
+							<input type="radio" name="sterilization" value="是" title=" 是">
+							<input type="radio" name="sterilization" value="否" title="否"
+								checked>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">是否免疫</label>
+						<div class="layui-input-block">
+							<input type="radio" name="immunity" value="是" title="是">
+							<input type="radio" name="immunity" value="否" title="否" checked>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<button lay-submit lay-filter="registration"
+							class="layui-btn float-right btn-purple">提交</button>
+					</div>
+				</form>
+			</div>
+				</div>
+			</div>
+			
+		</div>
+
+
+
+
+	</div>
+
+	<script src="../../util/jquery.js"></script>
+	<script src="../../assets/layui.js"></script>
+
+	<script type="text/javascript" src="../../js/getCustomer.js"></script>
+	<script src="../../js/user/registration.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family: 微软雅黑;
+	font-size: 14px;
+	color: #424242;
+	min-height: 101%;
+	overflow-x: hidden;
+	text-shadow: rgba(0, 0, 0, 0.05) 0px 1px 1px;
+	background: rgb(243, 245, 247);
+}
+
+.layui-nav * {
+	font-size: 16px;
+}
+
+.index-header {
+	height: 60px;
+	background: white;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 999; 
+	box-shadow: 4px -2px 13px 0px black;
+}
+
+.index-header .left {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.index-header img {
+	width: 60px;
+	height: 60px;
+	display: inline-block;
+}
+
+.index-header span {
+	display: inline-block;
+	font-size: 24px;
+	letter-spacing: 1px;
+}
+
+.index-header .head-img {
+	padding-left: 50px;
+}
+
+.head-font {
+	font-size: 1.15em;
+	color: #803b7d;
+	letter-spacing: 3px;
+}
+
+.layui-nav .layui-nav-item a {
+	color: rgb(102, 102, 102);
+}
+
+.layui-nav {
+	background-color: white;
+	color: #803b7d;
+}
+
+.layui-nav .layui-nav-item a:hover {
+	color: #803b7d;
+}
+
+#content {
+	width: 100%;
+	margin-top: 60px;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.float-right {
+	float: right;
+}
+
+.btn-purple {
+	border-color: purple;
+	background-color: purple;
+}
+
+.upload-button {
+	display: block;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	border-radius: 18px;
+}
+
+.upload-button img {
+	width: 100px;
+	height: 100px;
+	cursor: pointer;
+}
+
+#cusPhoto {
+	float: left;
+	width: 40px;
+	margin-right: -17px;
+	height: 40px;
+	line-height: 40px;
+	margin-top: 10px;
+}
+
+.bold {
+	font-weight: bold;
+}

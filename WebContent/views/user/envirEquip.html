@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>环境设备</title>
+<link rel="stylesheet" href="../../assets/css/layui.css">
+<link rel="stylesheet" href="../../assets/css/user.css">
+<link rel="stylesheet" href="../../assets/css/common.css">
+</head>
+<body onpageshow="getCurCustomer()">
+	<div class="index-header head-font">
+		<div class="layui-row">
+			<div class="layui-col-md3 left head-img">
+				<div>
+					<img src="../../assets/images/show.jpg">
+				</div>
+				<div>
+					<span>爱宠宠物医院</span>
+				</div>
+			</div>
+			<div class="layui-col-md7">
+				<ul class="layui-nav" lay-filter="">
+					<li class="layui-nav-item "><a href="../../indexWeb.html">主页</a></li>
+					<li class="layui-nav-item "><a
+						href="expertsIntroduction.html">专家介绍</a></li>
+					<li class="layui-nav-item layui-this"><a href="">环境设备</a></li>
+					<li class="layui-nav-item"><a href="adopt.html">领养专区</a></li>  
+				</ul>
+			</div>
+			<div id="logined" class="layui-col-md2" style="display:none;">
+					<ul class="layui-nav">
+						<li><img id="cusPhoto" src=""></li>
+						<li class="layui-nav-item"><a href="">个人中心</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;">修改信息</a>
+								</dd>
+								<dd>
+									<a href="javascript:;">修改密码</a>
+								</dd>
+								<dd>
+									<a href="javascript:;"  onclick="cusLogout()">退出</a>
+								</dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+				<div id="unlogined" class="layui-col-md2" style="display:block;">
+					<ul class="layui-nav">
+						<li class="layui-nav-item"><a href="login.html">登录</a> 
+						</li>
+						<li class="layui-nav-item"><a href="register.html">注册</a> 
+						</li>
+					</ul>
+				</div>
+		</div>
+	</div>
+	<div id="envirEquip">
+		<div class="layui-card">
+			<div class="layui-card-header"><h1 class="text-center">环境设备</h1></div>
+			<div class="layui-card-body">
+				<div class="layui-row">
+					<div class="layui-col-md4">
+						<div class="layui-card">
+							<div class="layui-card-header height-300">
+								<img src="../../assets/images/equipment.jpg"
+									style="width: 100%; height: 100%;">
+							</div>
+							<div class="layui-card-body">日本木村呼吸麻醉机</div>
+						</div>
+					</div>
+					<div class="layui-col-md4">
+						<div class="layui-card">
+							<div class="layui-card-header height-300">
+								<img src="../../assets/images/equipment.jpg"
+									style="width: 100%; height: 100%;">
+							</div>
+							<div class="layui-card-body">日本木村呼吸麻醉机</div>
+						</div>
+					</div>
+					<div class="layui-col-md4">
+						<div class="layui-card">
+							<div class="layui-card-header height-300">
+								<img src="../../assets/images/equipment.jpg"
+									style="width: 100%; height: 100%;">
+							</div>
+							<div class="layui-card-body">日本木村呼吸麻醉机</div>
+						</div>
+					</div>
+					<div class="layui-col-md4">
+						<div class="layui-card">
+							<div class="layui-card-header height-300">
+								<img src="../../assets/images/equipment.jpg"
+									style="width: 100%; height: 100%;">
+							</div>
+							<div class="layui-card-body">日本木村呼吸麻醉机</div>
+						</div>
+					</div>
+					<div class="layui-col-md4">
+						<div class="layui-card">
+							<div class="layui-card-header height-300">
+								<img src="../../assets/images/equipment.jpg"
+									style="width: 100%; height: 100%;">
+							</div>
+							<div class="layui-card-body">日本木村呼吸麻醉机</div>
+						</div>
+					</div>
+					<div class="layui-col-md4">
+						<div class="layui-card">
+							<div class="layui-card-header height-300">
+								<img src="../../assets/images/equipment.jpg"
+									style="width: 100%; height: 100%;">
+							</div>
+							<div class="layui-card-body">日本木村呼吸麻醉机</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+	<script src="../../util/jquery.js"></script>
+	<script src="../../assets/layui.js"></script> 
+	<script type="text/javascript" src="../../js/getCustomer.js"></script>
+	<script src="../../js/user/envirEquip.js"></script>
+</body>
+</html>

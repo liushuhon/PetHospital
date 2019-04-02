@@ -23,7 +23,12 @@ public class DoctorService {
 
 	public List<Map<String, Object>> changePassword(String password,
 			String username) { 
-		return changePassword(password, username);
+		return doctorDao.changePassword(password, username);
 	}
-
+	public List<Map<String, Object>> queryByMedicalSkill(String medicalSkil){
+		return doctorDao.queryByMedicalSkill(medicalSkil);
+	}
+	public List<Map<String, Object>> queryAll(){
+		return doctorDao.queryAll();
+	}
 }

@@ -14,24 +14,46 @@ public class Registration {
 	private String petName;
 	private String date;
     private String state;
+	private String regisTime;
 	
 	public Registration() {
 		super();
-	}
+	}  
 	
+	public Registration(String registrationCode, int customerId, int doctorId,
+			int petId, String customerName, String customerPhone,
+			String doctorName, String category, String petName, String date,
+			String state, String regisTime) {
+		super();
+		this.registrationCode = registrationCode;
+		this.customerId = customerId;
+		this.doctorId = doctorId;
+		this.petId = petId;
+		this.customerName = customerName;
+		this.customerPhone = customerPhone;
+		this.doctorName = doctorName;
+		this.category = category;
+		this.petName = petName;
+		this.date = date;
+		this.state = state;
+		this.regisTime = regisTime;
+	} 
 	
-	
+	public String getRegisTime() {
+		return regisTime;
+	} 
+
+	public void setRegisTime(String regisTime) {
+		this.regisTime = regisTime;
+	} 
+
 	public String getPetName() {
 		return petName;
-	}
-
-
+	} 
 
 	public void setPetName(String petName) {
 		this.petName = petName;
-	}
-
-
+	} 
 
 	public String getState() {
 		return state;

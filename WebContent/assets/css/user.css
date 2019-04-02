@@ -1,0 +1,302 @@
+@CHARSET "UTF-8";
+
+.leftMenu {
+	margin-left: 8%;
+}
+
+.leftMenu ul {
+	background-color: white;
+}
+
+.leftMenu li {
+	list-style: none;
+	height: 65px;
+	line-height: 65px;
+	text-align: center;
+}
+
+.leftMenu li:hover {
+	cursor: pointer;
+	background: #f3e5f5;
+	color: #8e4e8c;
+}
+
+.leftMenu .tabSelect {
+	background: #f3e5f5;
+	color: #8e4e8c;
+}
+
+.right img {
+	width: 90%;
+	height: 90%;
+	margin-top: 20px;
+	box-shadow: 2px 1px 9px 0px #9E9E9E;
+}
+
+.width30 {
+	width: 30%;
+}
+
+#doctorIntro img {
+	margin-top: 0;
+	width: 100%;
+	height: 100%;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	box-shadow: 1px 2px 9px 0px #9e9e9e82;
+}
+
+#doctorIntro .layui-card-header {
+	height: auto;
+	padding: 0;
+}
+
+#doctorIntro .layui-card {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.right .font {
+	color: #9E9E9E;
+	font-size: 16px;
+	height: 50px;
+	font-weight: 400;
+	line-height: 50px;
+}
+
+.introspan span {
+	display: block;
+}
+
+.purple {
+	color: #670c64;
+}
+
+.gray {
+	color: gray;
+}
+
+.black {
+	color: black;
+}
+
+.introspan a {
+	padding: 8px 0px;
+	display: block;
+	background-color: #770f77;
+	color: #fff;
+	border-radius: 26px;
+	text-align: center;
+	margin: 17px 8px;
+}
+
+#popDocIntro {
+	background-color: white;
+	display: none;
+}
+
+.block {
+	display: block;
+}
+
+.margin-bottom-10 {
+	margin-bottom: 10px;
+}
+
+.margin-left-10 {
+	margin-left: 10px;
+}
+
+.margin-right-10 {
+	margin-right: 10px;
+}
+
+.padding-10 {
+	padding: 0 10px;
+}
+
+.margin-top-10 {
+	margin-top: 10px;
+}
+
+.layui-layer-content {
+	overflow-x: hidden !important;
+}
+
+#petInfo {
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 80px;
+}
+
+#addPet .layui-form-item {
+	margin: 0 auto;
+	width: 50%;
+	margin-bottom: 20px;
+}
+
+#envirEquip {
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 80px;
+}
+
+#envirEquip img {
+	width: 100%;
+	border-top-left-radius: 18px;
+	border-top-right-radius: 18px;
+}
+
+.height-300 {
+	height: 300px;
+}
+
+#adopt {
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 80px;
+}
+
+#adopt img {
+	width: 100%;
+	border-radius: 18px;
+}
+
+#adopt .layui-card-header {
+	height: auto;
+}
+
+.petBlock a {
+	padding: 8px 0px;
+	display: block;
+	background-color: #770f77;
+	color: #fff;
+	border-radius: 26px;
+	text-align: center;
+	margin: 17px 8px;
+}
+
+#popUp {
+	display: none;
+}
+
+#popUp .layui-col-space20>* {
+	padding: 30px;
+}
+
+#popUp .layui-layer-btn .layui-layer-btn0 {
+	border-color: purple !important;
+	background-color: purple !important;
+	color: #fff;
+}
+
+#adoptForm {
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 80px;
+}
+
+#adoptForm .layui-form-item {
+	margin: 0 auto;
+	width: 50%;
+	margin-bottom: 20px;
+}
+
+#register {
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 80px;
+}
+
+#register .layui-form-item {
+	margin: 0 auto;
+	width: 50%;
+	margin-bottom: 20px;
+}
+
+.padding-top-40 {
+	padding-top: 40px;
+}
+
+.login-bgimg {
+	background-position: top center;
+	background-image: url('../images/bei4.jpg');
+}
+
+#login .layui-card {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 350px;
+	height: 300px;
+	margin-left: -175px;
+	margin-top: -150px;
+	text-align: center;
+	background: rgba(255, 255, 255, 0.5);
+	box-shadow: 0px 2px 20px grey;
+}
+
+.login-item {
+	margin-bottom: 27px;
+	margin-top: 30px;
+}
+
+.login-item input {
+	border-radius: 10px;
+	width: 90%;
+	margin: 0 auto;
+}
+
+.btn-bg {
+	background-color: #8000809c;
+}
+
+#login h2 {
+	/* background-color: #800080f2; */
+	color: #8000809c;
+	margin-top: 10px;
+	/* margin-bottom: 10px; */
+	font-weight: bold;
+}
+
+.my-skin .layui-layer-btn0 {
+	border-color: purple !important;
+	background-color: purple !important;
+}
+
+#hasPet {
+	text-align: center;
+}
+
+#hasPet span {
+	display: block;
+	font-size: 20px;
+	text-align: left;
+}
+
+#hasPet .petBlock {
+	cursor: pointer;
+	padding: 10px;
+	margin: 10px;
+	border: 2px solid transparent;
+}
+
+#hasPet .petBlock:hover {
+	border: 2px solid #80008054;
+}
+
+#hasPet .petBlockClicked {
+	border: 2px solid #80008054;
+}
+
+#hasPet  .layui-col-md3 {
+	width: 23%;
+}
+#hasPet .layui-form-item {
+    width: 50% !important;
+    margin-bottom: 20px !important;
+}
+ 
+.pointer {
+	cursor: pointer;
+}

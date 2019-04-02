@@ -3,6 +3,7 @@ package servlet;
 import java.io.Console;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,12 +15,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.CustomerService;
+import service.PetService;
 import service.RegistrationService;
+import util.Common;
+import util.CommonDAO;
 
 import com.alibaba.fastjson.JSON;
 
+import dao.PetDao;
 import dao.RegistrationDao;
+import entity.Customer;
 import entity.Doctor;
+import entity.Pet;
 import entity.Registration;
 
 /**
@@ -53,21 +61,25 @@ public class RegistrationServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		String requestType = request.getParameter("type"); 
 		RegistrationService registrationService = new RegistrationService();
+		Common common = new Common();
 		if(requestType.equals("findRegistrationByDoctorId")){  
 				String doctorId = request.getParameter("doctorId").toString();
 				List<Map<String,Object>> registrations = registrationService.findRegistrationByDoctorId(doctorId); 
 				OutputStream out = response.getOutputStream(); 
 				out.write(JSON.toJSONString(registrations).getBytes("utf-8")); 
-		}else if(requestType.equals("findRegistrationByCode")){ 
-		    System.out.print(request.getParameter("registrationCode").toString());
+		}else if(requestType.equals("findRegistrationByCode")){  
 			String registrationCode = request.getParameter("registrationCode").toString();
 			List<Map<String,Object>> registrations = registrationService.findRegistrationByCode(registrationCode);
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(registrations).getBytes("utf-8")); 
 		}else if(requestType.equals("selectRegistration")){  
+			String doctorId = "";
 			String selItem = request.getParameter("selItem").toString();
-			String doctorId = request.getParameter("doctorId").toString();
+			if (request.getParameter("doctorId")!=null ) {
+				doctorId = request.getParameter("doctorId").toString();
+			}
 			String selContent = request.getParameter("selContent").toString();
+			
 			List<Map<String,Object>> registrations = registrationService.selectRegistration(selItem,doctorId,selContent);
 			HashMap<String, Object> result = new HashMap<String, Object>();
 			result.put("data", registrations);
@@ -77,7 +89,61 @@ public class RegistrationServlet extends HttpServlet {
 			System.out.print(JSON.toJSONString(result));
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(result).getBytes("utf-8")); 
-	}
+		} else if (requestType.equals("addRegistration")){  
+			PrintWriter writer = response.getWriter();
+			String registrationCode = common.getRandomCard(); 
+			String petCode = common.getRandomCard(); 
+			String regisTime = request.getParameter("regisTime");
+			String petName = request.getParameter("petName");
+			String category = request.getParameter("species");
+			String doctorId = request.getParameter("doctorId");
+			String customerId = request.getParameter("customerId");
+			String immunity = request.getParameter("immunity");
+			String sterilization = request.getParameter("sterilization");
+			String gender = request.getParameter("gender");
+			String color = request.getParameter("color");
+			String age = request.getParameter("age");
+			String weight = request.getParameter("weight");
+			String doctorName = request.getParameter("doctorName");
+			String date = common.getNow(); 
+			String imgString = request.getParameter("petImg");
+			String im = common.processImgStr(imgString);
+			String path = "D:/angular/workspace/PetHospital/image/"+petCode+".jpg";
+			 
+			
+			Pet pet = new Pet(petCode, Integer.parseInt(customerId), Integer.parseInt(age), petName, gender, sterilization, immunity, category, color, weight, path);
+			PetService pService = new PetService();
+			common.generatorImage(im,path);
+			String imgHeader = "data:image/png;base64,";
+			writer.write(imgHeader + common.getImageStr(path));
+			
+			pService.addPet(pet);
+			CustomerService cService = new CustomerService();
+			Map<String, Object> customer = cService.queryByCode(customerId);
+			Registration registration = new Registration(registrationCode, Integer.parseInt(customerId), Integer.parseInt(doctorId)
+					, Integer.parseInt(petCode), customer.get("userName").toString(), customer.get("phone").toString(), doctorName, category, petName, date, "待处理", regisTime);
+			registrationService.addRegistration(registration); 
+			writer.flush();
+			writer.close();
+	}else if (requestType.equals("addRegiByExistPet")){  
+		String registrationCode = common.getRandomCard(); 
+		String petCode = request.getParameter("petCode");
+		String regisTime = request.getParameter("regisTime");
+		String petName = request.getParameter("petName");
+		String category = request.getParameter("species");
+		String doctorId = request.getParameter("doctorId");
+		String customerId = request.getParameter("customerId");    
+		String doctorName = request.getParameter("doctorName");
+		String date = common.getNow(); 
+	 
+		CustomerService cService = new CustomerService();
+		Map<String, Object> customer = cService.queryByCode(customerId);
+		Registration registration = new Registration(registrationCode, Integer.parseInt(customerId), Integer.parseInt(doctorId)
+				, Integer.parseInt(petCode), customer.get("userName").toString(), customer.get("phone").toString(), doctorName, category, petName, date, "待处理", regisTime);
+		registrationService.addRegistration(registration);
+		OutputStream out = response.getOutputStream(); 
+		out.write(JSON.toJSONString(true).getBytes("utf-8")); 
+}
 	}
 
 }

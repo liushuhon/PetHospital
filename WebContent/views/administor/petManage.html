@@ -23,9 +23,9 @@
 						<div class=" layui-col-md2">
 							<select id="select" name="select" lay-verify=""
 								class="layui-select ">
-								<option value="registrationCode">编号</option>
-								<option value="customerName">宠物昵称</option>
-								<option value="customerName">主人姓名</option>
+								<option value="petCode">编号</option>
+								<option value="nickname">宠物昵称</option>
+								<option value="masterid">主人编号</option>
 							</select>
 						</div>
 						<div class="layui-col-md2">
@@ -35,10 +35,10 @@
 								class="layui-btn layui-btn-normal" style="position: absolute;">查询</button>
 						</div>
 					</div>
-					<table id="customerTable" lay-filter="demo"></table>
-					<script type="text/html" id="customerTool">
+					<table id="petTable" lay-filter="demo"></table>
+					<script type="text/html" id="petTool">
                             <a class="layui-btn layui-btn-xs" lay-filter="detail" lay-event="detail" lay>查看</a> 
-                        </script>
+                    </script>
 				</div>
 			</div>
 		</div>

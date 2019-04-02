@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登录</title>
+<link rel="stylesheet" href="../../assets/css/layui.css">
+<link rel="stylesheet" href="../../assets/css/user.css">
+<link rel="stylesheet" href="../../assets/css/common.css">
+</head>
+<body class="login-bgimg">
+	<div class="index-header head-font">
+		<div class="layui-row">
+			<div class="layui-col-md3 left head-img">
+				<div>
+					<img src="../../assets/images/show.jpg">
+				</div>
+				<div>
+					<span>爱宠宠物医院</span>
+				</div>
+			</div>
+			<div class="layui-col-md7">
+				<ul class="layui-nav" lay-filter="">
+					<li class="layui-nav-item"><a href="../../indexWeb.html">主页</a></li>
+					<li class="layui-nav-item"><a href="expertsIntroduction.html">专家介绍</a></li>
+					<li class="layui-nav-item"><a href="">环境设备</a></li>
+					<li class="layui-nav-item"><a href="adopt.html">领养专区</a></li>
+				</ul>
+			</div>
+			<div id="logined" class="layui-col-md2" style="display: none;">
+				<ul class="layui-nav">
+					<li class="layui-nav-item"><a href="">个人中心<span
+							class="layui-badge-dot"></a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;">修改信息</a>
+							</dd>
+							<dd>
+								<a href="javascript:;">修改密码</a>
+							</dd>
+							<dd>
+								<a href="javascript:;">退出</a>
+							</dd>
+						</dl></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div id="login">
+		<div class="layui-card">
+			<div class="layui-card-header">
+				<h2>欢迎登录</h2>
+			</div>
+			<div class="layui-card-body">
+				<form class="layui-form" action="">
+					<div class="login-item">
+						<input type="text" name="phone" required lay-verify="required"
+							placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+					</div>
+					<div class="login-item">
+						<input type="password" name="password" required
+							lay-verify="required" placeholder="请输入密码" autocomplete="off"
+							class="layui-input">
+					</div>
+					<div>
+						<button class="layui-btn btn-bg" lay-submit lay-filter="login">登录</button>
+						<button class="layui-btn layui-btn-primary">注册</button>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+	<script src="../../util/jquery.js"></script>
+	
+	<script src="../../assets/layui.js"></script>
+	<script type="text/javascript" src="../../js/getCustomer.js"></script>
+	<script type="text/javascript" src="../../js/user/login.js"></script>
+</body>
+</html>
