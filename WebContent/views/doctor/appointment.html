@@ -12,7 +12,7 @@
 		<div class="layui-page-header">
 			<div class="pagewrap">
 				<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">挂号管理</a>
-					<a><cite>挂号管理</cite></a>
+					<a><cite>预约管理</cite></a>
 				</span>
 			</div>
 		</div>
@@ -37,8 +37,9 @@
 					</div>
 					<table id="regisTable" lay-filter="demo"></table>
 					<script type="text/html" id="regisTool"> 
-                            <a class="layui-btn layui-btn-xs" lay-filter="detail" lay-event="detail" lay>查看</a> 
-                        </script>
+                         <a class="layui-btn layui-btn-xs layui-btn-normal" lay-filter="editTime" lay-event="detail" lay>修改时间</a>  
+                         <a class="layui-btn layui-btn-xs" lay-filter="detail" lay-event="detail" lay>确认</a>  
+                    </script>
 				</div>
 			</div>
 		</div>
@@ -46,6 +47,6 @@
 	<script src="../../assets/layui.all.js"></script>
 	<script src="../../util/jquery.js"></script>
 	<script src="../../js/getCurUser.js"></script>
-	<script src="../../js/doctor/registration.js"></script>
+	<script src="../../js/doctor/appointment.js"></script>
 </body>
 </html>

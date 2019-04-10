@@ -29,8 +29,7 @@ public class CustomerDao {
 			e.printStackTrace();
 		}
 		return null;  
-	 }
-	  
+	 } 
 		
 	 public List<Map<String, Object>> queryAllByLimits(int page, int limits){
 		 int startIndex = (page - 1) * limits;
@@ -83,6 +82,7 @@ public class CustomerDao {
 				return null;
 			} 
 	  }
+	 
 	 public Map<String, Object> queryByCode(String code){ 
 		   try {
 				String sql = "SELECT * from customer WHERE customerCode='"+code+"'"; 
@@ -92,6 +92,36 @@ public class CustomerDao {
 			catch(Exception e){
 				e.printStackTrace();
 				return null;
+			} 
+	  }
+ 
+	 public void  updateByCode(Customer customer){ 
+		   try {
+				String sql = "update customer set userName = '"+customer.getUserName()+"',phone = '"+customer.getPhone()+"',address = '"+customer.getAddress()+"',gender = '"+customer.getGender()+"'  WHERE customerCode='"+customer.getCustomerCode()+"'"; 
+				commonDAO.executeUpdate(sql, null);
+			}
+			catch(Exception e){
+				e.printStackTrace();  
+			} 
+	  }
+
+	 public void  updatePhotoByCode(String path,String code){ 
+		   try {
+				String sql = "update customer set photo = '"+path+"'  WHERE customerCode='"+code+"'"; 
+				commonDAO.executeUpdate(sql, null);
+			}
+			catch(Exception e){
+				e.printStackTrace();  
+			} 
+	  }
+
+	 public void  updatePwdByCode(String pwd,String code){ 
+		   try {
+				String sql = "update customer set password = '"+pwd+"'  WHERE customerCode='"+code+"'"; 
+				commonDAO.executeUpdate(sql, null);
+			}
+			catch(Exception e){
+				e.printStackTrace();  
 			} 
 	  }
 }

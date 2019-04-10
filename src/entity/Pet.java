@@ -11,8 +11,8 @@ public class Pet {
 	private String species;
 	private String Color;
 	private String Weight;  
-	private String petImg;
- 
+	private String petImg; 
+		
 	public Pet(String petCode, int masterId, int age, String nickname,
 			String gender, String sterilization, String immunity,
 			String species, String color, String weight, String petImg) {

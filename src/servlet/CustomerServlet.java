@@ -123,7 +123,42 @@ public class CustomerServlet extends HttpServlet {
 			result.put("code", "0");
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(result).getBytes("utf-8")); 
+		} else if(requestType.equals("queryByCode")){ 
+			String code = request.getParameter("code").toString(); 
+			Map<String, Object> customer = customerService.queryByCode(code);
+			customer = common.toBase64(customer, "photo");
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(customer).getBytes("utf-8")); 
+		} else if(requestType.equals("updateByCode")){ 
+			String code = request.getParameter("cusCode").toString(); 
+			String gender = request.getParameter("gender").toString(); 
+			String address = request.getParameter("address").toString(); 
+			String userName = request.getParameter("userName").toString(); 
+			String phone = request.getParameter("phone").toString(); 
+			Customer customer = new Customer(code, userName, phone, address, gender);
+			customerService.updateByCode(customer);
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(true).getBytes("utf-8")); 
+		}else if(requestType.equals("updatePhotoByCode")){ 
+			PrintWriter writer = response.getWriter();
+			String code = request.getParameter("cusCode").toString(); 
+			String imgString = request.getParameter("photo");
+			String im = processImgStr(imgString);
+			String path = "D:/angular/workspace/PetHospital/image/"+code+".jpg"; 
+			customerService.updatePhotoByCode(path, code);
+			generatorImage(im,path);
+			String imgHeader = "data:image/png;base64,";
+			writer.write(imgHeader + getImageStr(path));
+			writer.flush();
+			writer.close(); 
+		} else if(requestType.equals("updatePwdByCode")){ 
+			String code = request.getParameter("cusCode").toString(); 
+			String pwd = request.getParameter("password").toString(); 
+			customerService.updatePwdByCode(pwd, code);
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(true).getBytes("utf-8")); 
 		}
+		
 	}
 	public static String getRandomCard() {
 		Random rand = new Random();// 生成随机数

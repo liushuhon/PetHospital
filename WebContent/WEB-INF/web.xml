@@ -113,4 +113,12 @@
     <servlet-name>DoctorServlet</servlet-name>
     <url-pattern>/servlet/DoctorServlet</url-pattern>
   </servlet-mapping>
+   <servlet>
+    <servlet-name>AdoptApplicationServlet</servlet-name>
+    <servlet-class>servlet.AdoptApplicationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdoptApplicationServlet</servlet-name>
+    <url-pattern>/servlet/AdoptApplicationServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -113,9 +113,12 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 	});
 	table.on('tool(demo)', function(obj) {
 		var data = obj.data;
-		location.href = "prescribe.html?registrationCode="
-				+ data.registrationCode;
-
+		if (obj.event === "confirm" ) {
+			
+		} else if (obj.event === "editTime" ) {
+			
+		} 
+		
 	})
 
 })

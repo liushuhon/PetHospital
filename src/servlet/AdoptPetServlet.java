@@ -115,6 +115,20 @@ public class AdoptPetServlet extends HttpServlet {
 			
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(pets).getBytes("utf-8")); 
+		}else if(requestType.equals("queryAllByMaster")){
+			int page = Integer.parseInt(request.getParameter("curr").toString());
+			int limit = Integer.parseInt(request.getParameter("nums").toString());
+			String masterId = request.getParameter("masterId").toString();
+			System.out.print(page);
+			int total = service.queryAllByMaster(masterId).size();
+			List<Map<String, Object>> pets = common.toBase64(service.queryAllByMasterLimits(page, limit, masterId), "photo");
+			HashMap<String, Object> result = new HashMap<String, Object>();
+			result.put("data", pets);
+			result.put("count", total);
+			result.put("msg", "");
+			result.put("code", "0");
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(result).getBytes("utf-8")); 
 		}
 	}
 

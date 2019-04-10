@@ -64,4 +64,35 @@ public class AdoptPetService {
 			e.printStackTrace(); 
 		}
 	 }
+	 
+	 /***
+	  * 用户查询所有领养宠物
+	  * @param masterId
+	  * @return
+	  */
+	 public List<Map<String, Object>> queryAllByMaster(String masterId) {
+
+			try { 
+				return dao.queryAllByMaster(masterId);
+			} catch (Exception e) {
+				new Exception("操作数据库出错！").printStackTrace();
+			}
+			return null; 
+		}
+	 /**
+	  *  用户分页查询所有领养宠物
+	  * @param page
+	  * @param limits
+	  * @return
+	  */
+		 public List<Map<String, Object>> queryAllByMasterLimits(int page, int limits, String masterId){ 
+				try { 
+					return dao.queryAllByMasterLimits(page, limits, masterId);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				return null;  
+		}
+	 
 }

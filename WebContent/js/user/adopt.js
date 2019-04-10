@@ -7,6 +7,7 @@ layui.use([ 'element', 'carousel', 'layer', 'jquery' ], function() {
 		height : '400px',
 		arrow : 'always',
 	});
+	layer.config({skin: 'my-skin'});
 });
 var adoptPets = [];
 (function(){
@@ -42,7 +43,7 @@ function formateAdoptPets(pets){
 								"<img alt='' src='"+curr.photo+"'>"+
 							"</div>"+
 							"<div class='layui-card-body'>"+
-								"<span class='purple text-center'><h3>"+curr.nickname+"</h3></span> <a"+
+								"<span class='purple text-center'><h3>"+curr.nickname+"</h3></span> <a "+
 									"href='javascript:;' onclick='adopt("+curr.adoptPetCode+")'>我想领养</a>"+
 							"</div>"+
 					"</div>";
@@ -64,44 +65,28 @@ function popPetAdopt(id) {
 		 ,content: "<div id='popUp'>"
 						+"<div class='layui-row layui-col-space20 margin-top-10'>"
 							+"<div class='layui-col-md5'>"
-								+"<img id='popImg'"
-								+	"style='width: 100%; height: 100%; margin-left: 12px; border-radius: 10px;'>"
+								+"<img id='popImg' src='"+currPet.photo+"'" 
+								+	" style='width: 100%; height: 100%; margin-left: 12px; border-radius: 10px;'>"
 							+"</div>"
 							+"<div class='layui-col-md7'>"
-								+"<span class='gray block margin-bottom-10'><h1 id='nickname'>"+currPet.nickname+" </h1></span> <span"
-								+	"class='gray block margin-bottom-10' id='gender'> </span> <span"
-									+"class='gray block margin-bottom-10' id='age'> </span> <span"
-									+"class='gray block margin-bottom-10' id='weight'> </span> <span"
-									+"class='gray block margin-bottom-10' id='color'> </span> <span"
-									+"class='gray block margin-bottom-10' id='species'> </span> <span"
-									+"class='gray block margin-bottom-10' id='sterilization'> </span> <span"
-									+"class='gray block margin-bottom-10' id='immunity'> </span>"
+								+"<span class='gray block margin-bottom-10'><h1 id='nickname'>"+currPet.nickname+" </h1></span> <span "
+								+	"class='gray block margin-bottom-10' id='gender'>性别："+currPet.gender+" </span> <span "
+									+"class='gray block margin-bottom-10' id='age'>年龄："+currPet.age+" 岁</span> <span "
+									+"class='gray block margin-bottom-10' id='weight'>体重："+currPet.weight+" kg</span> <span "
+									+"class='gray block margin-bottom-10' id='color'>颜色："+currPet.color+" </span> <span "
+									+"class='gray block margin-bottom-10' id='species'>种类："+currPet.species+" </span> <span "
+									+"class='gray block margin-bottom-10' id='sterilization'>是否绝育："+currPet.sterilization+" </span> <span "
+									+"class='gray block margin-bottom-10' id='immunity'>是否免疫："+currPet.immunity+" </span>"
 							+"</div>"
 						+"</div>"
 					+"</div>"	
 	 	  ,area: ['50%', '70%'] 
-	 	  ,success : function(layero, index) { 
-			$("#nickname").val(currPet.nickname);
-			$("#gender").html(currPet.nickname);
-//			layero.find("#gender")[0].outerText=currPet.gender;
-//			layero.find("#age")[0].outerText=currPet.age;
-//			layero.find("#weight")[0].outerText=currPet.weight;
-//			layero.find("#species")[0].outerText=currPet.species;
-//			layero.find("#color")[0].outerText=currPet.color;
-//			layero.find("#sterilization")[0].outerText=currPet.sterilization;
-//			layero.find("#immunity")[0].outerText=currPet.immunity;   
-		}  
 		  ,cancel: function(index){ 
 			  layer.close(index);
 		  }
-		});
-	 $('#popUp').hover(function(){
-		    $().css("overflow","auto")
-		},function(){
-		    $().css("overflow","hidden")
-		})
+		}); 
 }
-function adopt() {
+function adopt(petCode) {
 	layer.open({
 		type:1,
 		  title :'宠物资料'
@@ -109,12 +94,22 @@ function adopt() {
 		  ,btn: ['确定']
 	 	  ,area: ['30%', '30%']
 		  ,success: function(){
-			  
+			  $.ajax({
+					url : "/PetHospital/servlet/AdoptApplicationServlet",
+					type : "POST",
+					data : {
+						type : 'addApplication', 
+						userCode : cusId,
+						petCode : petCode
+					},
+				});
 		  }
 		  ,yes: function(index){
-			  layer.close(index);
+			 
+			  layer.close(index); 
 		  }
 		  ,cancel: function(index){ 
+			 
 			  layer.close(index);
 		  }
 	})

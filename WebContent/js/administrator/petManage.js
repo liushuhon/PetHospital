@@ -4,24 +4,6 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 	var form = layui.form;
 	var $ = layui.jquery;
 	getCurUser();
-//	$.ajax({
-//		type : "POST",
-//		async : false,
-//		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-//		url : "/PetHospital/servlet/PetServlet",
-//		dataType : 'json',
-//		data : {
-//			'type' : 'queryAllPets', 
-//		},
-//		success : function(data) {
-//			datas = eval(data);
-//			table.render();
-//		},
-//		error : function(error) {
-//			alert("cannot find!");
-//		}
-//	});
-
 	// 展示已知数据
 	table.render({
 		elem : '#petTable',

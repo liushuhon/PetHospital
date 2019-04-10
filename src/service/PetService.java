@@ -62,4 +62,36 @@ public class PetService {
 		}
 		return null;
 	}
+	 public List<Map<String, Object>> queryAllByMaster(String masterId) {
+			try {
+				return petDao.queryAllByMaster(masterId);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			return null;  
+	}
+	 public List<Map<String, Object>> queryAllByMasterLimits(int page, int limits, String masterId){ 
+			try {
+				return petDao.queryAllByMasterLimits(page, limits, masterId);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			return null;  
+	}
+	 public void deleteByCode(String petCode) { 
+			try {
+				petDao.deleteByCode(petCode);
+			} catch (Exception e) {
+				new Exception("操作数据库出错！").printStackTrace();
+			}
+		}
+	 public void updatePet(Pet pet){ 
+		 try {
+			petDao.updatePet(pet);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	 }
 }

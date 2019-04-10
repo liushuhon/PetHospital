@@ -19,3 +19,6 @@ function uploadPhoto() {
 	} 
 	reader.readAsDataURL( file );
 }
+function agreeApplication(id) {
+	
+}

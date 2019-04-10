@@ -13,6 +13,20 @@ public class Customer {
 		super();
 	}
 	
+	
+	
+	public Customer(String customerCode, String userName, String phone,
+			String address, String gender) {
+		super();
+		this.customerCode = customerCode;
+		this.userName = userName;
+		this.phone = phone;
+		this.address = address;
+		this.gender = gender;
+	}
+
+
+
 	public String getPhoto() {
 		return photo;
 	}

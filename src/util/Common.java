@@ -36,7 +36,14 @@ public class Common {
 		}
 		return listMaps;
 	}
-	
+	public Map<String, Object> toBase64(Map<String, Object> listMaps,String param) { 
+	 
+			String imgHeader = "data:image/png;base64,";
+			String s = imgHeader + getImageStr(listMaps.get(param).toString());
+			listMaps.put(param, s); 
+	 
+		return listMaps;
+	}
 	/**
 	 * 去除base64原来的东西
 	 * @param imgStr

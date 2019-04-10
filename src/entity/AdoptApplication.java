@@ -3,7 +3,7 @@ package entity;
 public class AdoptApplication {
 	private String customerId;
 	private String adoptPetId;
-	private String state;
+	private String appstate;
 	private String date;
 	
 	
@@ -16,7 +16,7 @@ public class AdoptApplication {
 		super();
 		this.customerId = customerId;
 		this.adoptPetId = adoptPetId;
-		this.state = state;
+		this.appstate = state;
 		this.date = date;
 	}
 
@@ -33,10 +33,10 @@ public class AdoptApplication {
 		this.adoptPetId = adoptPetId;
 	}
 	public String getState() {
-		return state;
+		return appstate;
 	}
 	public void setState(String state) {
-		this.state = state;
+		this.appstate = state;
 	}
 	public String getDate() {
 		return date;

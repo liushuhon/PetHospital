@@ -1,11 +1,11 @@
 @CHARSET "UTF-8";
 
 .leftMenu {
-	margin-left: 8%;
+	margin-left: 8%;  
 }
 
 .leftMenu ul {
-	background-color: white;
+	background-color: white; 
 }
 
 .leftMenu li {
@@ -23,6 +23,11 @@
 
 .leftMenu .tabSelect {
 	background: #f3e5f5;
+	color: #8e4e8c;
+}
+
+.tabUnSelect {
+	background: white;
 	color: #8e4e8c;
 }
 
@@ -157,6 +162,10 @@
 	margin-top: 80px;
 }
 
+.margin-top-20 {
+	margin-top : 20px;
+}
+
 #adopt img {
 	width: 100%;
 	border-radius: 18px;
@@ -177,7 +186,7 @@
 }
 
 #popUp {
-	display: none;
+	display: block;
 }
 
 #popUp .layui-col-space20>* {
@@ -200,6 +209,12 @@
 	margin: 0 auto;
 	width: 50%;
 	margin-bottom: 20px;
+}
+
+#prompt {
+	display: none;
+    margin-top: 10%;
+    margin-left: 13%;
 }
 
 #register {
@@ -274,6 +289,10 @@
 	text-align: left;
 }
 
+.bold {
+	font-weight : bold;
+}
+
 #hasPet .petBlock {
 	cursor: pointer;
 	padding: 10px;
@@ -299,4 +318,47 @@
  
 .pointer {
 	cursor: pointer;
+}
+
+.height-600 {
+	height:600px;
+}
+
+.height100 {
+	height: 100%;
+}
+
+.personInfoBlock {
+	width: 50%;
+	margin-top: 20px;
+}
+
+.tip {
+    position: absolute;
+    color: gray;
+    top: 6px;
+    right: -139px;
+}
+.personInfoBlock input {
+	border: transparent;
+    border-left: 1px solid #e6e6e6;
+}
+.avatar .upload-photo{
+	 position: relative;
+    width: 373px;
+    height: 373px;
+    background-color: #F2F2F5;
+    font-size: 12px;
+    color: gray;
+    text-align: center;
+        padding-top: 30px;	
+}
+.avatar img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 168px;
+    height: 168px;
+    margin: -50px 0 0 -84px;
+    border-radius: 100%;
 }

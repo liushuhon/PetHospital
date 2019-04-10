@@ -29,4 +29,13 @@ public class CustomerService {
 	 public List<Map<String, Object>> selectCustomerByLimits(String selItem,String selContent,int pageSize,int currPage){ 
 			return customerDao.selectCustomerByLimits(selItem, selContent, pageSize, currPage);
 	 }
+	 public void  updateByCode(Customer customer){ 
+		   this.customerDao.updateByCode(customer);
+	  }
+	 public void  updatePhotoByCode(String path,String code){ 
+		 this.customerDao.updatePhotoByCode(path, code);
+	 }
+	 public void  updatePwdByCode(String pwd,String code){ 
+		 this.customerDao.updatePwdByCode(pwd, code);
+	 }
 }
