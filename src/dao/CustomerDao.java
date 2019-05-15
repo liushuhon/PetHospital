@@ -20,6 +20,7 @@ public class CustomerDao {
 				e.printStackTrace();
 			} 
 	  }
+	 
 	 public List<Map<String, Object>> queryAllCustomer(){
 		try {
 			String sql = "SELECT * FROM customer";
@@ -41,7 +42,8 @@ public class CustomerDao {
 				e.printStackTrace();
 			}
 			return null;  
-		 }
+	}
+	 
 	 public List<Map<String, Object>> login(String phone, String password){ 
 		   try {
 				String sql = "SELECT * from customer WHERE password='"+password+"' AND phone='"+phone+"'";

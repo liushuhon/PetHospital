@@ -1,3 +1,4 @@
+var cusId = '';
 function getCurCustomer(){ 
 	$.ajax({
 		type : "POST",

@@ -52,10 +52,10 @@ public class AdminServlet extends HttpServlet {
 		if(requestType.equals("findAdminByUsernameAndPassword")){
 			String username = request.getParameter("username").toString();
 			String password = request.getParameter("password").toString();
-			request.getSession().setAttribute("username", username); 
-			request.getSession().setAttribute("password", password); 
+			request.getSession().setAttribute("adminName", username); 
+			request.getSession().setAttribute("adminPwd", password); 
 			List<Map<String,Object>> admin = adminService.findAdminByUsernameAndPassword(username, password);  
-			request.getSession().setAttribute("userId", admin.get(0).get("id")); 
+			request.getSession().setAttribute("adminId", admin.get(0).get("id")); 
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(admin).getBytes("utf-8")); 
 		} else if (requestType.equals("changePassword")) {

@@ -153,6 +153,11 @@ public class PetServlet extends HttpServlet {
 			writer.write(imgHeader + common.getImageStr(path));
 			writer.flush();
 			writer.close(); 
+		}  else if(requestType.equals("selectByPetId")){
+			String petId = request.getParameter("petId").toString();
+			List<Map<String, Object>> pets = petService.selectPetByPetId(petId);
+			OutputStream out = response.getOutputStream();
+			out.write(JSON.toJSONString(pets).getBytes("utf-8"));
 		}
 		
 	}

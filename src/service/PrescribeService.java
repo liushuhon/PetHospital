@@ -7,6 +7,14 @@ import dao.PrescriptionDao;
 
 public class PrescribeService {
 	PrescriptionDao prescriptionDao = new PrescriptionDao();
+	 public List<Map<String, Object>> findPrescriptionByCustomerId(String customerId) {
+		 return prescriptionDao.findPrescriptionByCustomerId(customerId);
+	 }
+	
+	 public List<Map<String, Object>> findPrescriptionByCustomerIdLimit(String customerId,int page, int limits) {
+		 return prescriptionDao.findPrescriptionByCustomerIdLimit(customerId, page, limits);
+	 }
+	 
 	public List<Map<String, Object>> findPrescriptionByDoctorId(String doctorId) {
 		return prescriptionDao.findPrescriptionByDoctorId(doctorId);
 	}

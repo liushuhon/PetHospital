@@ -15,13 +15,13 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 public class Common {
-	public static String getRandomCard() {
+	public  String getRandomCard() {
 		Random rand = new Random();// 生成随机数
 		String cardNnumer = "";
 		for (int a = 0; a < 6; a++) {
 			cardNnumer += rand.nextInt(10);// 生成6位数字
 		}
-		return cardNnumer;
+		return ""+cardNnumer;
 	}
 	public String getNow(){ 
 		 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式

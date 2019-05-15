@@ -15,7 +15,6 @@ function uploadPhoto() {
 		var img = $("#photo");
 		imgSrc = txt;
 		img.attr('src',imgSrc);
-		
 	} 
 	reader.readAsDataURL( file );
 }

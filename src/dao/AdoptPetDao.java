@@ -4,12 +4,24 @@ import java.util.List;
 import java.util.Map;
 
 import entity.AdoptPet;
+import entity.Medicine;
 import entity.Pet;
 import util.CommonDAO;
 
 public class AdoptPetDao {
 	
 	CommonDAO commonDAO = new CommonDAO();
+	public void addAdoptPet(AdoptPet adoptPet) throws Exception{ 
+		try {
+			String sql = "INSERT INTO adoptPet(adoptPetCode,masterid,age,nickname,gender,sterilization,immunity,species,color,weight,photo,state,inHospital) "
+					+ "VALUES('"+adoptPet.getAdoptPetCode()+"','"+null+"','"+adoptPet.getAge()+"','"+adoptPet.getNickname()+"','"+adoptPet.getGender()+"'"
+					+ ",'"+adoptPet.getSterilization()+"','"+adoptPet.getImmunity()+"','"+adoptPet.getSpecies()+"','"+adoptPet.getColor()+"','"+adoptPet.getWeight()+"'"
+							+ ",'"+adoptPet.getPhoto()+"','待领养','否')";
+			this.commonDAO.executeUpdate(sql, null); 
+		} catch (Exception e) {
+			new Exception("操作数据库出错！").printStackTrace(); 
+		}
+	}
 	/***
 	 * 管理员查询所有宠物
 	 * @param state

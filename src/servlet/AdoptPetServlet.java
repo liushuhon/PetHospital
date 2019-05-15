@@ -129,6 +129,32 @@ public class AdoptPetServlet extends HttpServlet {
 			result.put("code", "0");
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(result).getBytes("utf-8")); 
+		}else if(requestType.equals("addAdoptPet")){ 
+			PrintWriter writer = response.getWriter();
+			String adoptPetCode = common.getRandomCard();
+			String age = request.getParameter("age").toString();
+			String nickname = request.getParameter("nickname").toString();
+			String gender = request.getParameter("gender").toString();
+			String sterilization = request.getParameter("sterilization").toString();
+			String immunity = request.getParameter("immunity").toString();
+			String species = request.getParameter("species").toString();
+			String color = request.getParameter("color").toString();
+			String weight = request.getParameter("weight").toString();
+			String imgString = request.getParameter("photo");
+			String im = common.processImgStr(imgString);
+			String path = "D:/angular/workspace/PetHospital/image/"+adoptPetCode+".jpg";
+			AdoptPet aPet = new AdoptPet(adoptPetCode, 0, Integer.parseInt(age), nickname, gender, sterilization, immunity, species, color, weight, path);
+			try {
+				service.addAdoptPet(aPet);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			common.generatorImage(im,path);
+			String imgHeader = "data:image/png;base64,";
+			writer.write(imgHeader + common.getImageStr(path));
+			writer.flush();
+			writer.close(); 
 		}
 	}
 

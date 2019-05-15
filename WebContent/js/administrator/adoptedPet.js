@@ -47,7 +47,6 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			toolbar : '#petTool'
 		} ] ], 
 		skin : 'line',
-		even : true,
 		page : true,
 		limits : [ 5, 7, 10 ],
 		limit : 5,

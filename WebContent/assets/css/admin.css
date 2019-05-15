@@ -360,3 +360,8 @@ html, body , .app-container{
 	margin-top: 40px;
     margin-left: 70px;
 }
+
+.workTimeContent {
+	display: flex !important;
+    align-items: center  !important;
+}

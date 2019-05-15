@@ -38,19 +38,18 @@ function formateAdoptPets(pets){
     $('#adoptPets').html("");
     var infos = '';
     pets.map(function(curr,index) { 
-    	infos +=   "<div class='layui-card'>"+
+    	infos +=   "<div class='layui-card layui-col-md4'>"+
 							"<div class='layui-card-header' onclick='popPetAdopt("+curr.id+")'>"+
 								"<img alt='' src='"+curr.photo+"'>"+
 							"</div>"+
 							"<div class='layui-card-body'>"+
 								"<span class='purple text-center'><h3>"+curr.nickname+"</h3></span> <a "+
-									"href='javascript:;' onclick='adopt("+curr.adoptPetCode+")'>我想领养</a>"+
+									"href='javascript:;' onclick=adopt('"+curr.adoptPetCode+"')>我想领养</a>"+
 							"</div>"+
 					"</div>";
     }) 
      $('#adoptPets').append(infos);
 }
-
 function popPetAdopt(id) {
 	var currPet = "";
 	adoptPets.map(function(obj){
@@ -87,30 +86,34 @@ function popPetAdopt(id) {
 		}); 
 }
 function adopt(petCode) {
-	layer.open({
-		type:1,
-		  title :'宠物资料'
-		  ,content:  $('#prompt') 
-		  ,btn: ['确定']
-	 	  ,area: ['30%', '30%']
-		  ,success: function(){
-			  $.ajax({
-					url : "/PetHospital/servlet/AdoptApplicationServlet",
-					type : "POST",
-					data : {
-						type : 'addApplication', 
-						userCode : cusId,
-						petCode : petCode
-					},
-				});
-		  }
-		  ,yes: function(index){
-			 
-			  layer.close(index); 
-		  }
-		  ,cancel: function(index){ 
-			 
-			  layer.close(index);
-		  }
-	})
+	if (cusId === '') {
+		alert('请先登录');
+		location.href="login.html";
+	} else {
+		console.log(petCode)
+		layer.open({
+			type:1,
+			  title :'宠物资料'
+			  ,content:  $('#prompt') 
+			  ,btn: ['确定']
+		 	  ,area: ['30%', '30%']
+			  ,success: function(){
+				  $.ajax({
+						url : "/PetHospital/servlet/AdoptApplicationServlet",
+						type : "POST",
+						data : {
+							type : 'addApplication', 
+							userCode : cusId,
+							petCode : petCode+""
+						},
+					});
+			  }
+			  ,yes: function(index){
+				  layer.close(index); 
+			  }
+			  ,cancel: function(index){ 
+				  layer.close(index);
+			  }
+		})
+	}
 }

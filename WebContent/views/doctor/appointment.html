@@ -11,7 +11,7 @@
 	<div class="layui-content">
 		<div class="layui-page-header">
 			<div class="pagewrap">
-				<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">挂号管理</a>
+				<span class="layui-breadcrumb"> <a href="">首页</a> <a href="">预约管理</a>
 					<a><cite>预约管理</cite></a>
 				</span>
 			</div>
@@ -35,16 +35,17 @@
 								class="layui-btn layui-btn-normal" style="position: absolute;">查询</button>
 						</div>
 					</div>
-					<table id="regisTable" lay-filter="demo"></table>
-					<script type="text/html" id="regisTool"> 
-                         <a class="layui-btn layui-btn-xs layui-btn-normal" lay-filter="editTime" lay-event="detail" lay>修改时间</a>  
-                         <a class="layui-btn layui-btn-xs" lay-filter="detail" lay-event="detail" lay>确认</a>  
+					<table id="appointTable" lay-filter="demo"></table>
+					<script type="text/html" id="appointTool"> 
+                         <a class="layui-btn layui-btn-sm layui-btn-normal" lay-filter="editTime" lay-event="editTime" >修改时间</a>  
+                         <a class="layui-btn layui-btn-sm" lay-filter="confirm" lay-event="confirm" >确认预约</a>  
                     </script>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script src="../../assets/layui.all.js"></script>
+	<script src="../../assets/lay/modules/laydate.js"></script>
 	<script src="../../util/jquery.js"></script>
 	<script src="../../js/getCurUser.js"></script>
 	<script src="../../js/doctor/appointment.js"></script>

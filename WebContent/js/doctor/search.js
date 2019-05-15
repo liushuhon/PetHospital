@@ -1,6 +1,24 @@
 
 	var medicines = [];
+	var medicinesAndPrice = [];
 	$(function(){ 
+		$.ajax({
+			type : "POST",
+			async : false,
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			url : "/PetHospital/servlet/MedicineServlet",
+			dataType : 'json',
+			data : {
+				'type' : 'getAllMedicines',  
+			},
+			success : function(data) {
+				medicinesAndPrice = eval(data);    
+				 
+			},
+			error : function(error) {
+				alert("cannot find!");
+			}
+		}); 
 //	取得div层 
 	var $search = $('#search'); 
 //	取得输入框JQuery对象 
@@ -78,7 +96,16 @@
 							$searchInput.val(str.slice(0,str.length-searchValue.length)+term.medicineName); 
 //							清空并隐藏下拉列表 
 							$autocomplete.empty().hide(); 
-							
+							let sum = 0;
+							var chooseMedicineArr =   $("#medicines").val().split('，');
+							chooseMedicineArr.map(function(obj1, index) {
+								medicinesAndPrice.map(function(obj2, index) {
+									if(obj1 === obj2.medicineName) { 
+										sum += obj2.price;
+									}
+								});
+							});
+							$('#sumPrice').html(sum);
 						}); 
 					});//事件注册完毕 
 //					设置下拉列表的位置，然后显示下拉列表 

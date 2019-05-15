@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import service.DoctorService;
-import sun.misc.BASE64Encoder;
+import util.Common;
 
 import com.alibaba.fastjson.JSON;
 
@@ -20,6 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
  
+
+
+
+
+
+
 import entity.Doctor;
 
 /**
@@ -53,17 +60,24 @@ public class DoctorServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		String requestType = request.getParameter("type"); 
 		DoctorService doctorService = new DoctorService();
+		Common common = new Common();
 		if(requestType.equals("findDoctorById")){
 			String id = request.getParameter("id").toString();
 			List<Map<String,Object>> doctor = doctorService.findDoctorById(id); 
 			HashMap<String, Object> temp=(HashMap<String, Object>) doctor.get(0);
 			String imgHeader = "data:image/png;base64,";
-			String s = imgHeader + getImageStr(temp.get("photo").toString());
+			String s = imgHeader + common.getImageStr(temp.get("photo").toString());
 			temp.put("photo", s); 
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(doctor).getBytes("utf-8")); 
+		} else if(requestType.equals("findDoctorByCode")){
+			String code = request.getParameter("code").toString();
+			List<Map<String,Object>> doctor = doctorService.findDoctorByCode(code);
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(doctor).getBytes("utf-8")); 
 		}
 		else if(requestType.equals("updateDoctorById")){
+			PrintWriter writer = response.getWriter();
 			Doctor doctor = new Doctor();
 			doctor.setDoctorCode(request.getParameter("doctorCode"));
 			doctor.setAge(Integer.parseInt(request.getParameter("age")));
@@ -71,14 +85,20 @@ public class DoctorServlet extends HttpServlet {
 			doctor.setMedicalSkill(request.getParameter("medicalSkill").toString());
 			doctor.setPhone(request.getParameter("phone")); 
 			doctor.setGender(request.getParameter("gender")); 
-			List<Map<String,Object>> doctor1 = doctorService.updateDoctor(doctor);  
-			OutputStream out = response.getOutputStream(); 
-			out.write(JSON.toJSONString(doctor1).getBytes("utf-8")); 
+			String imgString = request.getParameter("photo");
+			String im = common.processImgStr(imgString);
+			String path = "D:/angular/workspace/PetHospital/image/"+request.getParameter("doctorCode")+".jpg"; 
+			doctor.setPhoto(path);
+			List<Map<String,Object>> doctor1 = doctorService.updateDoctor(doctor);
+			common.generatorImage(im,path);
+			String imgHeader = "data:image/png;base64,";
+			writer.write(imgHeader + common.getImageStr(path));
+			writer.flush();
+			writer.close();
 		}
 		else if(requestType.equals("findDoctorByUsernameAndPassword")){
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-			
 			request.getSession().setAttribute("username", username); 
 			request.getSession().setAttribute("password", password); 
 			List<Map<String,Object>> doctor = doctorService.findDoctorByUsernameAndPassword(username, password);
@@ -98,7 +118,7 @@ public class DoctorServlet extends HttpServlet {
 			List<Map<String, Object>> doctors = doctorService.queryByMedicalSkill(medicalSkill);
 			for (Map<String, Object> map : doctors) { 
 				String imgHeader = "data:image/png;base64,";
-				String s = imgHeader + getImageStr(map.get("photo").toString());
+				String s = imgHeader + common.getImageStr(map.get("photo").toString());
 				map.put("photo", s); 
 			}
 			OutputStream out = response.getOutputStream(); 
@@ -108,27 +128,47 @@ public class DoctorServlet extends HttpServlet {
 			List<Map<String, Object>> doctors = doctorService.queryAll();
 			for (Map<String, Object> map : doctors) { 
 				String imgHeader = "data:image/png;base64,";
-				String s = imgHeader + getImageStr(map.get("photo").toString());
+				String s = imgHeader + common.getImageStr(map.get("photo").toString());
 				map.put("photo", s); 
 			}
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(doctors).getBytes("utf-8"));
+		}else if (requestType.equals("queryAllDoctor")) {
+			int page = Integer.parseInt(request.getParameter("curr").toString());
+			int limit = Integer.parseInt(request.getParameter("nums").toString());
+			int total = doctorService.queryAllDoctor().size();
+			List<Map<String, Object>> doctors = common.toBase64(doctorService.queryAllByLimits(page, limit), "photo");
+			HashMap<String, Object> result = new HashMap<String, Object>();
+			result.put("data", doctors);
+			result.put("count", total);
+			result.put("msg", "");
+			result.put("code", "0");
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(result).getBytes("utf-8")); 
+		}else if(requestType.equals("selectDoctor")){ 
+			String selItem = request.getParameter("selItem").toString();
+			String selContent = request.getParameter("selContent").toString();
+			int pageSize = Integer.parseInt(request.getParameter("nums").toString()); 
+			int currPage = Integer.parseInt(request.getParameter("curr").toString());
+			int total = doctorService.selectDoctor(selItem, selContent).size();
+			List<Map<String,Object>> doctors = common.toBase64(doctorService.selectDoctorByLimits(selItem, selContent, pageSize, currPage), "photo"); 
+			HashMap<String, Object> result = new HashMap<String, Object>();
+			result.put("data", doctors);
+			result.put("count", total);
+			result.put("msg", "");
+			result.put("code", "0");
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(result).getBytes("utf-8")); 
+		}else if(requestType.equals("updateDoctorByAdmin")){ 
+			String workTime = request.getParameter("workTime").toString();
+			String doctorCode = request.getParameter("doctorCode").toString();
+			String level = request.getParameter("level").toString();
+			String jobTitle = request.getParameter("jobTitle").toString();
+			String medicalSkill = request.getParameter("medicalSkill").toString();
+			doctorService.updateDoctorByAdmin(doctorCode, workTime, jobTitle, level, medicalSkill);
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(true).getBytes("utf-8")); 
 		}
-	}
-	public String getImageStr(String imgFile) {
-	    InputStream inputStream = null;
-	    byte[] data = null;
-	    try {
-	        inputStream = new FileInputStream(imgFile);
-	        data = new byte[inputStream.available()];
-	        inputStream.read(data);
-	        inputStream.close();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	    // º”√‹
-	    BASE64Encoder encoder = new BASE64Encoder();
-	    return encoder.encode(data);
 	}
 
 }

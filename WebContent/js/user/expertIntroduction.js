@@ -8,7 +8,7 @@ layui.use([ 'element', 'carousel', 'layer','jquery' ], function() {
 		arrow : 'always',
 	});
 	layer.config({skin: 'my-skin'});
-
+	getCurCustomer()
 });
 function selectTab(idx) {
     for (var i = 1; i <= 9; i++) {
@@ -142,11 +142,18 @@ function formateDoctorIntro(doctors){
          "<div class='layui-card-body introspan'>" +
          "<span class='black'>"+curr.doctorName+"</span>"+
          "<span class='purple'>"+curr.level+"</span>"+
-         "<span class='gray'>"+curr.medicalSkill+"</span> <a href='registration.html?doctorName="+curr.doctorName+"&doctorCode="+curr.doctorCode+"'>立即预约</a>"+
+         "<span class='gray'>"+curr.medicalSkill+"</span> <a href='javascript:;' onclick=makeAppoint('"+curr.doctorName+"',"+curr.doctorCode+")>立即预约</a>"+
          "</div>" +
          "</div>" +
          "</div>";
     }) 
      $('#doctorIntro').append(infos);
 }
- 
+function makeAppoint(doctorName,doctorCode){
+	if (cusId!=='') {
+		location.href='registration.html?doctorName='+doctorName+'&doctorCode='+doctorCode;
+	} else {
+		alert('请先登录');
+		location.href="login.html"
+	}
+}

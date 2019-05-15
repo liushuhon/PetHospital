@@ -20,8 +20,9 @@ body {
 	position: fixed;
 	top: 0;
 	width: 100%;
-	z-index: 999; 
-	box-shadow: 4px -2px 13px 0px black;
+	z-index: 999;
+	border: 1px solid transparent;
+	box-shadow: 4px -2px 13px 0px #803b7d;
 }
 
 .index-header .left {
@@ -109,4 +110,34 @@ body {
 
 .bold {
 	font-weight: bold;
+}
+.content {
+	width: 88%;
+    margin-left: 6%;
+}
+#hospital .adoptFont {
+	margin-top: 40px;
+	background-color: #b85f7c;
+	color: white;
+	text-align: center;
+	margin-right: 20px;
+}
+
+#hospital .adoptFont .contactUs {
+	background-color: rgb(235, 235, 235);
+	color: #454545;
+	text-align: left;
+	padding-left: 38px;
+}
+
+#hospital .adoptFont .contactUs p {
+	padding: 10px 0;
+}
+
+.photoUp {
+	display: flex;
+	justify-content: space-between;
+	width: 95%;
+	color: #888888;
+	margin-top: 40px;
 }

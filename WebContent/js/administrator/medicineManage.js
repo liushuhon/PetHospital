@@ -58,10 +58,6 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			title : '售价/元',
 		}, {
 			align : 'center',
-			field : 'costPrice',
-			title : '进价/元',
-		}, {
-			align : 'center',
 			field : 'operate',
 			title : '操作',
 			align : 'center',
@@ -69,7 +65,6 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 		} ] ],
 
 		skin : 'line',
-		even : true,
 		page : true,
 		limits : [ 5, 7, 10 ],
 		limit : 5,

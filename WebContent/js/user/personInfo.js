@@ -4,7 +4,7 @@ var imgSrc = '';
 layui.use([ 'element', 'form', 'layer', 'table' ], function() {
 	var form = layui.form, element = layui.element, layer = layui.layer, table = layui.table;
 	form.render();
-	
+
 	/**
 	 * 增加宠物
 	 */
@@ -319,7 +319,150 @@ layui.use([ 'element', 'form', 'layer', 'table' ], function() {
 			});
 		}
 	});
-	
+	/**
+	 * 住院病历单
+	 */
+	table.on('tool(inHospitalTab)', function(obj) {
+		var data = obj.data;  
+		$.ajax({
+			url : "/PetHospital/servlet/DoctorServlet",
+			type : "POST",
+			async : false,
+			data : {
+				type : 'findDoctorByCode',
+				code : data.doctorId,
+			},
+			success : function(msg) {
+				var datas = eval(msg);
+				console.log(datas)
+				$('#phones').html(datas[0].phone);
+				$.ajax({
+					url : "/PetHospital/servlet/PetServlet",
+					type : "POST",
+					async : false,
+					data : {
+						type : 'selectByPetId',
+						petId : data.petId,
+					},
+					success : function(msg) {
+						var datas = eval(msg);
+						console.log(datas)
+						$('#weight1').html(datas[0].weight);
+					}
+				});
+			}
+		});
+		
+		$.ajax({
+			url : "/PetHospital/servlet/SituationServlet",
+			type : "POST",
+			async : false,
+			data : {
+				type : 'selectByPetId',
+				petId : data.petId,
+				mark : '住院'
+			},
+			success : function(msg) {
+				var datas = eval(msg);
+				var area = $('#historySituation1');
+				var html = '';
+				datas.forEach(function(item) {
+					html += '<p ><span>'+item.date+'</span>  <span>'+item.note+'</span></p>';
+				});
+				area.append(html);
+			}
+		});
+		$('#inHospital').css('display','none');
+		$('#in-detail').css('display','block');
+		$('#docName1').html(data.docName);
+		
+		$('#petName1').html(data.petName);
+		$('#stayDays1').html(data.stayDays);
+		$('#mark1').html(data.mark);
+//		$('#totalPrice').html(data.totalPrice);
+//		$('#date').html(data.date);
+	});
+	/**
+	 * 出院病历单
+	 */
+	table.on('tool(outHospitalTab)', function(obj) {
+		var data = obj.data;  
+		$.ajax({
+			url : "/PetHospital/servlet/DoctorServlet",
+			type : "POST",
+			async : false,
+			data : {
+				type : 'findDoctorByCode',
+				code : data.doctorId,
+			},
+			success : function(msg) {
+				var datas = eval(msg);
+				console.log(datas)
+				$('#phones').html(datas[0].phone);
+				$.ajax({
+					url : "/PetHospital/servlet/PetServlet",
+					type : "POST",
+					async : false,
+					data : {
+						type : 'selectByPetId',
+						petId : data.petId,
+					},
+					success : function(msg) {
+						var datas = eval(msg);
+						console.log(datas)
+						$('#weight').html(datas[0].weight);
+					}
+				});
+			}
+		});
+		
+		$.ajax({
+			url : "/PetHospital/servlet/SituationServlet",
+			type : "POST",
+			async : false,
+			data : {
+				type : 'selectByPetId',
+				petId : data.petId,
+				mark : '出院'
+			},
+			success : function(msg) {
+				var datas = eval(msg);
+				var area = $('#historySituation');
+				var html = '';
+				datas.forEach(function(item) {
+					html += '<p ><span>'+item.date+'</span>  <span>'+item.note+'</span></p>';
+				});
+				area.append(html);
+			}
+		});
+		$('#outHospital').css('display','none');
+		$('#out-detail').css('display','block');
+		$('#docName').html(data.docName);
+		
+		$('#petName').html(data.petName);
+		$('#stayDays').html(data.stayDays);
+		$('#mark').html(data.mark);
+//		$('#totalPrice').html(data.totalPrice);
+//		$('#date').html(data.date);
+	});
+	/**
+	 * 历史药方
+	 */
+	table.on('tool(prescribeTab)', function(obj) {
+		var data = obj.data;  
+		console.log(data);
+		$('#prescribe-container').css('display','none');
+		$('#prescribeDetail').css('display','block');
+		$('#nickname').html(data.nickname);
+		$('#age').html(data.age);
+		$('#doctorName').html(data.doctorName);
+		$('#docPhone').html(data.docPhone);
+		$('#symptom').html(data.symptom);
+		$('#medicines').html(data.medicines);
+		$('#note').html(data.note);
+		$('#totalPrice').html(data.totalPrice);
+		$('#date').html(data.date);
+	});
 	/***
 	 * 所有宠物管理
 	 */
@@ -520,8 +663,419 @@ layui.use([ 'element', 'form', 'layer', 'table' ], function() {
 	getPersonInfo();
 	getAllPets();
 	getAdoptPets();
+	getToBeConfirmRegis();
+	getConfirmedRegis();
+	getDealedRegis();
+	getPrescribe();
+	getOutHospital();
+	getInHospital();
 })();
+/**
+ * 未出院
+ */
+function getInHospital(){
+	layui.table.render({
+		elem : '#inHospitalTab',
+		id : 'inHospitalTab',
+		url : '/PetHospital/servlet/InHospitalServlet',
+		where : {
+			type : 'selectByCusId',
+			customerId : cusId,
+			mark : '住院'
+		},
+		request : {
+			pageName : 'curr' // 页码的参数名称，默认：page
+			,
+			limitName : 'nums' // 每页数据量的参数名，默认：limit
+		},
+		method : 'post',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		cols : [ [ // 标题栏
+		{
+			field : 'id',
+			title : '编号',
+			sort : true
+		}, {
+			field : 'petName',
+			title : '宠物',
+		}, {
+			field : 'docName',
+			title : '医生',
+		}, {
+			field : 'stayDays',
+			title : '住院天数',
+		}, {
+			field : 'bedId',
+			title : '病床',
+		},{
+			field : 'mark',
+			title : '状态',
+		}, {
+			align : 'center',
+			field : 'operate',
+			title : '操作',
+			align : 'center',
+			toolbar : '#inHospitalTool'
+		} ] ], 
+		skin : 'line' // 表格风格
+		,
+		page : true // 是否显示分页
+		,
+		limits : [ 5, 7, 10 ],
+		limit : 5 // 每页默认显示的数量
+		,
+		response : {
+			statusName : 'code' // 数据状态的字段名称，默认：code
+			,
+			statusCode : 0 // 成功的状态码，默认：0
+			,
+			msgName : 'msg' // 状态信息的字段名称，默认：msg
+			,
+			countName : 'count' // 数据总数的字段名称，默认：count
+			,
+			dataName : 'data' // 数据列表的字段名称，默认：data
+		}
+	});
+}
+/**
+ * 已出院
+ */
+function getOutHospital(){
+	layui.table.render({
+		elem : '#outHospitalTab',
+		id : 'outHospitalTab',
+		url : '/PetHospital/servlet/InHospitalServlet',
+		where : {
+			type : 'selectByCusId',
+			customerId : cusId,
+			mark : '出院'
+		},
+		request : {
+			pageName : 'curr' // 页码的参数名称，默认：page
+			,
+			limitName : 'nums' // 每页数据量的参数名，默认：limit
+		},
+		method : 'post',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		cols : [ [ // 标题栏
+		{
+			field : 'id',
+			title : '编号',
+			sort : true
+		}, {
+			field : 'petName',
+			title : '宠物',
+		}, {
+			field : 'docName',
+			title : '医生',
+		}, {
+			field : 'stayDays',
+			title : '住院天数',
+		}, {
+			field : 'hospitalPrice',
+			title : '总价',
+		},{
+			field : 'mark',
+			title : '状态',
+		}, {
+			align : 'center',
+			field : 'operate',
+			title : '操作',
+			align : 'center',
+			toolbar : '#outHospitalTool'
+		} ] ], 
+		skin : 'line' // 表格风格
+		,
+		page : true // 是否显示分页
+		,
+		limits : [ 5, 7, 10 ],
+		limit : 5 // 每页默认显示的数量
+		,
+		response : {
+			statusName : 'code' // 数据状态的字段名称，默认：code
+			,
+			statusCode : 0 // 成功的状态码，默认：0
+			,
+			msgName : 'msg' // 状态信息的字段名称，默认：msg
+			,
+			countName : 'count' // 数据总数的字段名称，默认：count
+			,
+			dataName : 'data' // 数据列表的字段名称，默认：data
+		}
+	});
+}
+/**
+ * 药方
+ */
+function getPrescribe(){
+	layui.table.render({
+		elem : '#prescribeTab',
+		id : 'prescribeTab',
+		url : '/PetHospital/servlet/PrescribeServlet',
+		where : {
+			types : 'queryAllPrescribeByCus',
+			customerId : cusId,
+		},
+		request : {
+			pageName : 'curr' // 页码的参数名称，默认：page
+			,
+			limitName : 'nums' // 每页数据量的参数名，默认：limit
+		},
+		method : 'post',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		cols : [ [ // 标题栏
+		{
+			field : 'prescriptionCode',
+			title : '编号',
+			sort : true
+		}, {
+			field : 'nickname',
+			title : '宠物',
+		}, {
+			field : 'doctorName',
+			title : '医生',
+		}, {
+			field : 'medicines',
+			title : '药物',
+		}, {
+			field : 'totalPrice',
+			title : '总价',
+		}, {
+			align : 'center',
+			field : 'operate',
+			title : '操作',
+			align : 'center',
+			toolbar : '#prescribeTool'
+		} ] ], 
+		skin : 'line' // 表格风格
+		,
+		page : true // 是否显示分页
+		,
+		limits : [ 5, 7, 10 ],
+		limit : 5 // 每页默认显示的数量
+		,
+		response : {
+			statusName : 'code' // 数据状态的字段名称，默认：code
+			,
+			statusCode : 0 // 成功的状态码，默认：0
+			,
+			msgName : 'msg' // 状态信息的字段名称，默认：msg
+			,
+			countName : 'count' // 数据总数的字段名称，默认：count
+			,
+			dataName : 'data' // 数据列表的字段名称，默认：data
+		}
+	});
+}
 
+/**
+ * 已处理的订单
+ */
+function getDealedRegis() {
+	layui.table.render({
+		elem : '#completedRegi',
+		id : 'completedRegi',
+		url : '/PetHospital/servlet/RegistrationServlet',
+		where : {
+			type : 'findRegistrationByCustId',
+			customerId : cusId,
+			state : '已处理'
+		},
+		request : {
+			pageName : 'curr' // 页码的参数名称，默认：page
+			,
+			limitName : 'nums' // 每页数据量的参数名，默认：limit
+		},
+		method : 'post',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		cols : [ [ // 标题栏
+		{
+			field : 'registrationCode',
+			title : '编号',
+			width : 80,
+			sort : true
+		}, {
+			field : 'customerName',
+			title : '主人姓名',
+			width : 120
+		}, {
+			field : 'customerPhone',
+			title : '手机号码',
+			minWidth : 120
+		}, {
+			field : 'petName',
+			title : '宠物姓名',
+			minWidth : 80
+		}, {
+			field : 'category',
+			title : '宠物类别',
+			minWidth : 80
+		}, {
+			field : 'regisTime',
+			title : '处理时间',
+			width : 200
+		}, {
+			field : 'state',
+			title : '状态',
+			width : 100
+		} ] ], 
+		skin : 'line' // 表格风格
+		,
+		page : true // 是否显示分页
+		,
+		limits : [ 5, 7, 10 ],
+		limit : 5 // 每页默认显示的数量
+		,
+		response : {
+			statusName : 'code' // 数据状态的字段名称，默认：code
+			,
+			statusCode : 0 // 成功的状态码，默认：0
+			,
+			msgName : 'msg' // 状态信息的字段名称，默认：msg
+			,
+			countName : 'count' // 数据总数的字段名称，默认：count
+			,
+			dataName : 'data' // 数据列表的字段名称，默认：data
+		}
+	});
+}
+/**
+ * 预约成功的订单
+ */
+function getConfirmedRegis() {
+	layui.table.render({
+		elem : '#confirmedRegi',
+		id : 'confirmedRegi',
+		url : '/PetHospital/servlet/RegistrationServlet',
+		where : {
+			type : 'findRegistrationByCustId',
+			customerId : cusId,
+			state : '预约成功'
+		},
+		request : {
+			pageName : 'curr' // 页码的参数名称，默认：page
+			,
+			limitName : 'nums' // 每页数据量的参数名，默认：limit
+		},
+		method : 'post',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		cols : [ [ // 标题栏
+		{
+			field : 'registrationCode',
+			title : '编号',
+			width : 80,
+			sort : true
+		}, {
+			field : 'customerName',
+			title : '主人姓名',
+			width : 120
+		}, {
+			field : 'customerPhone',
+			title : '手机号码',
+			minWidth : 120
+		}, {
+			field : 'petName',
+			title : '宠物姓名',
+			minWidth : 80
+		}, {
+			field : 'category',
+			title : '宠物类别',
+			minWidth : 80
+		}, {
+			field : 'regisTime',
+			title : '就诊时间',
+			width : 200
+		}, {
+			field : 'state',
+			title : '状态',
+			width : 100
+		} ] ], 
+		skin : 'line' // 表格风格
+		,
+		page : true // 是否显示分页
+		,
+		limits : [ 5, 7, 10 ],
+		limit : 5 // 每页默认显示的数量
+		,
+		response : {
+			statusName : 'code' // 数据状态的字段名称，默认：code
+			,
+			statusCode : 0 // 成功的状态码，默认：0
+			,
+			msgName : 'msg' // 状态信息的字段名称，默认：msg
+			,
+			countName : 'count' // 数据总数的字段名称，默认：count
+			,
+			dataName : 'data' // 数据列表的字段名称，默认：data
+		}
+	});
+}
+/**
+ * 待确认的订单
+ */
+function getToBeConfirmRegis(){
+	layui.table.render({
+		elem : '#toBeConfirmedRegi',
+		id : 'toBeConfirmedRegi',
+		url : '/PetHospital/servlet/RegistrationServlet',
+		where : {
+			type : 'findRegistrationByCustId',
+			customerId : cusId,
+			state : '待处理'
+		},
+		request : {
+			pageName : 'curr' // 页码的参数名称，默认：page
+			,
+			limitName : 'nums' // 每页数据量的参数名，默认：limit
+		},
+		method : 'post',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		cols : [ [ // 标题栏
+		{
+			field : 'registrationCode',
+			title : '编号',
+			sort : true
+		}, {
+			field : 'customerName',
+			title : '主人姓名',
+		}, {
+			field : 'customerPhone',
+			title : '手机号码',
+			width : 130
+		}, {
+			field : 'petName',
+			title : '宠物姓名',
+		}, {
+			field : 'category',
+			title : '宠物类别',
+		}, {
+			field : 'regisTime',
+			title : '预约时间',
+			width : 180
+		}, {
+			field : 'state',
+			title : '状态',
+		}] ], 
+		skin : 'line' // 表格风格
+		,
+		page : true // 是否显示分页
+		,
+		limits : [ 5, 7, 10 ],
+		limit : 5 // 每页默认显示的数量
+		,
+		response : {
+			statusName : 'code' // 数据状态的字段名称，默认：code
+			,
+			statusCode : 0 // 成功的状态码，默认：0
+			,
+			msgName : 'msg' // 状态信息的字段名称，默认：msg
+			,
+			countName : 'count' // 数据总数的字段名称，默认：count
+			,
+			dataName : 'data' // 数据列表的字段名称，默认：data
+		}
+	});
+}
 /**
  * 领养宠物
  */
@@ -767,7 +1321,7 @@ function refreashTable(table) {
 	
 }
 function checkTab(idx) {
-	for (var i = 1; i <= 4; i++) {
+	for (var i = 1; i <= 5; i++) {
 		if (idx == i) {
 			document.getElementById("TD" + i).className = "tabSelect";
 			document.getElementById("block" + i).style = "display:block;";
@@ -776,4 +1330,17 @@ function checkTab(idx) {
 			document.getElementById("block" + i).style = "display:none;";
 		}
 	}
+}
+
+function returnPrescribe() {
+	$('#prescribeDetail').css('display','none');
+	$('#prescribe-container').css('display','block');
+}
+function returnHospital() {
+	$('#out-detail').css('display','none');
+	$('#outHospital').css('display','block');
+}
+function returnInHospital() {
+	$('#in-detail').css('display','none');
+	$('#inHospital').css('display','block');
 }

@@ -9,7 +9,9 @@ function toUrl(hrefa){
 }
 (function () {
 	getCurUser(); 
-	$("#userName").html( curUsername);
+	 getCurAdmin()
+	$("#userName").html(curUsername);
+		$("#adminName").html(adminName);
     var entry,
         // 配置所有应用的入口文件，程序将会按照data-main属性中设置的值进行索引查找
         // 如果你在引入此脚本的script标签上没有设置data-main属性，程序将会默认访问home.js文件

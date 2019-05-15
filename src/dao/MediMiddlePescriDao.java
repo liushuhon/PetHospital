@@ -11,8 +11,8 @@ public class MediMiddlePescriDao {
 	public void addMedi_Prescri(MediMiddlePrescri mePrescri){
 		 
 		   try {
-				String sql = "insert into med_prescrip (medicineId,customerId,mark,price) "
-						+ "values('"+mePrescri.getMedicineId()+"','"+mePrescri.getCustomerId()+"','"+mePrescri.getMark()+"','"+mePrescri.getPrice()+"');";
+				String sql = "insert into med_prescrip (medicineId,prescriptionId,number) "
+						+ "values('"+mePrescri.getMedicineId()+"','"+mePrescri.getPrescriptionId()+"','"+mePrescri.getNumber()+"');";
 				
 				this.commonDAO.executeUpdate(sql, null); 
 			}

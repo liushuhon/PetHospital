@@ -10,7 +10,7 @@ public class AdoptPet {
 	private String immunity;
 	private String species;
 	private String Color;
-	private String Weight;  
+	private String weight;  
 	private String photo;
 	
 	
@@ -30,10 +30,11 @@ public class AdoptPet {
 		this.sterilization = sterilization;
 		this.immunity = immunity;
 		this.species = species;
-		Color = color;
-		Weight = weight;
+		this.Color = color;
+		this.weight = weight;
 		this.photo = photo;
 	}
+
 	public String getAdoptPetCode() {
 		return adoptPetCode;
 	}
@@ -89,10 +90,10 @@ public class AdoptPet {
 		Color = color;
 	}
 	public String getWeight() {
-		return Weight;
+		return weight;
 	}
 	public void setWeight(String weight) {
-		Weight = weight;
+		this.weight = weight;
 	}
 	public String getPhoto() {
 		return photo;

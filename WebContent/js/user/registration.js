@@ -149,7 +149,7 @@ function formatePets(pets) {
 	text += "<div class='layui-form-item text-center'>"+
 			"<label class='layui-form-label'>预约时间</label>"+
 			"<div class='layui-input-block'>"+
-			"<input type='text' class='layui-input' id='regisTime'"+
+			"<input type='text' class='layui-input' id='regisTime' autocomplete='off'"+
 			"name='regisTime'>"+
 			"</div>"+
 			"</div>";

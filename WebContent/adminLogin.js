@@ -28,7 +28,7 @@ layui.define(['element','layer'],function(exports){
 				success : function(data) {
 					if(data.length!=0){ 
 						adminId = data[0].id,
-						getCurUser();
+						getCurAdmin();
 						window.location.href="adminIndex.html";
 					}else{
 						layer.msg("用户名或密码错误")

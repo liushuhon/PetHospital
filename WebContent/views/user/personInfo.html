@@ -7,7 +7,13 @@
 <link rel="stylesheet" href="../../assets/css/user.css">
 <link rel="stylesheet" href="../../assets/css/common.css">
 <style>
-  .layui-table-body{overflow-x: hidden !important;}
+.layui-table-body {
+	overflow-x: hidden !important;
+}
+
+.layui-table-view .layui-table {
+	width: 100%
+}
 </style>
 </head>
 <body>
@@ -38,9 +44,6 @@
 								<a href="javascript:;">修改信息</a>
 							</dd>
 							<dd>
-								<a href="javascript:;">修改密码</a>
-							</dd>
-							<dd>
 								<a href="javascript:;" onclick="cusLogout()">退出</a>
 							</dd>
 						</dl></li>
@@ -66,6 +69,8 @@
 						href="javascript:;">预约管理</a></li>
 					<li id="TD4" class="tabUnSelect" onclick="checkTab(4)"><a
 						href="javascript:;">药方管理</a></li>
+					<li id="TD5" class="tabUnSelect" onclick="checkTab(5)"><a
+						href="javascript:;">住院宠物管理</a></li>
 				</ul>
 			</div>
 			<div class="layui-col-md9 right">
@@ -179,13 +184,12 @@
 											<ul class="layui-tab-title">
 												<li class="layui-this">所有宠物</li>
 												<li>领养宠物</li>
-												<li>住院宠物</li>
 											</ul>
 											<div class="layui-tab-content">
 												<div class="layui-tab-item layui-show">
-												<button id="addPet" class="layui-btn">
-													<i class="layui-icon">&#xe608;</i> 添加
-												</button>
+													<button id="addPet" class="layui-btn">
+														<i class="layui-icon">&#xe608;</i> 添加
+													</button>
 													<div class="form-box layui-form">
 														<table id="allPet" lay-filter="demo"></table>
 														<script type="text/html" id="petTool">
@@ -202,13 +206,240 @@
                   										  </script>
 													</div>
 												</div>
-												<div class="layui-tab-item">3</div>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div id="block3"></div>
-								<div id="block4"></div>
+								<div id="block3" style="display: none">
+									<div class="layui-row">
+										<div class="layui-tab layui-tab-brief"
+											lay-filter="docDemoTabBrief">
+											<ul class="layui-tab-title">
+												<li class="layui-this">待确认</li>
+												<li>预约成功</li>
+												<li>已处理</li>
+											</ul>
+											<div class="layui-tab-content">
+												<div class="layui-tab-item layui-show">
+													<div class="form-box layui-form">
+														<table id="toBeConfirmedRegi"
+															lay-filter="toBeConfirmedRegi"></table>
+													</div>
+												</div>
+												<div class="layui-tab-item">
+													<div class="form-box layui-form">
+														<table id="confirmedRegi" lay-filter="confirmedRegi"></table>
+
+													</div>
+												</div>
+												<div class="layui-tab-item">
+													<div class="form-box layui-form">
+														<table id="completedRegi" lay-filter="completedRegi"></table>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="block4" style="display: none">
+									<div class="layui-row">
+										<div class="layui-tab layui-tab-brief"
+											lay-filter="docDemoTabBrief">
+											<ul class="layui-tab-title">
+												<li class="layui-this">历史药方</li>
+											</ul>
+											<div class="layui-tab-content">
+												<div class="layui-tab-item layui-show">
+													<div id="prescribe-container" class="form-box layui-form">
+														<table id="prescribeTab" lay-filter="prescribeTab"></table>
+														<script type="text/html" id="prescribeTool">
+                            							 	<a class="layui-btn layui-btn-sm" lay-filter="detailPre" lay-event="detailPre" lay>查看</a>   
+                  										  </script>
+
+													</div>
+													<div id="prescribeDetail">
+														<p>
+															宠物：<span id="nickname"></span>
+														</p>
+														<p>
+															年龄：<span id="age"></span>岁
+														</p>
+														<p>
+															医生：<span id="doctorName"></span>
+														</p>
+														<p>
+															联系电话：<span id="docPhone"></span>
+														</p>
+														<p>
+															症状：<span id="symptom"></span>
+														</p>
+														<p>
+															药物：<span id="medicines"></span>
+														</p>
+														<p>
+															备注：<span id="note"></span>
+														</p>
+														<p>
+															总价：<span id="totalPrice"></span>元
+														</p>
+														<p>
+															时间：<span id="date"></span>
+														</p>
+														<button style="margin-top: 10px;"
+															onclick="returnPrescribe()"
+															class="layui-btn layui-btn-primary">返回</button>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<div id="block5" style="display: none;">
+									<div class="layui-row">
+										<div class="layui-tab layui-tab-brief"
+											lay-filter="docDemoTabBrief">
+											<ul class="layui-tab-title">
+												<li class="layui-this">已出院</li>
+												<li>未出院</li>
+											</ul>
+											<div class="layui-tab-content">
+												<div class="layui-tab-item layui-show">
+													<div id="outHospital" class="form-box layui-form">
+														<table id="outHospitalTab" lay-filter="outHospitalTab"></table>
+														<script type="text/html" id="outHospitalTool">
+                            							 	<a class="layui-btn layui-btn-sm" lay-filter="detailOutHospital" lay-event="detailOutHospital" lay>查看</a>   
+                  										</script>
+													</div>
+													<div id="out-detail" class="layui-card-body layui-form">
+														<div class="layui-row layui-form-item ">
+															<div class="  layui-col-md4">
+																<label class="layui-form-label">医生姓名:</label>
+																<div class="layui-input-block lineHeight">
+																	<p id="docName" class="layui-p"></p>
+																</div>
+															</div>
+															
+														</div>
+														<div class="layui-row layui-form-item ">
+															<div class="  layui-col-md4">
+																<label class="layui-form-label">宠物昵称:</label>
+																<div class="layui-input-block lineHeight">
+																	<p id="petName" class="layui-p"></p>
+																</div>
+															</div>
+															<div class="  layui-col-md4">
+																<label class="layui-form-label">体重:</label>
+																<div class="layui-input-block lineHeight">
+																	<p id="weight"></p>
+																</div>
+															</div> 
+														</div>
+														
+														<div class="layui-row layui-form-item ">
+															<div class="  layui-col-md4">
+																<label class="layui-form-label">住院天数:</label>
+																<div class="layui-input-block lineHeight">
+																	<p id="stayDays" class="layui-p"></p>
+																</div>
+															</div>
+															<div class="  layui-col-md4">
+																<label class="layui-form-label">状态:</label>
+																<div class="layui-input-block lineHeight">
+																	<p id="mark"></p>
+																</div>
+															</div> 
+														</div>
+														<div class="layui-row layui-form-item">
+															<div class="layui-col-md8">
+																<label class="layui-form-item layui-form-label">宠物病情:</label>
+																<div id="historySituation"
+																	class="layui-input-block lineHeight situation-list">
+																	
+																</div>
+															</div>
+														</div>
+														<div class="layui-row layui-form-item">
+															<div class="layui-col-md8">
+																
+														<button style="margin-top: 10px;margin-left: 35px;"
+														onclick="returnHospital()"
+															class="layui-btn layui-btn-primary">返回</button>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="layui-tab-item">
+													<div id="inHospital" class="form-box layui-form">
+														<table id="inHospitalTab" lay-filter="inHospitalTab"></table>
+														<script type="text/html" id="inHospitalTool">
+                            							 	<a class="layui-btn layui-btn-sm" lay-filter="detailInHospital" lay-event="detailInHospital" lay>查看</a>   
+                  										</script>
+													</div>
+													<div id="in-detail" class="layui-card-body layui-form">
+														<div class="layui-row layui-form-item ">
+															<div class="  layui-col-md4">
+																<label class="layui-form-label">医生姓名:</label>
+																<div class="layui-input-block lineHeight">
+																	<p id="docName1" class="layui-p"></p>
+																</div>
+															</div>
+															
+														</div>
+														<div class="layui-row layui-form-item ">
+															<div class="  layui-col-md4">
+																<label class="layui-form-label">宠物昵称:</label>
+																<div class="layui-input-block lineHeight">
+																	<p id="petName1" class="layui-p"></p>
+																</div>
+															</div>
+															<div class="  layui-col-md4">
+																<label class="layui-form-label">体重:</label>
+																<div class="layui-input-block lineHeight">
+																	<p id="weight1"></p>
+																</div>
+															</div> 
+														</div>
+														
+														<div class="layui-row layui-form-item ">
+															<div class="  layui-col-md4">
+																<label class="layui-form-label">住院天数:</label>
+																<div class="layui-input-block lineHeight">
+																	<p id="stayDays1" class="layui-p"></p>
+																</div>
+															</div>
+															<div class="  layui-col-md4">
+																<label class="layui-form-label">状态:</label>
+																<div class="layui-input-block lineHeight">
+																	<p id="mark1"></p>
+																</div>
+															</div> 
+														</div>
+														<div class="layui-row layui-form-item">
+															<div class="layui-col-md8">
+																<label class="layui-form-item layui-form-label">宠物病情:</label>
+																<div id="historySituation1"
+																	class="layui-input-block lineHeight situation-list">
+																	
+																</div>
+															</div>
+														</div>
+														<div class="layui-row layui-form-item">
+															<div class="layui-col-md8">
+																
+														<button style="margin-top: 10px;margin-left: 35px;"
+														onclick="returnInHospital()"
+															class="layui-btn layui-btn-primary">返回</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

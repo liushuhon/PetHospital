@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="../../assets/css/user.css">
 <link rel="stylesheet" href="../../assets/css/common.css">
 </head>
-<body onpageshow="">
+<body style="background-color: white;" onpageshow="">
 	<div class="index-header head-font">
 		<div class="layui-row">
 			<div class="layui-col-md3 left head-img">
@@ -32,10 +32,7 @@
 					<li class="layui-nav-item"><a href="">个人中心</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">修改信息</a>
-							</dd>
-							<dd>
-								<a href="javascript:;">修改密码</a>
+								<a href="personInfo.html">修改信息</a>
 							</dd>
 							<dd>
 								<a href="javascript:;" onclick="cusLogout()">退出</a>
@@ -51,23 +48,59 @@
 			</div>
 		</div>
 	</div>
-	<div id="adopt">
-		<div class="layui-card">
-			<div class="layui-card-header ">
-				<h1 class="text-center">待领养专区</h1>
+	<div class="layui-carousel" style="margin-top: 60px;" id="test1">
+		<div carousel-item>
+			<div>
+				<img src="../../assets/images/photo1.jpg"
+					style="width: 1366px; height: 400px">
 			</div>
-			<div class="layui-card-body">
-				<div class="layui-row">
-					<div id="adoptPets" class="layui-col-md4 petBlock">
-						
-					</div>
-					
-				</div>
-
+			<div>
+				<img src="../../assets/images/photo1.jpg"
+					style="width: 1366px; height: 400px">
+			</div>
+			<div>
+				<img src="../../assets/images/photo1.jpg"
+					style="width: 1366px; height: 400px">
+			</div>
+			<div>
+				<img src="../../assets/images/photo1.jpg"
+					style="width: 1366px; height: 400px">
 			</div>
 		</div>
 	</div>
-	 
+
+	<div class="layui-row content">
+		<div id="hospital" class="layui-col-md3">
+			<div class="adoptFont">
+				<h1>领养专区</h1>
+				<span>ADOPTION AREA</span>
+			</div>
+			<div class="adoptFont">
+				<h1>联系我们</h1>
+				<span>SERVICE</span>
+				<div class="contactUs">
+					<p>电话：010-00000000</p>
+					<p>微信：petpalace</p>
+					<p>官方微信、微博：爱宠宠物 </p>
+					<p>邮件：2244705257@qq.com</p>
+					<p>地址：重庆理工大学</p>
+				</div>
+			</div>
+		</div>
+		<div id="adopt" class="layui-col-md9">
+			<div class="layui-card">
+				<div class="layui-card-header photoUp">
+					<span>领养专区</span>
+					<span>首页：领养专区</span>
+				</div>
+				<div class="layui-card-body">
+					<div id="adoptPets" class="layui-row petBlock"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<div id="prompt">
 		<div class="layui-row">
 			<div class="layui-col-md12">您的申请已发送至管理员处，请注意查收信息</div>

@@ -1,5 +1,5 @@
 /**
- * 
+ * 医生
  */
 function getCurUser(){ 
 	$.ajax({
@@ -25,7 +25,32 @@ function getCurUser(){
 		}
 	});
 }
-
+/**
+ * 管理员
+ */
+function getCurAdmin(){ 
+	$.ajax({
+		type : "POST",
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		url : "/PetHospital/servlet/UserServlet",
+		dataType : 'json',
+		async:false,
+		data : {
+			'type' : 'getAdmin', 
+		},
+		success : function(data) {
+			var datas = eval(data);
+			adminId = datas.userId;
+			
+			adminName = datas.username;
+			adminPwd = datas.password; 
+			console.log(adminId+" "+adminName+" "+adminPwd)
+		},
+		error : function(error) {
+			alert("error");
+		}
+	});
+}
 function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
     var r = window.location.search.substr(1).match(reg);  //匹配目标参数

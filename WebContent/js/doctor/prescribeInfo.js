@@ -26,7 +26,14 @@ layui.use(['layer','form','jquery'],function(){
 			$("#immunity").html(datas[0].immunity);
 			$("#sterilization").html(datas[0].sterilization);
 			$("#symptom").html(datas[0].symptom);
-			$("#medicines").html(datas[0].medicines);/*
+			
+			let html = '';
+			datas[0].medicines.split(',').forEach(function(item){
+				html += "<p>"+item+"</p>";
+			});
+			$("#medicines").html(html);
+			$("#note").html(datas[0].note);
+/*
 			customerId = datas[0].customerCode;
 			petId = datas[0].petCode;
 			doctorId = datas[0].doctorCode;*/

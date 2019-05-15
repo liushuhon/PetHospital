@@ -113,12 +113,52 @@
     <servlet-name>DoctorServlet</servlet-name>
     <url-pattern>/servlet/DoctorServlet</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <servlet-name>AdoptApplicationServlet</servlet-name>
     <servlet-class>servlet.AdoptApplicationServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AdoptApplicationServlet</servlet-name>
     <url-pattern>/servlet/AdoptApplicationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>FacilityServlet</servlet-name>
+    <servlet-class>servlet.FacilityServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FacilityServlet</servlet-name>
+    <url-pattern>/servlet/FacilityServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>InHospitalServlet</servlet-name>
+    <servlet-class>servlet.InHospitalServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InHospitalServlet</servlet-name>
+    <url-pattern>/servlet/InHospitalServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>BedServlet</servlet-name>
+    <servlet-class>servlet.BedServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BedServlet</servlet-name>
+    <url-pattern>/servlet/BedServlet</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>SituationServlet</servlet-name>
+    <servlet-class>servlet.SituationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SituationServlet</servlet-name>
+    <url-pattern>/servlet/SituationServlet</url-pattern>
+  </servlet-mapping>    
+  <servlet>
+    <servlet-name>MediMiddleInHospitalServlet</servlet-name>
+    <servlet-class>servlet.MediMiddleInHospitalServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MediMiddleInHospitalServlet</servlet-name>
+    <url-pattern>/servlet/MediMiddleInHospitalServlet</url-pattern>
   </servlet-mapping>
 </web-app>

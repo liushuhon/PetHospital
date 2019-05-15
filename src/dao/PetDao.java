@@ -50,7 +50,7 @@ public class PetDao {
 	 public List<Map<String, Object>> queryAllByMaster(String masterId) {
 
 			try {
-				String sql = "SELECT * FROM pet WHERE masterid = '"+masterId+"' UNION select a.id,a.masterid,a.age,a.nickname,a.gender,a.sterilization,a.immunity,a.species,a.color,a.weight,a.adoptPetCode as petCode,a.photo AS petImg,a.state FROM adoptpet AS a where a.masterid = '"+masterId+"'";
+				String sql = "SELECT * FROM pet WHERE masterid = '"+masterId+"' UNION select a.id,a.masterid,a.age,a.nickname,a.gender,a.sterilization,a.immunity,a.species,a.color,a.weight,a.adoptPetCode as petCode,a.photo AS petImg,a.state,a.inHospital FROM adoptpet AS a where a.masterid = '"+masterId+"'";
 				return commonDAO.excuteQuery(sql, null);
 			} catch (Exception e) {
 				new Exception("操作数据库出错！").printStackTrace();
@@ -66,7 +66,7 @@ public class PetDao {
 		 public List<Map<String, Object>> queryAllByMasterLimits(int page, int limits, String masterId){
 			 int startIndex = (page - 1) * limits;
 				try {
-					String sql = "SELECT * FROM pet WHERE masterid = '"+masterId+"' UNION select a.id,a.masterid,a.age,a.nickname,a.gender,a.sterilization,a.immunity,a.species,a.color,a.weight,a.adoptPetCode as petCode,a.photo AS petImg,a.state FROM adoptpet AS a where a.masterid = '"+masterId+"' order by id desc limit " + startIndex + "," + limits;
+					String sql = "SELECT * FROM pet WHERE masterid = '"+masterId+"' UNION select a.id,a.masterid,a.age,a.nickname,a.gender,a.sterilization,a.immunity,a.species,a.color,a.weight,a.adoptPetCode as petCode,a.photo AS petImg,a.state,a.inHospital FROM adoptpet AS a where a.masterid = '"+masterId+"' order by id desc limit " + startIndex + "," + limits;
 					return this.commonDAO.excuteQuery(sql, null);
 				}
 				catch(Exception e){
@@ -103,9 +103,9 @@ public class PetDao {
 				return null;
 			} 
 	  }
-	public List<Map<String, Object>> queryByCusId(String customerCode) {
+	public List<Map<String, Object>> queryByCusId(String masterId) {
 
-		String sql = "SELECT * FROM pet  JOIN customer WHERE pet.masterid = customer.customerCode and customer.customerCode = '" + customerCode+"'";
+		String sql = "SELECT * FROM pet WHERE masterid = '"+masterId+"' UNION select a.id,a.masterid,a.age,a.nickname,a.gender,a.sterilization,a.immunity,a.species,a.color,a.weight,a.adoptPetCode as petCode,a.photo AS petImg,a.state,a.inHospital FROM adoptpet AS a where a.masterid = '"+masterId+"' order by id desc ";
 		try {
 			return commonDAO.excuteQuery(sql, null);
 		} catch (Exception e) {
@@ -115,9 +115,9 @@ public class PetDao {
 	}
 	public void addPet(Pet pet) {
 
-		String sql = "insert into pet (masterid,age,nickname,gender,sterilization,immunity,species,color,weight,petCode,petImg,state)"
+		String sql = "insert into pet (masterid,age,nickname,gender,sterilization,immunity,species,color,weight,petCode,petImg,state,inHospital)"
 						+ "values('"+pet.getMasterId()+"','"+pet.getAge()+"','"+pet.getNickname()+"','"+pet.getGender()+"'"
-								+ ",'"+pet.getSterilization()+"','"+pet.getImmunity()+"','"+pet.getSpecies()+"','"+pet.getColor()+"','"+pet.getWeight()+"','"+pet.getPetCode()+"','"+pet.getPetImg()+"','健康');";
+								+ ",'"+pet.getSterilization()+"','"+pet.getImmunity()+"','"+pet.getSpecies()+"','"+pet.getColor()+"','"+pet.getWeight()+"','"+pet.getPetCode()+"','"+pet.getPetImg()+"','健康','否');";
 		try {
 			commonDAO.executeUpdate(sql, null);
 		} catch (Exception e) {
@@ -145,4 +145,17 @@ public class PetDao {
 				e.printStackTrace(); 
 			} 
 	  }
+	 
+		public List<Map<String, Object>> selectPetByPetId(String petId) {
+			
+			try {
+				String sql = "select * FROM pet WHERE petCode = '"+petId+"'";
+				List<Map<String, Object>> pet = this.commonDAO.excuteQuery(sql, null);
+				return pet;
+			}
+			catch(Exception e){
+				System.out.println("操作数据库出错！");
+			}
+			return null; 
+		}
 }

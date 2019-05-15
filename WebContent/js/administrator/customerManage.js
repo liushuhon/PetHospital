@@ -60,7 +60,6 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			toolbar : '#customerTool'
 		} ] ], 
 		skin : 'line',
-		even : true,
 		page : true,
 		limits : [ 5, 7, 10 ],
 		limit : 5,

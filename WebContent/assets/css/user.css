@@ -141,15 +141,17 @@
 }
 
 #envirEquip {
-	width: 80%;
+	padding-top:40px;
 	margin: 0 auto;
-	margin-top: 80px;
 }
-
+.faciName {
+    line-height: 50px;
+    text-align: center;
+}
 #envirEquip img {
-	width: 100%;
-	border-top-left-radius: 18px;
-	border-top-right-radius: 18px;
+	height: 300px;
+    width: 265px;
+    border-radius: 8px;
 }
 
 .height-300 {
@@ -157,9 +159,7 @@
 }
 
 #adopt {
-	width: 80%;
 	margin: 0 auto;
-	margin-top: 80px;
 }
 
 .margin-top-20 {
@@ -180,7 +180,7 @@
 	display: block;
 	background-color: #770f77;
 	color: #fff;
-	border-radius: 26px;
+	border-radius: 15px;
 	text-align: center;
 	margin: 17px 8px;
 }
@@ -361,4 +361,23 @@
     height: 168px;
     margin: -50px 0 0 -84px;
     border-radius: 100%;
+}
+#prescribe-container {
+	display:block;
+}
+#prescribeDetail {
+	display:none;
+}
+#prescribeDetail p:nth-child(even)
+{
+	margin-bottom:10px;
+}
+.lineHeight {
+	line-height:38px;
+}
+#out-detail {
+	display: none;
+}
+#in-detail {
+	display: none;
 }

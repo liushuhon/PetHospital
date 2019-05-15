@@ -4,29 +4,24 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 	var form = layui.form;
 	var $ = layui.jquery;
 	getCurUser();
-	$.ajax({
-		type : "POST",
-		async : false,
-		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-		url : "/PetHospital/servlet/RegistrationServlet",
-		dataType : 'json',
-		data : {
-			'type' : 'findRegistrationByDoctorId',
-			'doctorId' : curUserId
-		},
-		success : function(data) {
-			datas = eval(data);
-			table.render();
-		},
-		error : function(error) {
-			alert("cannot find!");
-		}
-	});
 
 	// 展示已知数据
 	table.render({
 		elem : '#regisTable',
 		id : 'regisTable',
+		url : '/PetHospital/servlet/RegistrationServlet',
+		where : {
+			type : 'queryAllRegistration',
+			doctorId : curUserId,
+			state : '预约成功'
+		},
+		request : {
+			pageName : 'curr' // 页码的参数名称，默认：page
+			,
+			limitName : 'nums' // 每页数据量的参数名，默认：limit
+		},
+		method : 'post',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		cols : [ [ // 标题栏
 		{
 			field : 'registrationCode',
@@ -60,14 +55,12 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 		}, {
 			field : 'operate',
 			title : '操作',
-			width : 150,
+			width : 180,
 			align : 'center',
 			toolbar : '#regisTool'
-		} ] ],
-		data : datas,
+		} ] ], 
 		skin : 'line' // 表格风格
 		,
-		even : true,
 		page : true // 是否显示分页
 		,
 		limits : [ 5, 7, 10 ],

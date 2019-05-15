@@ -8,9 +8,15 @@ import util.CommonDAO;
 
 public class RegistrationDao {
 	CommonDAO commonDAO = new CommonDAO();
-	public List<Map<String, Object>> findRegistrationByDoctorId(String doctorId) {
+	/**
+	 * 用户的订单
+	 * @param doctorId
+	 * @param state
+	 * @return
+	 */
+	public List<Map<String, Object>> findRegistrationByCustId(String customerId,String state) {
 		try {
-			String sql = "select * from  registration where state='待处理' and doctorId = '"+ doctorId +"'order by date DESC";
+			String sql = "select * from  registration where state='"+state+"' and customerId = '"+ customerId +"'order by date DESC";
 			List<Map<String, Object>> registrations = this.commonDAO.excuteQuery(sql, null);
 			return registrations;
 		}
@@ -19,6 +25,58 @@ public class RegistrationDao {
 		}
 		return null;
 	}
+	/***
+	 * 用户的分页订单
+	 * @param page
+	 * @param limits
+	 * @return
+	 */
+	 public List<Map<String, Object>> queryAllByLimitsForCust(String customerId, int page, int limits, String state){
+		 int startIndex = (page - 1) * limits;
+			try {
+				String sql = "SELECT * FROM registration where state = '"+state+"' and customerId = '"+customerId+"' order by date desc limit " + startIndex + "," + limits;
+				return this.commonDAO.excuteQuery(sql, null);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			return null;  
+	}
+	/**
+	 * 医生的订单
+	 * @param doctorId
+	 * @param state
+	 * @return
+	 */
+	public List<Map<String, Object>> findRegistrationByDoctorId(String doctorId,String state) {
+		try {
+			String sql = "select * from  registration where state='"+state+"' and doctorId = '"+ doctorId +"'order by date DESC";
+			List<Map<String, Object>> registrations = this.commonDAO.excuteQuery(sql, null);
+			return registrations;
+		}
+		catch(Exception e){
+			System.out.println("操作数据库出错！");
+		}
+		return null;
+	}
+	/***
+	 * 医生的分页订单
+	 * @param page
+	 * @param limits
+	 * @return
+	 */
+	 public List<Map<String, Object>> queryAllByLimits(String doctorId, int page, int limits, String state){
+		 int startIndex = (page - 1) * limits;
+			try {
+				String sql = "SELECT * FROM registration where state = '"+state+"' and doctorId = '"+doctorId+"' order by date desc limit " + startIndex + "," + limits;
+				return this.commonDAO.excuteQuery(sql, null);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			return null;  
+	}
+ 
 	public List<Map<String, Object>> findRegistrationDealed(String doctorId) {
 		try {
 			String sql = "select * from  registration where state='已处理' and doctorId = '"+ doctorId +"' order by date DESC";
@@ -53,14 +111,43 @@ public class RegistrationDao {
 		}
 		
 	} 
-	public List<Map<String, Object>> selectRegistration(String selItem,String doctorId, String selContent) {
+	public void updateStateAndDate(String registrationCode,String state,String regisTime, String date){
+		try {
+			String sql = "update registration SET state='"+state+"',regisTime = '"+regisTime+"',date = '"+date+"' WHERE registrationCode='"+registrationCode+"'";
+			this.commonDAO.executeUpdate(sql, null);
+			
+		}
+		catch(Exception e){
+			System.out.println("操作数据库出错！");
+		}
+		
+	}
+	public List<Map<String, Object>> selectRegistration(String selItem,String doctorId, String selContent,String state) {
 		
 		try {
 			String sql ="";
 			if (doctorId=="") {
 				sql = "select * FROM registration WHERE state = '待处理' AND  "+selItem+" like '%"+selContent+"%' order by date DESC";
 			} else {
-				sql = "select * FROM registration WHERE state = '待处理' AND doctorId='"+doctorId+"' AND "+selItem+" like '%"+selContent+"%' order by date DESC";
+				sql = "select * FROM registration WHERE state = '"+state+"' AND doctorId='"+doctorId+"' AND "+selItem+" like '%"+selContent+"%' order by date DESC";
+			} 
+			List<Map<String, Object>> registrations = this.commonDAO.excuteQuery(sql, null);
+			return registrations;
+		}
+		catch(Exception e){
+			System.out.println("操作数据库出错！");
+		}
+		return null; 
+	}
+	
+	public List<Map<String, Object>> selectRegistrationByLimit(String selItem,String doctorId, String selContent,int pageSize,int currPage,String state) {
+		int startIndex = (currPage - 1) * pageSize; 
+		try {
+			String sql ="";
+			if (doctorId=="") {
+				sql = "select * FROM registration WHERE state = '待处理' AND  "+selItem+" like '%"+selContent+"%' order by date DESC";
+			} else {
+				sql = "select * FROM registration WHERE state = '"+state+"' AND doctorId='"+doctorId+"' AND "+selItem+" like '%"+selContent+"%' order by date DESC limit " +startIndex+","+pageSize;
 			} 
 			List<Map<String, Object>> registrations = this.commonDAO.excuteQuery(sql, null);
 			return registrations;

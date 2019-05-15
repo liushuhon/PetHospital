@@ -94,4 +94,7 @@ public class PetService {
 			e.printStackTrace();
 		}
 	 }
+		public List<Map<String, Object>> selectPetByPetId(String petId) {
+			return petDao.selectPetByPetId(petId);
+		}
 }

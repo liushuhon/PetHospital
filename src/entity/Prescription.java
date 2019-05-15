@@ -9,16 +9,28 @@ public class Prescription {
 	private String date;
 	private String symptom;
 	private Double totalPrice;
+	private String note;
+	
 	public Prescription() {
 		super();
 	}
 	
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	
+
 	public Double getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(double sum) {
-		this.totalPrice = sum;
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	public String getSymptom() {

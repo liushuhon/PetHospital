@@ -1,32 +1,27 @@
-layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
+layui.use([ 'element', 'table', 'form', 'jquery','laydate' ], function() {
 	var element = layui.element;
 	var table = layui.table;
 	var form = layui.form;
 	var $ = layui.jquery;
+	  var laydate = layui.laydate;
 	getCurUser();
-	$.ajax({
-		type : "POST",
-		async : false,
-		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-		url : "/PetHospital/servlet/RegistrationServlet",
-		dataType : 'json',
-		data : {
-			'type' : 'findRegistrationByDoctorId',
-			'doctorId' : curUserId
-		},
-		success : function(data) {
-			datas = eval(data);
-			table.render();
-		},
-		error : function(error) {
-			alert("cannot find!");
-		}
-	});
-
 	// 展示已知数据
 	table.render({
-		elem : '#regisTable',
-		id : 'regisTable',
+		elem : '#appointTable',
+		id : 'appointTable',
+		url : '/PetHospital/servlet/RegistrationServlet',
+		where : {
+			type : 'queryAllRegistration',
+			doctorId : curUserId,
+			state : '待处理'
+		},
+		request : {
+			pageName : 'curr' // 页码的参数名称，默认：page
+			,
+			limitName : 'nums' // 每页数据量的参数名，默认：limit
+		},
+		method : 'post',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		cols : [ [ // 标题栏
 		{
 			field : 'registrationCode',
@@ -50,7 +45,7 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			title : '宠物类别',
 			minWidth : 80
 		}, {
-			field : 'date',
+			field : 'regisTime',
 			title : '预约时间',
 			width : 160
 		}, {
@@ -60,14 +55,12 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 		}, {
 			field : 'operate',
 			title : '操作',
-			width : 150,
+			width : 180,
 			align : 'center',
-			toolbar : '#regisTool'
-		} ] ],
-		data : datas,
+			toolbar : '#appointTool'
+		} ] ], 
 		skin : 'line' // 表格风格
 		,
-		even : true,
 		page : true // 是否显示分页
 		,
 		limits : [ 5, 7, 10 ],
@@ -91,7 +84,7 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			var selContent = $('#selContent').val();// 获取输入框的值
 			var selItem = $("#select").val();
 			// 执行重载
-			table.reload('regisTable', {
+			table.reload('appointTable', {
 				page : {
 					curr : 1
 				// 重新从第 1 页开始
@@ -100,7 +93,8 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 					type : 'selectRegistration',
 					doctorId : curUserId,
 					selContent : selContent,
-					selItem : selItem
+					selItem : selItem,
+					state : '待处理'
 				},// 这里传参 向后台
 				url : '/PetHospital/servlet/RegistrationServlet',// 后台做模糊搜索接口路径
 				method : 'post'
@@ -114,9 +108,94 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 	table.on('tool(demo)', function(obj) {
 		var data = obj.data;
 		if (obj.event === "confirm" ) {
-			
+			$.ajax({
+				type : "POST",
+				async : false,
+				contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+				url : "/PetHospital/servlet/RegistrationServlet",
+				dataType : 'json',
+				data : {
+					'type' : 'updateStateAndDate',
+					'registrationCode' : data.registrationCode,
+					'date' : data.date,
+					'state' : '预约成功'
+				},
+				success : function(data) {
+					table.reload('appointTable', {
+						page : {
+							curr : 1
+						// 重新从第 1 页开始
+						},
+						where : {
+							type : 'queryAllRegistration',
+							doctorId : curUserId,
+							state : '待处理'
+						},
+						url : '/PetHospital/servlet/RegistrationServlet',// 后台做模糊搜索接口路径
+						method : 'post'
+					});
+				},
+				error : function(error) {
+					alert("cannot find!");
+				}
+			});
 		} else if (obj.event === "editTime" ) {
-			
+			parent.layer.open({
+				type : 1,
+				title : "修改预约时间",
+				area : [ '420px', '220px' ],
+				content :   '<div class="layui-form-item text-center" style="margin-top:30px">'+
+							'<label class="layui-form-label">预约时间</label>'+
+							'<div class="layui-input-block" >'+
+							'<input type="text" style="width:55%" class="layui-input" autocomplete="off" id="regisTime" name="regisTime">'+
+							'</div>'+
+							'</div>',
+				btn : [ '确定', '取消' ],
+				success : function(layero, index) {
+					parent.layui.laydate.render({
+						elem : '#regisTime',
+						type : 'datetime',
+						min : 0,
+						max : 7,
+					  });
+				},
+				yes : function(index, layero) {
+					let registrationCode = obj.data.registrationCode;
+					let state = '预约成功';
+					let date  = layero.find('#regisTime').val();
+					$.ajax({
+						url : '/PetHospital/servlet/RegistrationServlet',
+						type : 'POST',
+						data : {
+							type : 'updateStateAndDate',
+							registrationCode : registrationCode,
+							state : state,
+							date : date
+						},
+						success : function(msg) {
+							parent.layer.closeAll();
+						}
+					})
+				},
+				cancel : function(index, layero) {
+					layer.close(index);
+				},
+				end : function() {
+					table.reload('appointTable', {
+						page : {
+							curr : 1
+						},
+						where : {
+							type : 'queryAllRegistration',
+							doctorId : curUserId,
+							state : '待处理'
+						},
+						url : '/PetHospital/servlet/RegistrationServlet',
+						method : 'post'
+					});
+				}
+			}); 
+
 		} 
 		
 	})

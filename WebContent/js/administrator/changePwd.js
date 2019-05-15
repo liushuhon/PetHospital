@@ -3,8 +3,8 @@ layui.use(['element','layer'],function(exports){
     $(document).on('click','#submitPassword',function(){
 	var rePassword = $("#rePassword").val();
   	var newPassword = $("#newPassword").val();  
-  	getCurUser(); 
-  	if(rePassword == curPassword){
+  	getCurAdmin(); 
+  	if(rePassword == adminPwd){
   	  	$.ajax({
 			type : "POST",
 			async : false,
@@ -14,7 +14,7 @@ layui.use(['element','layer'],function(exports){
 			crossDomain:true,
 			data : {
 				'type' : 'changePassword',
-				'userId' : curUserId,
+				'userId' : adminId,
 				'password' : newPassword
 			},
 			success : function(data) {  

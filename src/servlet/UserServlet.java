@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -66,10 +65,10 @@ public class UserServlet extends HttpServlet {
 			user.setUserId(request.getSession().getAttribute("cusCode").toString());
 			user.setUsername(request.getSession().getAttribute("cusName").toString());
 			user.setPassword(request.getSession().getAttribute("cusPassword").toString());  
-				 String photosrc= request.getSession().getAttribute("cusPhoto").toString();
-				String imgHeader = "data:image/png;base64,";
-				String base64Src = imgHeader + getImageStr(photosrc.trim());
-				user.setPhoto(base64Src);		
+			String photosrc= request.getSession().getAttribute("cusPhoto").toString();
+			String imgHeader = "data:image/png;base64,";
+			String base64Src = imgHeader + getImageStr(photosrc.trim());
+			user.setPhoto(base64Src);		
 			OutputStream out = response.getOutputStream();
 			out.write(JSON.toJSONString(user).getBytes("utf-8"));
 		}else if(requestType.equals("cusLogout")){ 
@@ -79,6 +78,13 @@ public class UserServlet extends HttpServlet {
 			request.getSession().removeAttribute("cusPhoto");
 			OutputStream out = response.getOutputStream();
 			out.write(JSON.toJSONString(true).getBytes("utf-8"));
+		}else if(requestType.equals("getAdmin")){ 
+			User user = new User();
+			user.setUserId(request.getSession().getAttribute("adminId").toString());
+			user.setUsername(request.getSession().getAttribute("adminName").toString());
+			user.setPassword(request.getSession().getAttribute("adminPwd").toString()); 
+			OutputStream out = response.getOutputStream();
+			out.write(JSON.toJSONString(user).getBytes("utf-8"));
 		}
 	}
 	public String getImageStr(String imgFile) {

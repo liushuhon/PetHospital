@@ -5,22 +5,38 @@ public class Facility {
 	private String faciName;
 	private String origin;
 	private String faciDescribe;
-	private String stockNum;
-	private String total; 
+	private String state;
+	private String photo;
 	
 	public Facility() {
 		super();
 	}
 
 	public Facility(String faciCode, String faciName, String origin,
-			String faciDescribe, String stockNum, String total) {
+			String faciDescribe,String state,String photo) {
 		super();
 		this.faciCode = faciCode;
 		this.faciName = faciName;
 		this.origin = origin;
 		this.faciDescribe = faciDescribe;
-		this.stockNum = stockNum;
-		this.total = total;
+		this.state = state;
+		this.photo = photo;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public String getFaciCode() {
@@ -53,22 +69,6 @@ public class Facility {
 
 	public void setFaciDescribe(String faciDescribe) {
 		this.faciDescribe = faciDescribe;
-	}
-
-	public String getStockNum() {
-		return stockNum;
-	}
-
-	public void setStockNum(String stockNum) {
-		this.stockNum = stockNum;
-	}
-
-	public String getTotal() {
-		return total;
-	}
-
-	public void setTotal(String total) {
-		this.total = total;
 	}
 	
 }

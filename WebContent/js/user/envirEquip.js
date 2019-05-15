@@ -8,3 +8,39 @@ layui.use([ 'element', 'carousel' ], function() {
 		arrow : 'always',
 	});
 });
+
+(function(){
+	queryAllFacilitys();
+})();
+function queryAllFacilitys(){
+	$.ajax({
+		url : "/PetHospital/servlet/FacilityServlet",
+		type : "POST",
+		data : {
+			type : 'queryAllFaciForUser'
+		},
+		success : function(data) {
+			facilitys = eval(data);
+			formateFacilitys(facilitys);
+		},
+		error : function(data) {
+			
+		}
+	});
+}
+function formateFacilitys(facilitys){
+	console.log(facilitys)
+    $('#envirEquip').html("");
+    var infos = '';
+    facilitys.map(function(curr,index) { 
+    	infos +=   "<div class='layui-col-md4'>"+
+							"<div>"+
+								"<img alt='' src='"+curr.photo+"'>"+
+							"</div>"+
+							"<div  class='faciName'>"+
+								"<span>"+curr.faciName+"</span>"+
+							"</div>"+
+					"</div>";
+    }) 
+     $('#envirEquip').append(infos);
+}

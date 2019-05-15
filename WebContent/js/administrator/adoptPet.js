@@ -2,8 +2,7 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 	var element = layui.element;
 	var table = layui.table;
 	var form = layui.form;
-	var $ = layui.jquery; 
-
+	var $ = layui.jquery;
 	// 展示已知数据
 	table.render({
 		elem : '#petTable',
@@ -47,7 +46,6 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			toolbar : '#petTool'
 		} ] ], 
 		skin : 'line',
-		even : true,
 		page : true,
 		limits : [ 5, 7, 10 ],
 		limit : 5,
@@ -259,6 +257,118 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			});
 		}
 	})
+		$("#addAdoptPet").on( 'click',
+			function() {
+			parent.layer.open({
+				type : 1,
+				title : "新增待领养宠物",
+				area : [ '50%','90%'],
+				content : '<form class="layui-form layui-from-pane" action="" style="margin-top: 20px">' 
+					+ '<div class="layui-form-item">'
+					+ '<label class="layui-form-label">宠物照片</label>' 
+					+ '<div class="layui-input-block">'
+					+ '<input type="file"'
+			            + 'accept="image/png, image/jpeg, image/gif, image/jpg"'
+			             +'id="xFile"'
+			            + 'style="position:absolute;clip:rect(0 0 0 0);"'
+			            + 'onchange="uploadPhoto()">'
+					+'<label class="upload-button"'
+			            + 'for="xFile">'
+			         +'<img id="photo" src="assets/images/moren.jpg" style="width:25%;height:25%;border-radius: 10px;" alt="">'
+			     + '</label> '
+					 
+					+ '</div>' + '</div>'
+					+ '<div class="layui-form-item">'
+					+ '<label class="layui-form-label">宠物昵称</label>' 
+					+ '<div class="layui-input-block">'
+					+ '<input type="text" name="nickname" id="nickname" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入宠物昵称" class="layui-input">'
+					+ '</div>' + '</div>' 
+					+ '<div class="layui-form-item">'
+					+ '<label class="layui-form-label">性别</label>' 
+					+'<div class="layui-input-block">'
+					+'<input type="radio" name="gender" value="雄" title="雄"> <input '
+						+'type="radio" name="gender" value="雌" title="雌" checked> '
+					+ '</div>' + '</div>' 
+					+ '<div class="layui-form-item">'
+					+ '<label class="layui-form-label">年龄</label>' 
+					+ '<div class="layui-input-block">'
+					+ '<input type="text" name="age" id="age" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入宠物年龄" class="layui-input">'
+					+ '</div>' + '</div>' 
+					+ '<div class="layui-form-item">'
+					+ '<label class="layui-form-label">体重</label>' 
+					+ '<div class="layui-input-block">'
+					+ '<input type="text" name="weight" id="weight" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入宠物体重/kg" class="layui-input">'
+					+ '</div>' + '</div>' 
+					+ '<div class="layui-form-item">'
+					+ '<label class="layui-form-label">种类</label>' 
+					+ '<div class="layui-input-block">'
+					+ '<input type="text" name="species" id="species" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入宠物种类" class="layui-input">'
+					+ '</div>' + '</div>' 
+					+ '<div class="layui-form-item">'
+					+ '<label class="layui-form-label">颜色</label>' 
+					+ '<div class="layui-input-block">'
+					+ '<input type="text" name="color" id="color" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入宠物颜色" class="layui-input">'
+					+ '</div>' + '</div>' 
+					+ '<div class="layui-form-item">'
+					+ '<label class="layui-form-label">是否绝育</label>' 
+					+'<div class="layui-input-block">'
+					+'<input type="radio" name="immunity" value="是" title="是">'
+					+'<input type="radio" name="immunity" value="否" title="否" checked> '
+					+ '</div>' + '</div>' 
+					+ '<div class="layui-form-item">'
+					+ '<label class="layui-form-label">是否免疫</label>' 
+					+'<div class="layui-input-block">'
+					+'<input type="radio" name="sterilization" value="是" title="是">'
+					+'<input type="radio" name="sterilization" value="否" title="否" checked>'
+					+ '</div>' + '</div>' 
+					+ '</form>',
+				btn : [ '确定', '取消' ],
+				success : function(layero, index) {
+					parent.layui.form.render();
+				},
+				yes : function(index, layero) {
+					parent.layui.form.render();
+					$.ajax({
+						url : '/PetHospital/servlet/AdoptPetServlet',
+						type : 'POST',
+						data : {
+							type : 'addAdoptPet',
+							nickname : layero.find("#nickname").val(),
+							age : layero.find("#age").val(),
+							weight : layero.find("#weight").val(),
+							species : layero.find("#species").val(),
+							color : layero.find("#color").val(),
+							sterilization : parent.$('input[name="sterilization"]:checked').val(),
+							immunity : parent.$('input[name="immunity"]:checked').val(),
+							gender : parent.$('input[name="gender"]:checked').val(),
+							photo : parent.imgSrc
+						},
+						success : function(msg) {
+							parent.layer.closeAll();
+						},
+						error : function(msg) {
+							parent.layer.closeAll();
+						}
+					})
+				},
+				cancel : function(index, layero) {
+					layer.close(index);
+				},
+				end : function() {
+					table.reload('petTable', {
+						page : {
+							curr : 1
+						},
+						where : {
+							type : 'queryAllPet',
+						},
+						url : '/PetHospital/servlet/AdoptPetServlet',
+						method : 'post'
+					});
+				}
+			}); 
+
+			});
 	function refreashTable() {
 		table.reload('petTable', {
 			page : {
@@ -272,4 +382,64 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			method : 'post'
 		});
 	}
+	
+	var addCon = '<form class="layui-form layui-from-pane" action="" style="margin-top: 20px">' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">宠物照片</label>' 
+		+ '<div class="layui-input-block">'
+		+ '<input type="file"'
+            + 'accept="image/png, image/jpeg, image/gif, image/jpg"'
+             +'id="xFile"'
+            + 'style="position:absolute;clip:rect(0 0 0 0);"'
+            + 'onchange="uploadPhoto()">'
+		+'<label class="upload-button"'
+            + 'for="xFile">'
+         +'<img id="photo" src="assets/images/moren.jpg" style="width:25%;height:25%;border-radius: 10px;" alt="">'
+     + '</label> '
+		 
+		+ '</div>' + '</div>'
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">宠物昵称</label>' 
+		+ '<div class="layui-input-block">'
+		+ '<input type="text" name="nickname" id="nickname" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入宠物昵称" class="layui-input">'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">性别</label>' 
+		+'<div class="layui-input-block">'
+		+'<input type="radio" name="gender" value="雄" title="雄">'
+		+'<input type="radio" name="gender" value="雌" title="雌" checked>'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">年龄</label>' 
+		+ '<div class="layui-input-block">'
+		+ '<input type="text" name="age" id="age" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入宠物年龄" class="layui-input">'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">体重</label>' 
+		+ '<div class="layui-input-block">'
+		+ '<input type="text" name="weight" id="weight" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入宠物体重/kg" class="layui-input">'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">种类</label>' 
+		+ '<div class="layui-input-block">'
+		+ '<input type="text" name="species" id="species" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入宠物种类" class="layui-input">'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">颜色</label>' 
+		+ '<div class="layui-input-block">'
+		+ '<input type="text" name="color" id="color" required style="width:80%" lay-verify="required" autocomplete="off" placeholder="请输入宠物颜色" class="layui-input">'
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">是否绝育</label>' 
+		+'<div class="layui-input-block">'
+		+'<input type="radio" name="immunity" value="是" title="是">'
+		+'<input type="radio" name="immunity" value="否" title="否" checked> '
+		+ '</div>' + '</div>' 
+		+ '<div class="layui-form-item">'
+		+ '<label class="layui-form-label">是否免疫</label>' 
+		+'<div class="layui-input-block">'
+		+'<input type="radio" name="sterilization" value="是" title="是">'
+		+'<input type="radio" name="sterilization" value="否" title="否" checked>'
+		+ '</div>' + '</div>' 
+		+ '</form>';
 })

@@ -33,9 +33,6 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			field : 'gender',
 			title : '雌雄',
 		}, {
-			field : 'userName',
-			title : '主人姓名',
-		}, {
 			field : 'species',
 			title : '宠物类别',
 		}, {
@@ -45,7 +42,6 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			toolbar : '#petTool'
 		} ] ], 
 		skin : 'line',
-		even : true,
 		page : true,
 		limits : [ 5, 7, 10 ],
 		limit : 5,

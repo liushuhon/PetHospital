@@ -8,8 +8,24 @@ import entity.Doctor;
 
 public class DoctorService {
 	DoctorDao doctorDao = new DoctorDao();
+	public List<Map<String, Object>> queryAllDoctor(){
+		return doctorDao.queryAllDoctor();
+	}
+	 public List<Map<String, Object>> selectDoctor(String selItem, String selContent){ 
+		 return doctorDao.selectDoctor(selItem, selContent);
+	 }
+	 public List<Map<String, Object>> queryAllByLimits(int page, int limits){
+		 return doctorDao.queryAllByLimits(page, limits);
+	 }
+	 public List<Map<String, Object>> selectDoctorByLimits(String selItem,String selContent,int pageSize,int currPage){ 
+			return doctorDao.selectDoctorByLimits(selItem, selContent, pageSize, currPage);
+	 }
+	
 	public List<Map<String, Object>> findDoctorById(String id) { 
 		return doctorDao.findDoctorById(id);
+	}
+	public List<Map<String, Object>> findDoctorByCode(String id) { 
+		return doctorDao.findDoctorByCode(id);
 	}
 
 	public List<Map<String, Object>> updateDoctor(Doctor doctor) { 
@@ -30,5 +46,8 @@ public class DoctorService {
 	}
 	public List<Map<String, Object>> queryAll(){
 		return doctorDao.queryAll();
+	}
+	public void updateDoctorByAdmin(String doctorCode,String workTime,String jobTitle,String level,String medicalSkill) {  
+		doctorDao.updateDoctorByAdmin(doctorCode, workTime, jobTitle, level, medicalSkill);
 	}
 }

@@ -9,6 +9,13 @@ import entity.AdoptPet;
 
 public class AdoptPetService {
 	AdoptPetDao dao = new AdoptPetDao();
+	public void addAdoptPet(AdoptPet adoptPet) throws Exception{ 
+		try {
+			dao.addAdoptPet(adoptPet);
+		} catch (Exception e) {
+			new Exception("操作数据库出错！").printStackTrace(); 
+		}
+	}
 	public List<Map<String, Object>> queryAllPets(String state){
 		try {
 			return dao.queryAllPets(state);

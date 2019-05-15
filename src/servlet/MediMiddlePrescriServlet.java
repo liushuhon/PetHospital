@@ -52,24 +52,23 @@ public class MediMiddlePrescriServlet extends HttpServlet {
 		MediMiddlePrescriService service = new MediMiddlePrescriService();
 		if(requestType.equals("addMiddle")){
 			String medicineId = request.getParameter("medicineId").toString();
-			String price = request.getParameter("price").toString();
-			String customerId = request.getParameter("customerId").toString(); 
+			String number = request.getParameter("number").toString();
+			String prescriptionId = request.getParameter("prescriptionId").toString(); 
 			MediMiddlePrescri mePrescri = new MediMiddlePrescri();
-			mePrescri.setCustomerId(customerId);
-			mePrescri.setMark(0);
-			mePrescri.setPrice(Double.parseDouble(price));
+			mePrescri.setNumber(number);
+			mePrescri.setPrescriptionId(prescriptionId);
 			mePrescri.setMedicineId(medicineId);
 			service.addMedi_Prescri(mePrescri); 
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(true).getBytes("utf-8")); 
 		} else if (requestType.equals("selectByMark0")) {
-			String customerId = request.getParameter("customerId");
-			String mark = request.getParameter("mark");
-			List<Map<String, Object>> middles = service.selectByMark(customerId, mark);
-			double sum = 0;
-			for (Map<String, Object> map : middles) {
-				sum += Double.parseDouble((map.get("price").toString()));
-			}
+//			String customerId = request.getParameter("customerId");
+//			String mark = request.getParameter("mark");
+//			List<Map<String, Object>> middles = service.selectByMark(customerId, mark);
+//			double sum = 0;
+//			for (Map<String, Object> map : middles) {
+//				sum += Double.parseDouble((map.get("price").toString()));
+//			}
 		}
 	}
 
