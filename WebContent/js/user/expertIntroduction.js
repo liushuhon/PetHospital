@@ -136,7 +136,7 @@ function formateDoctorIntro(doctors){
     doctors.map(function(curr,index) { 
     	infos +=   "<div class='layui-col-md4 width30'>" +
         "<div class='layui-card' >" +
-        "<div class='layui-card-header' onclick='popIntro("+curr.id+")'>" +
+        "<div class='layui-card-header doctor-photo' onclick='popIntro("+curr.doctorCode+")'>" +
          "<img  src='"+curr.photo+"'>" +
          "</div>" +	
          "<div class='layui-card-body introspan'>" +

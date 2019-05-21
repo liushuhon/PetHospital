@@ -96,6 +96,19 @@ public class AdoptApplicationServlet extends HttpServlet {
 			
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(true).getBytes("utf-8")); 
+		}else if(requestType.equals("queryAllAppByCus")){
+			int page = Integer.parseInt(request.getParameter("curr").toString());
+			int limit = Integer.parseInt(request.getParameter("nums").toString());
+			String customerId = request.getParameter("customerId").toString();
+			int total = service.queryApplicationByCus(customerId).size();
+			List<Map<String, Object>> apps = service.queryAllByLimitsByCus(page, limit, customerId);
+			HashMap<String, Object> result = new HashMap<String, Object>();
+			result.put("data", apps);
+			result.put("count", total);
+			result.put("msg", "");
+			result.put("code", "0");
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(result).getBytes("utf-8")); 
 		}
 	}
 

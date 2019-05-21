@@ -169,4 +169,15 @@ public class RegistrationDao {
 			System.out.println("操作数据库出错！");
 		} 
 	}
+	public List<Map<String, Object>> findRegistedTime(String doctorId,String date) {
+		try {
+			String sql = "SELECT * FROM registration WHERE regisTime LIKE '%"+date+"%' and doctorId ='"+doctorId+"'";
+			return this.commonDAO.excuteQuery(sql, null);
+			 
+		}
+		catch(Exception e){
+			System.out.println("操作数据库出错！");
+		}
+		return null; 
+	}
 }

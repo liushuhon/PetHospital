@@ -99,8 +99,9 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 		var data = obj.data;
 		console.log(data);
 		if (obj.event === 'outHospital') {
+			var returnMoney = data.advancePay - data.hospitalPrice;
 			// bed置为空闲 situationmark置为出院 inhospitalmark置为出院
-			parent.layer.confirm('确认出院吗', function(index) {
+			parent.layer.confirm('确认出院吗，将退还主人'+returnMoney+'元', function(index) {
 				$.ajax({
 					url : "/PetHospital/servlet/BedServlet",
 					type : "POST",

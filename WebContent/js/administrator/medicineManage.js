@@ -173,13 +173,13 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 					content :addCon,
 
 					btn : [ '确定', '取消' ],
-					success : function(layero, index) { 
-						parent.layui.form.render(); 
+					success : function(layero, index) {
+						parent.layui.form.render();
 						addOption('categary','add');
 						addOption('specifications','add');
 						addOption('manufacturer','add');
 						addOption('supplier','add');
-						parent.layui.form.render(); 
+						parent.layui.form.render();
 					},
 					yes : function(index, layero) {
 						$.ajax({

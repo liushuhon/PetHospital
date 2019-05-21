@@ -24,7 +24,7 @@
 					<img src="../../assets/images/show.jpg">
 				</div>
 				<div>
-					<span>爱宠宠物医院</span>
+					<span>刘刘宠物医院</span>
 				</div>
 			</div>
 			<div class="layui-col-md7">
@@ -41,7 +41,7 @@
 					<li class="layui-nav-item"><a href="">个人中心</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;">修改信息</a>
+								<a href="javascript:;">个人中心</a>
 							</dd>
 							<dd>
 								<a href="javascript:;" onclick="cusLogout()">退出</a>
@@ -64,13 +64,15 @@
 					<li id="TD1" class="tabSelect" onclick="checkTab(1)"><a
 						href="javascript:;">个人信息</a></li>
 					<li id="TD2" class="tabUnSelect" onclick="checkTab(2)"><a
-						href="javascript:;">宠物管理</a></li>
+						href="javascript:;">我的宠物</a></li>
 					<li id="TD3" class="tabUnSelect" onclick="checkTab(3)"><a
-						href="javascript:;">预约管理</a></li>
+						href="javascript:;">我的预约</a></li>
 					<li id="TD4" class="tabUnSelect" onclick="checkTab(4)"><a
-						href="javascript:;">药方管理</a></li>
+						href="javascript:;">宠物药方</a></li>
 					<li id="TD5" class="tabUnSelect" onclick="checkTab(5)"><a
-						href="javascript:;">住院宠物管理</a></li>
+						href="javascript:;">住院宠物</a></li>
+						<li id="TD6" class="tabUnSelect" onclick="checkTab(6)"><a
+						href="javascript:;">我的领养</a></li>
 				</ul>
 			</div>
 			<div class="layui-col-md9 right">
@@ -182,8 +184,8 @@
 										<div class="layui-tab layui-tab-brief"
 											lay-filter="docDemoTabBrief">
 											<ul class="layui-tab-title">
-												<li class="layui-this">所有宠物</li>
-												<li>领养宠物</li>
+												<li class="layui-this" onclick="getAllPets()">所有宠物</li>
+												<li onclick="getAdoptPets()">领养宠物</li>
 											</ul>
 											<div class="layui-tab-content">
 												<div class="layui-tab-item layui-show">
@@ -210,14 +212,42 @@
 										</div>
 									</div>
 								</div>
+								<div id="block6" style="display: none">
+									<div class="layui-row">
+										<div class="layui-tab layui-tab-brief"
+											lay-filter="docDemoTabBrief">
+											<ul class="layui-tab-title">
+												<li class="layui-this">消息反馈</li>
+											</ul>
+											<div class="layui-tab-content">
+												<div class="layui-tab-item layui-show">
+													<button id="addPet" class="layui-btn">
+														<i class="layui-icon">&#xe608;</i> 去领养
+													</button>
+													<div class="form-box layui-form">
+														<table id="adoptApplication" lay-filter="adoptApplication"></table>
+													</div>
+												</div>
+												<div class="layui-tab-item">
+													<div class="form-box layui-form">
+														<table id="adoptPet" lay-filter="adopt"></table>
+														<script type="text/html" id="adoptPetTool">
+                            							 	<a class="layui-btn layui-btn-sm" lay-filter="detail" lay-event="edit" lay>编辑</a>   
+                  										  </script>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 								<div id="block3" style="display: none">
 									<div class="layui-row">
 										<div class="layui-tab layui-tab-brief"
 											lay-filter="docDemoTabBrief">
 											<ul class="layui-tab-title">
-												<li class="layui-this">待确认</li>
-												<li>预约成功</li>
-												<li>已处理</li>
+												<li class="layui-this" onclick="getToBeConfirmRegis()">待确认</li>
+												<li onclick="getConfirmedRegis()">预约成功</li>
+												<li onclick="getDealedRegis()">已处理</li>
 											</ul>
 											<div class="layui-tab-content">
 												<div class="layui-tab-item layui-show">
@@ -247,16 +277,61 @@
 										<div class="layui-tab layui-tab-brief"
 											lay-filter="docDemoTabBrief">
 											<ul class="layui-tab-title">
-												<li class="layui-this">历史药方</li>
+												<li class="layui-this" onclick="getUnpayPrescription()">代付款药方</li>
+												<li onclick="getPrescribe()">历史药方</li>
 											</ul>
 											<div class="layui-tab-content">
 												<div class="layui-tab-item layui-show">
+													 <div id="unpay-container" class="form-box layui-form">
+														<table id="unpayTab" lay-filter="unpayTab"></table>
+														<script type="text/html" id="unpayTool">
+															<a class="layui-btn layui-btn-sm" lay-filter="detailUnPay" lay-event="detailUnPay" lay>查看</a> 
+                  										  </script>
+													</div>
+													<div id="unPayDetail" style="display:none;">
+														<p>
+															宠物：<span id="unickname"></span>
+														</p>
+														<p>
+															年龄：<span id="uage"></span>岁 &nbsp;&nbsp;
+															编号：<span id="uPetId"></span>
+														</p>
+														<p>
+															医生：<span id="udoctorName"></span>
+														</p>
+														<p>
+															联系电话：<span id="udocPhone"></span>
+														</p>
+														<p>
+															症状：<span id="usymptom"></span>
+														</p>
+														<p>
+															药物：<span id="umedicines"></span>
+														</p>
+														<p>
+															备注：<span id="unote"></span>
+														</p>
+														<p>
+															总价：<span id="utotalPrice"></span>元
+														</p>
+														<p>
+															时间：<span id="udate"></span>
+														</p>
+														<button style="margin-top: 10px;"
+															onclick="payPrescrib()"
+															class="layui-btn ">立即付款</button>
+														<button style="margin-top: 10px;"
+															onclick="returnUnpay()"
+															class="layui-btn layui-btn-primary">返回</button>
+													</div>
+												</div>
+											
+												<div class="layui-tab-item">
 													<div id="prescribe-container" class="form-box layui-form">
 														<table id="prescribeTab" lay-filter="prescribeTab"></table>
 														<script type="text/html" id="prescribeTool">
                             							 	<a class="layui-btn layui-btn-sm" lay-filter="detailPre" lay-event="detailPre" lay>查看</a>   
                   										  </script>
-
 													</div>
 													<div id="prescribeDetail">
 														<p>
@@ -291,6 +366,7 @@
 															class="layui-btn layui-btn-primary">返回</button>
 													</div>
 												</div>
+												
 											</div>
 
 										</div>
@@ -301,8 +377,8 @@
 										<div class="layui-tab layui-tab-brief"
 											lay-filter="docDemoTabBrief">
 											<ul class="layui-tab-title">
-												<li class="layui-this">已出院</li>
-												<li>未出院</li>
+												<li class="layui-this" onclick="getOutHospital()">已出院</li>
+												<li onclick="getInHospital()">未出院</li>
 											</ul>
 											<div class="layui-tab-content">
 												<div class="layui-tab-item layui-show">

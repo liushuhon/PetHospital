@@ -365,3 +365,7 @@ html, body , .app-container{
 	display: flex !important;
     align-items: center  !important;
 }
+
+.input-width {
+	width: 250px !important;
+}

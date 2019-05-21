@@ -10,11 +10,26 @@ public class Prescription {
 	private String symptom;
 	private Double totalPrice;
 	private String note;
+	private String state;
 	
 	public Prescription() {
 		super();
 	}
 	
+	
+	
+	public String getState() {
+		return state;
+	}
+
+
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+
+
 	public String getNote() {
 		return note;
 	}

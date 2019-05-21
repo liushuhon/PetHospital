@@ -117,7 +117,7 @@ layui.use([ 'element', 'table', 'form', 'jquery','laydate' ], function() {
 				data : {
 					'type' : 'updateStateAndDate',
 					'registrationCode' : data.registrationCode,
-					'date' : data.date,
+					'date' : data.regisTime,
 					'state' : '预约成功'
 				},
 				success : function(data) {

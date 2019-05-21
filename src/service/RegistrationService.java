@@ -67,4 +67,7 @@ public class RegistrationService {
 	public void addRegistration(Registration registration) {
 		 registrationDao.addRegistration(registration);
 	}
+	public List<Map<String, Object>> findRegistedTime(String doctorId,String date) {
+		return registrationDao.findRegistedTime(doctorId, date);
+	}
 }

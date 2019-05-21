@@ -63,4 +63,23 @@ public class AdoptApplicationService {
 				e.printStackTrace(); 
 			} 
 	  }
+	 
+		public List<Map<String, Object>> queryApplicationByCus(String customerId) {
+			try {
+				return dao.queryApplicationByCus(customerId);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		}
+		 public List<Map<String, Object>> queryAllByLimitsByCus(int page, int limits,String customerId){
+				try {
+					return dao.queryAllByLimitsByCus(page, limits, customerId);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				return null;  
+		}
 }	

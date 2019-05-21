@@ -135,6 +135,9 @@ public class RegistrationServlet extends HttpServlet {
 			String age = request.getParameter("age");
 			String weight = request.getParameter("weight");
 			String doctorName = request.getParameter("doctorName");
+			
+			
+			
 			String date = common.getNow();
 			String imgString = request.getParameter("petImg");
 			String im = common.processImgStr(imgString);
@@ -185,6 +188,12 @@ public class RegistrationServlet extends HttpServlet {
 			registrationService.updateStateAndDate(registrationCode, state, regisTime,date);
 			OutputStream out = response.getOutputStream();
 			out.write(JSON.toJSONString(true).getBytes("utf-8"));
+		}else if (requestType.equals("findRegistedTime")) {
+			String doctorId = request.getParameter("doctorId").toString();
+			String date = request.getParameter("date").toString();
+			List<Map<String, Object>> regis = registrationService.findRegistedTime(doctorId, date);
+			OutputStream out = response.getOutputStream();
+			out.write(JSON.toJSONString(regis).getBytes("utf-8"));
 		}
 	}
 

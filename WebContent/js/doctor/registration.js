@@ -45,7 +45,7 @@ layui.use([ 'element', 'table', 'form', 'jquery' ], function() {
 			title : '宠物类别',
 			minWidth : 80
 		}, {
-			field : 'date',
+			field : 'regisTime',
 			title : '预约时间',
 			width : 160
 		}, {

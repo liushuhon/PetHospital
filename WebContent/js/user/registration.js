@@ -11,9 +11,50 @@ layui.use([ 'laydate', 'form', 'carousel' ], function() {
 	// 监听提交
 	laydate.render({
 		elem : '#regisTime',
-		type : 'datetime',
+		type : 'date',
 		min : 0,
 		max : 7,
+		done: function(value, date, endDate){
+
+		    $('#selectTimeBlock').css('display','')
+			$.ajax({
+				type : "POST",
+				contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+				url : "/PetHospital/servlet/RegistrationServlet",
+				dataType : 'json',
+				async : false,
+				data : {
+					'type' : 'findRegistedTime',
+					'doctorId' : docCode,
+					'date' : value
+				},
+				success : function(data) {
+					let regis = eval(data);
+					selectedTime = [];
+					regis.map(function(item) {
+						selectedTime.push(item.regisTime.split(' ')[1]);
+					});
+					timeArr.map(function(obj) {
+						var selectEle = parent.document.getElementById('selectTime');  
+						console.log(selectEle);
+						var optionObj = parent.document.createElement("option");  
+						optionObj.value = obj;  
+						optionObj.innerHTML = obj;
+						selectedTime.map(function(item) {
+							if(item === obj){
+								optionObj.disabled = "disabled";
+							}
+						});
+						selectEle.appendChild(optionObj);    
+					});
+					layui.form.render();
+				},
+				error : function(error) {
+					
+				}
+			});
+		    console.log(value); //得到日期生成的值，如：2017-08-18
+		}
 	});
 
 	form.on('submit(registration)', function(data) {
@@ -32,7 +73,7 @@ layui.use([ 'laydate', 'form', 'carousel' ], function() {
 				'gender' : data.gender,
 				'immunity' : data.immunity,
 				'petName' : data.petName,
-				'regisTime' : data.regisTime,
+				'regisTime' : data.regisTime+" "+$('#selectTime').val(),
 				'species' : data.species,
 				'sterilization' : data.sterilization,
 				'weight' : data.weight,
@@ -69,13 +110,38 @@ var docCode = '';
 var pets = [];
 var choosePetData = null;
 var imgSrc = '';
+var doctorInfo = null;
+var timeArr = [];
+var selectedTime = [];
 (function() {
 	getCurCustomer();
 	docName = parseURL("doctorName");
 	docCode = parseURL("doctorCode");
 	$('#docName').html(docName);
 	selectPets();
+	selectDoctor();
 })();
+
+function selectDoctor() {
+	$.ajax({
+		type : "POST",
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		url : "/PetHospital/servlet/DoctorServlet",
+		dataType : 'json',
+		async : false,
+		data : {
+			'type' : 'findDoctorById',
+			'id' : docCode
+		},
+		success : function(data) {
+			doctorInfo = eval(data);
+			let workTime = doctorInfo[0].workTime;
+			formateWorkTime(workTime);
+		},
+		error : function(error) {
+		}
+	})
+}
 
 function selectPets() {
 	$.ajax({
@@ -96,6 +162,25 @@ function selectPets() {
 		}
 	})
 }
+
+function formateWorkTime(time) {
+	var start = time.split('-')[0];
+	var end = time.split('-')[1];
+
+	var loopStartTime = start;
+	var loopEndTime = ''; 
+	while (loopStartTime !== end) {
+		if (loopStartTime.split(':')[1]==='30') {
+			loopEndTime = Number(Number(loopStartTime.split(':')[0])+1) +":00";
+			
+		} else {
+			loopEndTime = loopStartTime.split(':')[0] + ":30"; 
+		}
+		timeArr.push(loopStartTime+"-"+loopEndTime);
+		loopStartTime = loopEndTime;
+	}
+}
+
 function parseURL(name) {
 	var windowUrl = decodeURI(window.location.search);
 
@@ -144,15 +229,26 @@ function chooseHasPet() {
  * @param pets
  */
 function formatePets(pets) {
+	
 	$('#hasPet').html("");
 	var text = '';
-	text += "<div class='layui-form-item text-center'>"+
-			"<label class='layui-form-label'>预约时间</label>"+
-			"<div class='layui-input-block'>"+
+	text += '<form class="layui-form layui-from-pane" action="" target="hidden_frame" style="margin-top: 20px">' + 
+			"<div class='layui-form-item text-center'>"+
+			"<label class='layui-form-label'>预约日期</label>"+
+			"<div class='layui-input-block' style='width: 35%;'>"+
 			"<input type='text' class='layui-input' id='regisTime' autocomplete='off'"+
 			"name='regisTime'>"+
 			"</div>"+
-			"</div>";
+			"</div>"
+			+ '<div  id="selectTimeBlock" class="layui-form-item" style="display:none;">'
+			+ '<label class="layui-form-label">预约时间</label>' 
+			+ '<div class="layui-input-block" style="width:35%" >'
+		    + '<select id="selectTime" lay-filter="selectTime" lay-verify="required"  >'
+	        + '<option value="">请选择时间</option>'
+	        + '</select>'
+			+ '</div>' + '</div>'  
+			+ '<form>'
+			+ '<iframe name="hidden_frame" id="hidden_frame" style="display: none"></iframe>';
 	pets.map(function(curr,index) { 
 	  text += "<div class='layui-col-md3 petBlock' id=pet"+index+" onclick='choosePet("+curr.petCode+","+index+")'>" +
       "<div>" +
@@ -167,7 +263,7 @@ function formatePets(pets) {
 	  }); 
 	text +=  "<div class='layui-row'><button onclick='submitHasPet()'"+
 			"class='layui-btn float-right btn-purple' style='float: left;margin-left: 35px;margin-top: 30px;'>提交</button></div>";
-	$('#hasPet').append(text);
+	$('#hasPet').append(text); 
 }
 
 /**
@@ -186,7 +282,7 @@ function submitHasPet(){
 			'type' : 'addRegiByExistPet',
 			'petCode' : data.petCode,  
 			'petName' : data.nickname,
-			'regisTime' : $('#regisTime').val(),
+			'regisTime' : $('#regisTime').val()+" "+$('#selectTime').val(),
 			'species' : data.species,  
 			'doctorId' : docCode,
 			'customerId' : cusId,

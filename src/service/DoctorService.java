@@ -50,4 +50,7 @@ public class DoctorService {
 	public void updateDoctorByAdmin(String doctorCode,String workTime,String jobTitle,String level,String medicalSkill) {  
 		doctorDao.updateDoctorByAdmin(doctorCode, workTime, jobTitle, level, medicalSkill);
 	}
+	public void addDoctorByAdmin(String doctorCode,String workTime,String jobTitle,String level,String medicalSkill,String username,String doctorName,String phone) {  
+		doctorDao.addDoctorByAdmin(doctorCode, workTime, jobTitle, level, medicalSkill, username, doctorName,phone);
+	}
 }

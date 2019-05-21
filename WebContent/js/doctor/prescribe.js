@@ -180,6 +180,7 @@ layui.use([ 'layer', 'form', 'jquery' ], function() {
 					'cusName' : $('#customerName').val(),
 					'docName' : doctorName,
 					'registrationCode' : registrationCode,
+					'advancePay' : $('#advancePayPrice').val()
 				},
 				success : function(data) {
 					inHospitalId = data;
@@ -215,7 +216,8 @@ layui.use([ 'layer', 'form', 'jquery' ], function() {
 				'medicines' : selectMedicinesWithType.join(','),
 				'registrationCode' : registrationCode,
 				'note' : $("#note").val(),
-				'totalPrice' : medicinePrice
+				'totalPrice' : medicinePrice,
+				'state' : '待付款'
 			},
 			success : function(data) {
 				prescriptionCode = data;
@@ -290,9 +292,11 @@ layui.use([ 'layer', 'form', 'jquery' ], function() {
 		 if (data.value === '是') {
 			$('#staysDays').show();
 			$('#selectNoArea').show();
+			$('#advancePay').show();
 		} else {
 			$('#staysDays').hide();
 			$('#selectNoArea').hide();
+			$('#advancePay').hide();
 		}
 	}); 
 	

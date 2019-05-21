@@ -28,11 +28,11 @@
 			<div class="layui-side-scroll">
 				<div class="custom-logo">
 					<!--  <img src="assets/images/logo.png" alt=""/> -->
-					<h1>宠物医院后台管理</h1>
+					<h1>刘刘宠物医院后台管理</h1>
 				</div>
 				<ul id="Nav" class="layui-nav layui-nav-tree">
 					<li class="layui-nav-item"><a href="javascript:;"> <i
-							class="layui-icon">&#xe609;</i> <em>客户管理</em>
+							class="layui-icon">&#xe609;</i> <em>用户管理</em>
 					</a>
 						<dl class="layui-nav-child">
 							<dd>
@@ -53,7 +53,7 @@
 								<a href="views/administor/medecineManage.html">药品管理</a>
 							</dd>
 						</dl></li>
-					<li class="layui-nav-item"><a href="javascript:;"> <i
+<!-- 					<li class="layui-nav-item"><a href="javascript:;"> <i
 							class="layui-icon">&#xe612;</i> <em>仓库管理</em>
 					</a>
 						<dl class="layui-nav-child">
@@ -63,7 +63,7 @@
 							<dd>
 								<a href="views/administor/outStorageManage.html">出库管理</a>
 							</dd>
-						</dl></li>
+						</dl></li> -->
 					<li class="layui-nav-item"><a href="javascript:;"> <i
 							class="layui-icon">&#xe612;</i> <em>参数管理</em>
 					</a>
@@ -150,7 +150,9 @@
 	<script src="assets/layui.js"></script>
 	<script src="util/jquery.js"></script>
 	<script src="js/getCurUser.js"></script>
-		<script type="text/javascript">
+	<script src="adminIndex.js"></script>
+	<script src="index.js" data-main="home"></script>
+	<script type="text/javascript">
 	layui.use([ 'jquery', 'form', 'layer', 'table', 'laydate' ], function() {
 		var layer = layui.layer;
 		var form = layui.form;
@@ -159,7 +161,5 @@
 		var laydate = layui.laydate;
 	});
 	</script>
-	<script src="adminIndex.js"></script>
-	<script src="index.js" data-main="home"></script>
 </body>
 </html>

@@ -463,6 +463,27 @@ layui.use([ 'element', 'form', 'layer', 'table' ], function() {
 		$('#totalPrice').html(data.totalPrice);
 		$('#date').html(data.date);
 	});
+	
+	/**
+	 * 待付款药方
+	 */ 
+	table.on('tool(unpayTab)', function(obj) {
+		var data = obj.data;   
+		console.log(data);
+		$('#unpay-container').css('display','none');
+		$('#unPayDetail').css('display','block');
+		$('#uPetId').html(data.petId);
+		$('#unickname').html(data.nickname);
+		$('#uage').html(data.age);
+		$('#udoctorName').html(data.doctorName);
+		$('#udocPhone').html(data.docPhone);
+		$('#usymptom').html(data.symptom);
+		$('#umedicines').html(data.medicines);
+		$('#unote').html(data.note);
+		$('#utotalPrice').html(data.totalPrice);
+		$('#udate').html(data.date);
+	});
+	
 	/***
 	 * 所有宠物管理
 	 */
@@ -667,9 +688,75 @@ layui.use([ 'element', 'form', 'layer', 'table' ], function() {
 	getConfirmedRegis();
 	getDealedRegis();
 	getPrescribe();
+	getUnpayPrescription();
 	getOutHospital();
 	getInHospital();
+	getAdoptApplication();
 })();
+/**
+ * 获取管理员反馈
+ */
+function getAdoptApplication(){
+	layui.table.render({
+		elem : '#adoptApplication',
+		id : 'adoptApplication',
+		url : '/PetHospital/servlet/AdoptApplicationServlet',
+		where : {
+			type : 'queryAllAppByCus',
+			customerId : cusId,
+		},
+		request : {
+			pageName : 'curr' // 页码的参数名称，默认：page
+			,
+			limitName : 'nums' // 每页数据量的参数名，默认：limit
+		},
+		method : 'post',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		cols : [ [ // 标题栏
+		{
+			field : 'id',
+			title : '编号',
+			sort : true
+		}, {
+			field : 'nickname',
+			title : '宠物',
+		}, {
+			field : 'species',
+			title : '种类',
+		}, {
+			field : 'age',
+			title : '年龄/岁',
+		}, {
+			field : 'weight',
+			title : '体重/Kg',
+		}, {
+			field : 'date',
+			title : '日期',
+		},{
+			field : 'state',
+			title : '反馈',
+		} ] ], 
+		skin : 'line' // 表格风格
+		,
+		page : true // 是否显示分页
+		,
+		limits : [ 5, 7, 10 ],
+		limit : 5 // 每页默认显示的数量
+		,
+		response : {
+			statusName : 'code' // 数据状态的字段名称，默认：code
+			,
+			statusCode : 0 // 成功的状态码，默认：0
+			,
+			msgName : 'msg' // 状态信息的字段名称，默认：msg
+			,
+			countName : 'count' // 数据总数的字段名称，默认：count
+			,
+			dataName : 'data' // 数据列表的字段名称，默认：data
+		}
+	});
+}
+
 /**
  * 未出院
  */
@@ -805,16 +892,17 @@ function getOutHospital(){
 	});
 }
 /**
- * 药方
+ * 未付款的药方
  */
-function getPrescribe(){
+function getUnpayPrescription(){
 	layui.table.render({
-		elem : '#prescribeTab',
-		id : 'prescribeTab',
+		elem : '#unpayTab',
+		id : 'unpayTab',
 		url : '/PetHospital/servlet/PrescribeServlet',
 		where : {
 			types : 'queryAllPrescribeByCus',
 			customerId : cusId,
+			state : '待付款'
 		},
 		request : {
 			pageName : 'curr' // 页码的参数名称，默认：page
@@ -840,6 +928,77 @@ function getPrescribe(){
 		}, {
 			field : 'totalPrice',
 			title : '总价',
+		}, {
+			field : 'state',
+			title : '状态',
+		}, {
+			align : 'center',
+			field : 'operate',
+			title : '操作',
+			align : 'center',
+			toolbar : '#unpayTool'
+		} ] ], 
+		skin : 'line' // 表格风格
+		,
+		page : true // 是否显示分页
+		,
+		limits : [ 5, 7, 10 ],
+		limit : 5 // 每页默认显示的数量
+		,
+		response : {
+			statusName : 'code' // 数据状态的字段名称，默认：code
+			,
+			statusCode : 0 // 成功的状态码，默认：0
+			,
+			msgName : 'msg' // 状态信息的字段名称，默认：msg
+			,
+			countName : 'count' // 数据总数的字段名称，默认：count
+			,
+			dataName : 'data' // 数据列表的字段名称，默认：data
+		}
+	});
+}
+
+/**
+ * 药方
+ */
+function getPrescribe(){
+	layui.table.render({
+		elem : '#prescribeTab',
+		id : 'prescribeTab',
+		url : '/PetHospital/servlet/PrescribeServlet',
+		where : {
+			types : 'queryAllPrescribeByCus',
+			customerId : cusId,
+			state : '已付款'
+		},
+		request : {
+			pageName : 'curr' // 页码的参数名称，默认：page
+			,
+			limitName : 'nums' // 每页数据量的参数名，默认：limit
+		},
+		method : 'post',
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		cols : [ [ // 标题栏
+		{
+			field : 'prescriptionCode',
+			title : '编号',
+			sort : true
+		}, {
+			field : 'nickname',
+			title : '宠物',
+		}, {
+			field : 'doctorName',
+			title : '医生',
+		}, {
+			field : 'medicines',
+			title : '药物',
+		}, {
+			field : 'totalPrice',
+			title : '总价',
+		}, {
+			field : 'state',
+			title : '状态',
 		}, {
 			align : 'center',
 			field : 'operate',
@@ -1321,7 +1480,7 @@ function refreashTable(table) {
 	
 }
 function checkTab(idx) {
-	for (var i = 1; i <= 5; i++) {
+	for (var i = 1; i <= 6; i++) {
 		if (idx == i) {
 			document.getElementById("TD" + i).className = "tabSelect";
 			document.getElementById("block" + i).style = "display:block;";
@@ -1330,8 +1489,48 @@ function checkTab(idx) {
 			document.getElementById("block" + i).style = "display:none;";
 		}
 	}
+	if (idx === 1) {
+		getPersonInfo();
+	}else if (idx === 2) {
+		getAllPets();
+		getAdoptPets();
+	}else if (idx === 3) {
+		getToBeConfirmRegis();
+		getConfirmedRegis();
+		getDealedRegis();
+	}else if (idx === 4) {
+		getPrescribe();
+		getUnpayPrescription();
+	}else if (idx === 5) {
+		getOutHospital();
+		getInHospital();
+	}else {
+		getAdoptApplication();
+	}
 }
 
+function payPrescrib() {
+	$.ajax({
+		url : "/PetHospital/servlet/PrescribeServlet",
+		type : "POST",
+		async : false,
+		data : {
+			types : 'changeState',
+			petId : $('#uPetId').html()
+		},
+		success : function(msg) {
+			alert('付款成功');
+			getPrescribe();
+			getUnpayPrescription();
+		}
+	});
+	$('#unPayDetail').css('display','none');
+	$('#unpay-container').css('display','block');
+}
+function returnUnpay() {
+	$('#unPayDetail').css('display','none');
+	$('#unpay-container').css('display','block');
+}
 function returnPrescribe() {
 	$('#prescribeDetail').css('display','none');
 	$('#prescribe-container').css('display','block');

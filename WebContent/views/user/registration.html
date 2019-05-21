@@ -15,7 +15,7 @@
 					<img src="../../assets/images/show.jpg">
 				</div>
 				<div>
-					<span>爱宠宠物医院</span>
+					<span>刘刘宠物医院</span>
 				</div>
 			</div>
 			<div class="layui-col-md7">
@@ -64,7 +64,7 @@
 				<div class="layui-card-body">
 					<div id="hasPet" class="layui-row"></div>
 					<div id="addPet" style="display: none" class="layui-card-body">
-						<form class="layui-form" action="">
+						<form class="layui-form" action=""  target="hidden_frame">
 							<div class="layui-form-item upload-photo">
 								<label class="layui-form-label">宠物照片</label> <input type="file"
 									accept="image/png, image/jpeg, image/gif, image/jpg" id="xFile"
@@ -75,10 +75,18 @@
 								</label>
 							</div>
 							<div class="layui-form-item text-center">
-								<label class="layui-form-label">预约时间</label>
+								<label class="layui-form-label">预约日期</label>
 								<div class="layui-input-block">
 									<input type="text" class="layui-input" id="regisTime" autocomplete="off"
 										name="regisTime">
+								</div>
+							</div>
+							<div id="selectTimeBlock" style="display:none;" class="layui-form-item text-center">
+								<label class="layui-form-label">预约时间</label>
+								<div class="layui-input-block">
+									<select id="selectTime">
+										<option value="" lay-filter="selectTime" lay-verify="required">请选择时间</option>
+									</select>
 								</div>
 							</div>
 							<div class="layui-form-item text-center">
@@ -145,6 +153,7 @@
 									class="layui-btn float-right btn-purple">提交</button>
 							</div>
 						</form>
+						<iframe name='hidden_frame' id="hidden_frame" style="display: none"></iframe>
 					</div>
 				</div>
 			</div>

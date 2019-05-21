@@ -372,6 +372,14 @@
 {
 	margin-bottom:10px;
 }
+#unPayDetail {
+	display:none;
+}
+#unPayDetail p:nth-child(even)
+{
+	margin-bottom:10px;
+}
+
 .lineHeight {
 	line-height:38px;
 }

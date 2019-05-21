@@ -13,10 +13,10 @@ public class PrescriptionDao {
 	 public void addPrescription(Prescription prescription){
 		 
 		   try {
-				String sql = "insert into prescription (prescriptionCode,symptom,medicines,customerId,petId,doctorId,date,totalPrice,note) "
+				String sql = "insert into prescription (prescriptionCode,symptom,medicines,customerId,petId,doctorId,date,totalPrice,note,state) "
 						+ "values('"+prescription.getPrescriptionCode()+"','"+prescription.getSymptom()+"','"
 						+prescription.getMedicines()+"','"+prescription.getCustomerId()+"','"+prescription.getPetId()+"','"
-						+prescription.getDoctorId()+"','"+prescription.getDate()+"','"+prescription.getTotalPrice()+"','"+prescription.getNote()+"');";
+						+prescription.getDoctorId()+"','"+prescription.getDate()+"','"+prescription.getTotalPrice()+"','"+prescription.getNote()+"','"+prescription.getState()+"');";
 				
 				this.commonDAO.executeUpdate(sql, null); 
 			}
@@ -35,9 +35,9 @@ public class PrescriptionDao {
 			}
 			return null;
 		}
-	 public List<Map<String, Object>> findPrescriptionByCustomerId(String customerId) {
+	 public List<Map<String, Object>> findPrescriptionByCustomerId(String customerId,String state) {
 			try {
-				String sql = "select customer.*,pet.*,prescription.*,doctor.* FROM customer,pet,prescription,doctor WHERE pet.petCode = prescription.petId AND customer.customerCode = prescription.customerId AND doctor.doctorCode = prescription.doctorId AND prescription.customerId = '"+customerId+"' order by prescription.date DESC";
+				String sql = "select customer.*,pet.*,prescription.*,doctor.* FROM customer,pet,prescription,doctor WHERE pet.petCode = prescription.petId AND customer.customerCode = prescription.customerId AND doctor.doctorCode = prescription.doctorId AND prescription.customerId = '"+customerId+"' And prescription.state = '"+state+"' order by prescription.date DESC";
 				List<Map<String, Object>> prescriptions = this.commonDAO.excuteQuery(sql, null);
 				return prescriptions;
 			}
@@ -46,10 +46,10 @@ public class PrescriptionDao {
 			}
 			return null;
 		}
-	 public List<Map<String, Object>> findPrescriptionByCustomerIdLimit(String customerId,int page, int limits) {
+	 public List<Map<String, Object>> findPrescriptionByCustomerIdLimit(String customerId,int page, int limits,String state) {
 		 int startIndex = (page - 1) * limits;
 			try {
-				String sql = "select customer.*,pet.*,prescription.*,doctor.doctorName,doctor.phone as docPhone FROM customer,pet,prescription,doctor WHERE pet.petCode = prescription.petId AND customer.customerCode = prescription.customerId AND doctor.doctorCode = prescription.doctorId AND prescription.customerId = '"+customerId+"' order by prescription.date DESC limit " + startIndex + "," + limits;
+				String sql = "select customer.*,pet.*,prescription.*,doctor.doctorName,doctor.phone as docPhone FROM customer,pet,prescription,doctor WHERE pet.petCode = prescription.petId AND customer.customerCode = prescription.customerId AND doctor.doctorCode = prescription.doctorId AND prescription.customerId = '"+customerId+"' And prescription.state = '"+state+"' order by prescription.date DESC limit " + startIndex + "," + limits;
 				List<Map<String, Object>> prescriptions = this.commonDAO.excuteQuery(sql, null);
 				return prescriptions;
 			}
@@ -91,6 +91,15 @@ public class PrescriptionDao {
 		}
 		return null;
 		 
+	}
+	public void changePayState(String petId) {
+		try {
+			String sql = "UPDATE prescription SET state = '已付款' where petId = '"+petId+"' AND state = '待付款'";
+			this.commonDAO.executeUpdate(sql, null);
+		}
+		catch(Exception e){
+			System.out.println("操作数据库出错！");
+		}
 	}
 	
 	 

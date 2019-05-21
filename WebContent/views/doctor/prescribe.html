@@ -110,37 +110,9 @@
 							</div>
 						</div>
 					</div>
-
-					<div class="layui-row layui-form-item">
-						<div class="layui-col-md8">
-						<div class="layui-col-md5">
-						<label class="layui-form-label">是否住院</label>
-							<div class=" layui-input-block">
-								<input type="radio" lay-filter="inHospital" name="inHospital" value="是" title="是" checked>
-								<input type="radio" lay-filter="inHospital" name="inHospital" value="否" title="否"
-									>
-							</div>
-						</div>
-							
-							<div id="staysDays" class="layui-col-md2 layui-input-block  staysNum">
-								<input type="number" id="days" class="layui-input" name="stays" ><span style="padding: 10px;">天</span>
-							</div> 
-						</div>	
-					</div>
-					<div id="selectNoArea" class="layui-row layui-form-item">
-						<div class="layui-col-md8">
-							<label class="layui-form-item layui-form-label">床位 </label>
-							<div class="layui-input-block">
-								<select id="bedNo" name="bedNo" lay-verify="">
-								  <option value="">请选择一个床位</option>
-								   
-								</select>    
-							</div>
-						</div>
-					</div>
-					<div id="medicineList" class="layui-row layui-form-item">
+<div id="medicineList" class="layui-row layui-form-item">
 						<div  class="layui-col-md8">
-							<label class="layui-form-item layui-form-label">药品清单 </label>
+							<label class="layui-form-item layui-form-label">药品清单</label>
 							<div id="search" class="layui-col-space20 layui-input-block">
 								<div class="layui-col-md5">
 									<select name="medicineSelect" lay-verify="" lay-search>
@@ -166,6 +138,42 @@
 
 						</div>
 						 
+					</div>
+					<div class="layui-row layui-form-item">
+						<div class="layui-col-md8">
+						<div class="layui-col-md5">
+						<label class="layui-form-label">是否住院</label>
+							<div class=" layui-input-block">
+								<input type="radio" lay-filter="inHospital" name="inHospital" value="是" title="是" checked>
+								<input type="radio" lay-filter="inHospital" name="inHospital" value="否" title="否"
+									>
+							</div>
+						</div>
+							
+							<div id="staysDays" class="layui-col-md2 layui-input-block  staysNum">
+								<input type="number" id="days" class="layui-input" name="stays" ><span style="padding: 10px;">天</span>
+							</div> 
+						</div>	
+					</div>
+					<div id="selectNoArea" class="layui-row layui-form-item">
+						<div class="layui-col-md8">
+							<label class="layui-form-item layui-form-label">床位</label>
+							<div class="layui-input-block">
+								<select id="bedNo" name="bedNo" lay-verify="">
+								  <option value="">请选择一个床位</option>
+								   
+								</select>    
+							</div>
+						</div>
+					</div>
+					
+					<div id="advancePay" class="layui-row layui-form-item">
+						<div class="layui-col-md8">
+							<label class="layui-form-item layui-form-label">预缴费 </label>
+							<div class="layui-input-block" style="display:flex;">
+								<input type="number" id="advancePayPrice" class="layui-input" style="width: 20%;" name="stays" ><span style="padding: 10px;">元</span>
+							</div>
+						</div>
 					</div>
 					<div class="layui-row layui-form-item">
 						<div class="layui-col-md8">

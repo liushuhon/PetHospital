@@ -78,4 +78,32 @@ public class AdoptApplicationDao {
 				e.printStackTrace(); 
 			} 
 	  }
+	 
+		public List<Map<String, Object>> queryApplicationByCus(String customerId) {
+			try {
+				String sql = "select a.*,c.userName,c.phone,c.customerCode,c.photo,c.gender as cusPhoto,p.nickname,p.species,p.gender,p.adoptPetCode,"
+						+ "p.state,p.immunity,p.sterilization,p.weight,p.age,p.color,p.photo as petPhoto from adoptapplication a , customer c ,"
+						+ "adoptpet p  WHERE a.adoptPetId = p.adoptPetCode and  a.customerId = c.customerCode  "
+								+ "and c.customerCode = '"+customerId+"' ORDER BY a.date desc";
+				return commonDAO.excuteQuery(sql, null);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		}
+		 public List<Map<String, Object>> queryAllByLimitsByCus(int page, int limits,String customerId){
+			 int startIndex = (page - 1) * limits;
+				try {
+					String sql = "select a.*,c.userName,c.phone,c.customerCode,c.photo,c.gender as cusPhoto,p.nickname,p.species,p.gender,"
+							+ "p.adoptPetCode,p.state,p.immunity,p.sterilization,p.weight,p.age,p.color,p.photo as petPhoto from adoptapplication a ,"
+							+ " customer c ,adoptpet p  WHERE a.adoptPetId = p.adoptPetCode and  a.customerId = c.customerCode  "
+									+ " and c.customerCode = '"+customerId+"' ORDER BY a.date desc limit " + startIndex + "," + limits;
+					return this.commonDAO.excuteQuery(sql, null);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				return null;  
+		}
 }

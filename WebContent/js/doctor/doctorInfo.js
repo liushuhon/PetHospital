@@ -1,6 +1,6 @@
  
      (function(){
-    	 
+    	 getCurUser();
     	 layui.use(['jquery', 'layer','form'], function(){ 
        	  var $ = layui.$ //重点处
        	  ,layer = layui.layer,form = layui.form;
@@ -13,7 +13,7 @@
    				dataType : 'json',
    				data : {
    					'type' : 'findDoctorById',
-   					'id' : 1
+   					'id' : curUserId
    				},
    				success : function(data) {
    					datas = eval(data);  

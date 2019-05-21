@@ -89,6 +89,7 @@ public class PrescribeServlet extends HttpServlet {
 			prescription.setDate(date);
 			prescription.setNote(note);
 			prescription.setTotalPrice(totalPrice);
+			prescription.setState(request.getParameter("state"));
 			pDao.addPrescription(prescription); 
 			registerableService.updateState(request.getParameter("registrationCode"));
 //			service.updateMarkTo1(request.getParameter("customerId")); 
@@ -104,8 +105,9 @@ public class PrescribeServlet extends HttpServlet {
 			int page = Integer.parseInt(request.getParameter("curr").toString());
 			int limit = Integer.parseInt(request.getParameter("nums").toString());
 			String customerId = request.getParameter("customerId").toString();
-			int total = prescribeService.findPrescriptionByCustomerId(customerId).size();
-			List<Map<String, Object>> pres = prescribeService.findPrescriptionByCustomerIdLimit(customerId, page, limit);
+			String state = request.getParameter("state").toString();
+			int total = prescribeService.findPrescriptionByCustomerId(customerId,state).size();
+			List<Map<String, Object>> pres = prescribeService.findPrescriptionByCustomerIdLimit(customerId, page, limit,state);
 			HashMap<String, Object> result = new HashMap<String, Object>();
 			result.put("data", pres);
 			result.put("count", total);
@@ -132,7 +134,12 @@ public class PrescribeServlet extends HttpServlet {
 			OutputStream out = response.getOutputStream(); 
 			System.out.print(result);
 			out.write(JSON.toJSONString(result).getBytes("utf-8")); 
-	}
+		}else if(requestType.equals("changeState")){  
+			String petId = request.getParameter("petId").toString();
+			prescribeService.changePayState(petId);
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(true).getBytes("utf-8")); 
+		}
 	}
 
 }

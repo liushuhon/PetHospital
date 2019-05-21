@@ -65,9 +65,13 @@ public class DoctorServlet extends HttpServlet {
 			String id = request.getParameter("id").toString();
 			List<Map<String,Object>> doctor = doctorService.findDoctorById(id); 
 			HashMap<String, Object> temp=(HashMap<String, Object>) doctor.get(0);
-			String imgHeader = "data:image/png;base64,";
-			String s = imgHeader + common.getImageStr(temp.get("photo").toString());
-			temp.put("photo", s); 
+			if (temp.get("photo") == null) {
+				temp.put("photo", null); 
+			}else {
+				String imgHeader = "data:image/png;base64,";
+				String s = imgHeader + common.getImageStr(temp.get("photo").toString());
+				temp.put("photo", s);
+			} 
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(doctor).getBytes("utf-8")); 
 		} else if(requestType.equals("findDoctorByCode")){
@@ -166,6 +170,18 @@ public class DoctorServlet extends HttpServlet {
 			String jobTitle = request.getParameter("jobTitle").toString();
 			String medicalSkill = request.getParameter("medicalSkill").toString();
 			doctorService.updateDoctorByAdmin(doctorCode, workTime, jobTitle, level, medicalSkill);
+			OutputStream out = response.getOutputStream(); 
+			out.write(JSON.toJSONString(true).getBytes("utf-8")); 
+		}else if(requestType.equals("addDoctorByAdmin")){ 
+			String doctorCode = common.getRandomCard().toString();
+			String workTime = request.getParameter("workTime").toString();
+			String level = request.getParameter("level").toString();
+			String jobTitle = request.getParameter("jobTitle").toString();
+			String medicalSkill = request.getParameter("medicalSkill").toString();
+			String username = request.getParameter("username").toString();
+			String doctorName = request.getParameter("doctorName").toString();
+			String phone = request.getParameter("phone").toString();
+			doctorService.addDoctorByAdmin(doctorCode, workTime, jobTitle, level, medicalSkill, username,doctorName,phone);
 			OutputStream out = response.getOutputStream(); 
 			out.write(JSON.toJSONString(true).getBytes("utf-8")); 
 		}

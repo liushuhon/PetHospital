@@ -64,7 +64,7 @@ public class DoctorDao {
 	 public List<Map<String, Object>> findDoctorById(String id){
 		 
 		 try {
-				String sql = "select * from  doctor where id='" + id + "'";
+				String sql = "select * from  doctor where doctorCode='" + id + "'";
 				List<Map<String, Object>> doctor = this.commonDAO.excuteQuery(sql, null);
 				return doctor;
 			}
@@ -156,9 +156,22 @@ public class DoctorDao {
 		public void updateDoctorByAdmin(String doctorCode,String workTime,String jobTitle,String level,String medicalSkill) {  
 			
 			try {
-				String sql = "update doctor set workTime='" + workTime + "',workTime='" + jobTitle + "',jobTitle='" + workTime + "'，level='" + level + "'，medicalSkill='" + medicalSkill + "'where doctorCode='" + doctorCode+"'" ;
+				String sql = "update doctor set workTime='" + workTime + "',jobTitle='" + jobTitle + "',level='" + level + "',medicalSkill='" + medicalSkill + "'where doctorCode='" + doctorCode+"'" ;
 						this.commonDAO.executeUpdate(sql, null);
 				System.out.print(sql);
+			}
+			catch(Exception e){
+				new Exception("操作数据库出错！").printStackTrace();;
+			}
+		}
+		
+		public void addDoctorByAdmin(String doctorCode,String workTime,String jobTitle,String level,String medicalSkill,String username,String doctorName,String phone) {  
+			
+			try {
+				String sql = "insert into doctor (doctorCode,username,doctorName,password,gender,age,level,Jobtitle,phone,medicalSkill,photo,description,workTime)"
+						+ "values('"+doctorCode+"','"+username+"','"+doctorName+"','"+123456+"'"
+								+ ","+null+","+null+",'"+level+"','"+jobTitle+"','"+phone+"','"+medicalSkill+"',"+null+","+null+",'"+workTime+"')";
+				this.commonDAO.executeUpdate(sql, null);
 			}
 			catch(Exception e){
 				new Exception("操作数据库出错！").printStackTrace();;

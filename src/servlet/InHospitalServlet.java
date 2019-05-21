@@ -67,12 +67,13 @@ public class InHospitalServlet extends HttpServlet {
 			String cusName = request.getParameter("cusName");
 			String docName = request.getParameter("docName");
 			String registrationCode = request.getParameter("registrationCode");
+			Double advancePay = Double.parseDouble(request.getParameter("advancePay").toString());
 			Bed bed = new Bed();
 			bed.setPetId(petId);
 			bed.setState("Âú");
 			bed.setBedCode(bedId);
 			bService.updateBed(bed);
-			InHospital inHospital = new InHospital(customerId, petId, bedId, doctorId, Double.parseDouble(hospitalPrice), mark, Integer.parseInt(stayDays), petName, docName, cusName);
+			InHospital inHospital = new InHospital(customerId, petId, bedId, doctorId, Double.parseDouble(hospitalPrice), mark, Integer.parseInt(stayDays), petName, docName, cusName, advancePay);
 			service.addInHospital(inHospital);
 			String id = service.selectInHospitalByPetId(petId).get(0).get("id").toString();
 			rService.updateState(registrationCode);

@@ -31,8 +31,12 @@ public class Common {
 	public List<Map<String, Object>> toBase64(List<Map<String, Object>> listMaps,String param) {
 		for (Map<String, Object> map : listMaps) {
 			String imgHeader = "data:image/png;base64,";
-			String s = imgHeader + getImageStr(map.get(param).toString());
-			map.put(param, s); 
+			if (map.get(param)==null) {
+				map.put(param, null);
+			} else {
+				String s = imgHeader + getImageStr(map.get(param).toString());
+				map.put(param, s); 
+			}
 		}
 		return listMaps;
 	}

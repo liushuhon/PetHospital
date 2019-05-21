@@ -11,10 +11,10 @@ public class InHospitalDao {
 
 	public void addInHospital(InHospital inHospital){ 
 		try {
-			String sql = "INSERT INTO InHospital(customerId,petId,bedId,doctorId,stayDays,hospitalPrice,mark,petName,docName,cusName) "
+			String sql = "INSERT INTO InHospital(customerId,petId,bedId,doctorId,stayDays,hospitalPrice,mark,petName,docName,cusName,advancePay) "
 					+ "VALUES('"+inHospital.getCustomerId()+"','"+inHospital.getPetId()+"','"+inHospital.getBedId()
 					+"','"+inHospital.getDoctorId()+"','"+inHospital.getStayDays()+"','"+inHospital.getHospitalPrice()+"','"+inHospital.getMark()+"','"
-					+inHospital.getPetName()+"','"+inHospital.getDocName()+"','"+inHospital.getCusName()+"')";
+					+inHospital.getPetName()+"','"+inHospital.getDocName()+"','"+inHospital.getCusName()+"','"+inHospital.getAdvancePay()+"')";
 			this.commonDAO.executeUpdate(sql, null); 
 		} catch (Exception e) {
 			new Exception("操作数据库出错！").printStackTrace(); 

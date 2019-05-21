@@ -11,6 +11,7 @@ public class InHospital {
 	private String petName;
 	private String docName;
 	private String cusName;
+	private Double advancePay;
 	
 	public InHospital() {
 		super();
@@ -18,7 +19,7 @@ public class InHospital {
 	
 	public InHospital(String customerId, String petId, String bedId,
 			String doctorId, Double hospitalPrice, String mark, int stayDays,
-			String petName, String docName, String cusName) {
+			String petName, String docName, String cusName, Double advancePay) {
 		super();
 		this.customerId = customerId;
 		this.petId = petId;
@@ -30,6 +31,16 @@ public class InHospital {
 		this.petName = petName;
 		this.docName = docName;
 		this.cusName = cusName;
+		this.advancePay = advancePay;
+	}
+	
+
+	public Double getAdvancePay() {
+		return advancePay;
+	}
+
+	public void setAdvancePay(Double advancePay) {
+		this.advancePay = advancePay;
 	}
 
 	public String getPetName() {

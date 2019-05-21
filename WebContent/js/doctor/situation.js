@@ -43,7 +43,8 @@ layui.use(['layer','form','jquery'],function(){
 		dataType : 'json',
 		data : {
 			'type' : 'selectByPetId', 
-			'petId' : petId
+			'petId' : petId,
+			'mark' : '住院'
 		},
 		success : function(data) {
 			datas = eval(data);    
